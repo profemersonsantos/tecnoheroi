@@ -1,0 +1,3590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TecnoHerói - Curso de Informática</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #2563EB;
+    --azul-claro: #DBEAFE;
+    --verde: #16A34A;
+    --verde-claro: #DCFCE7;
+    --roxo: #7C3AED;
+    --roxo-claro: #EDE9FE;
+    --laranja: #EA580C;
+    --laranja-claro: #FFEDD5;
+    --amarelo: #D97706;
+    --amarelo-claro: #FEF3C7;
+    --vermelho: #DC2626;
+    --vermelho-claro: #FEE2E2;
+    --cinza: #64748B;
+    --cinza-claro: #F1F5F9;
+    --branco: #FFFFFF;
+    --fundo: #F0F4FF;
+    --texto: #1E293B;
+    --sombra: 0 4px 20px rgba(0,0,0,0.12);
+    --sombra-lg: 0 8px 40px rgba(0,0,0,0.18);
+    --radius: 16px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--fundo);
+    color: var(--texto);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== TELA DE BOAS-VINDAS ===== */
+  #tela-boas-vindas {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #tela-admin-login {
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #tela-boas-vindas::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+    top: -200px; right: -200px;
+    animation: float 8s ease-in-out infinite;
+  }
+
+  #tela-boas-vindas::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+    bottom: -100px; left: -100px;
+    animation: float 10s ease-in-out infinite reverse;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.05); }
+  }
+
+  .hero-emoji {
+    font-size: 100px;
+    margin-bottom: 1rem;
+    animation: bounce 2s ease-in-out infinite;
+    display: block;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .hero-titulo {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: #fff;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+  }
+
+  .hero-subtitulo {
+    font-size: 1.3rem;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+
+  .nome-input-wrapper {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    max-width: 420px;
+    width: 100%;
+  }
+
+  .nome-input-wrapper label {
+    display: block;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .nome-input-wrapper input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-sm);
+    border: 3px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.95);
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--texto);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .nome-input-wrapper input:focus {
+    border-color: #fff;
+  }
+
+  .btn-comecar {
+    background: #fff;
+    color: var(--roxo);
+    border: none;
+    padding: 1.1rem 3rem;
+    border-radius: 50px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    transition: transform 0.15s, box-shadow 0.15s;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-comecar:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  }
+
+  .btn-comecar:active { transform: scale(0.97); }
+
+  .estrelas-fundo {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .estrela {
+    position: absolute;
+    color: rgba(255,255,255,0.6);
+    font-size: 20px;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
+
+  /* ===== APP PRINCIPAL ===== */
+  #app { display: none; }
+
+  /* ===== HEADER ===== */
+  header {
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-logo {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem;
+    color: var(--roxo);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .header-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .player-name {
+    font-weight: 700;
+    color: var(--texto);
+    font-size: 0.95rem;
+  }
+
+  .xp-badge {
+    background: var(--amarelo-claro);
+    color: var(--amarelo);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .nivel-badge {
+    background: var(--roxo-claro);
+    color: var(--roxo);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 0.9rem;
+  }
+
+  /* ===== NAVEGAÇÃO DAS AULAS ===== */
+  #tela-aulas {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .boas-vindas-banner {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: var(--radius);
+    padding: 2rem;
+    color: #fff;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .boas-vindas-banner .icon { font-size: 60px; }
+
+  .boas-vindas-banner h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .boas-vindas-banner p {
+    font-size: 1rem;
+    opacity: 0.9;
+    font-weight: 600;
+  }
+
+  .progresso-geral {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--sombra);
+  }
+
+  .progresso-geral h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--cinza);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .barra-progresso {
+    background: var(--cinza-claro);
+    border-radius: 50px;
+    height: 16px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+  }
+
+  .barra-progresso-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 50px;
+    transition: width 1s ease;
+  }
+
+  .progresso-texto {
+    font-size: 0.9rem;
+    color: var(--cinza);
+    font-weight: 600;
+  }
+
+  .titulo-secao {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.6rem;
+    color: var(--texto);
+    margin-bottom: 1.2rem;
+  }
+
+  .grid-aulas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .card-aula {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--sombra);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 3px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-aula:hover:not(.bloqueada) {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-lg);
+  }
+
+  .card-aula.bloqueada {
+    opacity: 0.6;
+    cursor: not-allowed;
+    filter: grayscale(0.5);
+  }
+
+  .card-aula.concluida { border-color: var(--verde); }
+  .card-aula.atual { border-color: var(--azul); }
+
+  .card-aula-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .aula-numero {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--cinza);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .aula-status {
+    padding: 0.25rem 0.7rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .status-concluida { background: var(--verde-claro); color: var(--verde); }
+  .status-atual { background: var(--azul-claro); color: var(--azul); }
+  .status-bloqueada { background: var(--cinza-claro); color: var(--cinza); }
+
+  .aula-emoji { font-size: 48px; margin-bottom: 0.75rem; display: block; }
+
+  .aula-titulo {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    color: var(--texto);
+    margin-bottom: 0.4rem;
+  }
+
+  .aula-descricao {
+    font-size: 0.9rem;
+    color: var(--cinza);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .aula-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.82rem;
+    color: var(--cinza);
+    font-weight: 600;
+  }
+
+  .aula-meta span { display: flex; align-items: center; gap: 0.3rem; }
+
+  .xp-card {
+    position: absolute;
+    top: 1rem;
+    right: 4.5rem;
+    background: var(--amarelo-claro);
+    color: var(--amarelo);
+    padding: 0.2rem 0.6rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+
+  .lock-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.5);
+    border-radius: var(--radius);
+    font-size: 3rem;
+  }
+
+  /* ===== TELA DA AULA ===== */
+  #tela-aula { display: none; max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  .aula-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .btn-voltar {
+    background: #fff;
+    border: 2px solid var(--cinza-claro);
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius-sm);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.15s;
+    color: var(--texto);
+  }
+
+  .btn-voltar:hover { border-color: var(--roxo); color: var(--roxo); }
+
+  .aula-titulo-header {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8rem;
+    color: var(--texto);
+  }
+
+  .progresso-aula {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--sombra);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .progresso-aula-texto {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--cinza);
+    white-space: nowrap;
+  }
+
+  .secoes-container { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  /* ===== CARTÕES DE CONTEÚDO ===== */
+  .secao-card {
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--sombra);
+  }
+
+  .secao-header {
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    color: #fff;
+  }
+
+  .secao-body { padding: 1.5rem; }
+
+  .tip-box {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--amarelo-claro);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+
+  .tip-box .icon { font-size: 1.5rem; }
+
+  .tip-box p { font-size: 0.95rem; color: #92400E; font-weight: 600; line-height: 1.5; }
+
+  .conceito-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .conceito-item {
+    background: var(--fundo);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .conceito-item .icon { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
+  .conceito-item h4 { font-size: 0.9rem; font-weight: 800; margin-bottom: 0.3rem; }
+  .conceito-item p { font-size: 0.82rem; color: var(--cinza); line-height: 1.4; }
+
+  .passo-a-passo { margin-top: 1rem; }
+
+  .passo {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .passo-numero {
+    background: var(--roxo);
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .passo-content h4 { font-weight: 800; margin-bottom: 0.2rem; }
+  .passo-content p { font-size: 0.9rem; color: var(--cinza); line-height: 1.5; }
+
+  .atividade-pratica {
+    background: var(--azul-claro);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    border-left: 4px solid var(--azul);
+  }
+
+  .atividade-pratica h4 {
+    color: var(--azul);
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .atividade-pratica p, .atividade-pratica li {
+    font-size: 0.95rem;
+    color: #1E40AF;
+    line-height: 1.6;
+  }
+
+  .atividade-pratica ol, .atividade-pratica ul {
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  p { line-height: 1.7; font-size: 1rem; }
+  p + p { margin-top: 0.8rem; }
+
+  strong { font-weight: 800; }
+
+  ul.lista-conteudo, ol.lista-conteudo {
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  ul.lista-conteudo li, ol.lista-conteudo li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  /* ===== QUIZ ===== */
+  .quiz-container {
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--sombra);
+    overflow: hidden;
+  }
+
+  .quiz-header {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 1.5rem;
+    color: #fff;
+    text-align: center;
+  }
+
+  .quiz-header h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .quiz-header p { opacity: 0.9; font-size: 0.95rem; }
+
+  .quiz-body { padding: 2rem; }
+
+  .quiz-contador {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-numero {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--cinza);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .quiz-pontos {
+    background: var(--amarelo-claro);
+    color: var(--amarelo);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+
+  .quiz-pergunta {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    color: var(--texto);
+  }
+
+  .opcoes-grid {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .opcao-btn {
+    background: var(--fundo);
+    border: 2px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--texto);
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .opcao-btn:hover:not(:disabled) {
+    border-color: var(--roxo);
+    background: var(--roxo-claro);
+    color: var(--roxo);
+  }
+
+  .opcao-btn.correta { background: var(--verde-claro); border-color: var(--verde); color: var(--verde); }
+  .opcao-btn.errada { background: var(--vermelho-claro); border-color: var(--vermelho); color: var(--vermelho); }
+  .opcao-btn:disabled { cursor: default; }
+
+  .opcao-letra {
+    width: 30px; height: 30px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .feedback-resposta {
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    display: none;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.05rem;
+  }
+
+  .feedback-resposta.correto { background: var(--verde-claro); color: var(--verde); }
+  .feedback-resposta.errado { background: var(--vermelho-claro); color: var(--vermelho); }
+
+  .btn-quiz {
+    width: 100%;
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    border: none;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: none;
+  }
+
+  .btn-proxima {
+    background: var(--roxo);
+    color: #fff;
+  }
+
+  .btn-proxima:hover { background: #6D28D9; transform: translateY(-2px); }
+
+  /* ===== RESULTADO DO QUIZ ===== */
+  .quiz-resultado {
+    text-align: center;
+    padding: 2rem;
+    display: none;
+  }
+
+  .resultado-emoji { font-size: 80px; display: block; margin-bottom: 1rem; }
+
+  .resultado-titulo {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .resultado-pontuacao {
+    font-size: 3rem;
+    font-family: 'Fredoka One', cursive;
+    color: var(--roxo);
+    margin: 1rem 0;
+  }
+
+  .resultado-xp {
+    background: var(--amarelo-claro);
+    color: var(--amarelo);
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-concluir-aula {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 0 0.5rem;
+  }
+
+  .btn-concluir-aula:hover { transform: translateY(-3px); box-shadow: var(--sombra-lg); }
+
+  .btn-repetir-quiz {
+    background: var(--fundo);
+    color: var(--texto);
+    border: 2px solid var(--cinza-claro);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 0 0.5rem;
+  }
+
+  .btn-repetir-quiz:hover { border-color: var(--roxo); color: var(--roxo); }
+
+  /* ===== MODAL CONQUISTA ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+  }
+
+  .modal-overlay.ativo { display: flex; }
+
+  .modal-conquista {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .modal-conquista .trophy { font-size: 80px; display: block; margin-bottom: 1rem; }
+
+  .modal-conquista h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8rem;
+    color: var(--roxo);
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-conquista p { color: var(--cinza); margin-bottom: 1.5rem; font-size: 1rem; }
+
+  .btn-fechar-modal {
+    background: var(--roxo);
+    color: #fff;
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn-fechar-modal:hover { background: #6D28D9; }
+
+  /* ===== CRONÔMETRO ===== */
+  .cronometro {
+    background: var(--fundo);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 1rem;
+    font-weight: 800;
+    color: var(--cinza);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  /* ===== VÍDEO DA AULA ===== */
+  .video-section {
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--sombra);
+    margin-bottom: 1.5rem;
+  }
+
+  .video-header {
+    background: linear-gradient(135deg, #FF0000, #cc0000);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    color: #fff;
+  }
+
+  .video-body { padding: 1.25rem; }
+
+  .video-descricao {
+    font-size: 0.9rem;
+    color: var(--cinza);
+    margin-bottom: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .video-play-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #0f0f0f;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+  }
+
+  .video-play-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+  }
+
+  .video-thumb {
+    position: relative;
+    width: 200px;
+    min-width: 200px;
+    height: 112px;
+    background: #111;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .video-play-btn {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.3);
+    transition: background 0.15s;
+  }
+
+  .video-play-card:hover .video-play-btn {
+    background: rgba(0,0,0,0.1);
+  }
+
+  .video-play-info {
+    padding: 0.75rem 1rem 0.75rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .video-play-titulo {
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #fff;
+    line-height: 1.4;
+  }
+
+  .video-play-sub {
+    font-size: 0.8rem;
+    color: #aaa;
+    font-weight: 600;
+  }
+
+  .video-aviso {
+    background: var(--azul-claro);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    color: #1E40AF;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* ===== UTILITY ===== */
+  .hidden { display: none !important; }
+
+  .btn-iniciar-quiz {
+    width: 100%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    border: none;
+    padding: 1.1rem;
+    border-radius: var(--radius-sm);
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .btn-iniciar-quiz:hover { transform: translateY(-2px); box-shadow: var(--sombra); }
+
+  .conquistas-section {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-top: 2rem;
+    box-shadow: var(--sombra);
+  }
+
+  .conquistas-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .conquista-item {
+    background: var(--fundo);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .conquista-item.desbloqueada { background: var(--amarelo-claro); color: #92400E; }
+  .conquista-item.bloqueada-c { opacity: 0.4; }
+</style>
+</head>
+<body>
+
+<!-- ===== TELA DE BOAS-VINDAS ===== -->
+<div id="tela-boas-vindas">
+  <div class="estrelas-fundo" id="estrelasFundo"></div>
+  <span class="hero-emoji">🦸</span>
+  <h1 class="hero-titulo">TecnoHerói</h1>
+  <p class="hero-subtitulo">Curso de Informática para Heróis do 5º Ano!</p>
+  <div class="nome-input-wrapper">
+    <label for="inputNome">🎮 Qual é o seu nome completo, herói?</label>
+    <input type="text" id="inputNome" placeholder="Digite seu nome completo..." maxlength="60" autofocus oninput="filtrarSugestoesAluno(this.value)" autocomplete="off">
+    <div id="listaSugestoes" style="display:none;background:#fff;border-radius:10px;margin-top:0.4rem;overflow:hidden;max-height:200px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.15)"></div>
+    <div id="erroLoginAluno" style="display:none;margin-top:0.6rem;background:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.4);border-radius:8px;padding:0.6rem 0.9rem;color:#fff;font-size:0.88rem;font-weight:700"></div>
+  </div>
+  <button class="btn-comecar" onclick="iniciarCurso()">🚀 Começar Aventura!</button>
+  <button onclick="mostrarLoginAdmin()" style="margin-top:1.2rem;background:transparent;border:2px solid rgba(255,255,255,0.4);color:rgba(255,255,255,0.8);padding:0.6rem 1.4rem;border-radius:50px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='#fff';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,0.4)';this.style.color='rgba(255,255,255,0.8)'">🔐 Acesso do Professor</button>
+</div>
+
+<!-- ===== TELA LOGIN / CADASTRO PROFESSOR ===== -->
+<div id="tela-admin-login" style="display:none;min-height:100vh;background:linear-gradient(135deg,#1e3a5f,#0f2027);align-items:center;justify-content:center;flex-direction:column;padding:2rem">
+
+  <!-- PASSO 1: Identificação do professor -->
+  <div id="admin-passo1" style="background:#fff;border-radius:20px;padding:2.5rem;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.4)">
+    <div style="text-align:center;margin-bottom:1.5rem">
+      <div style="font-size:3rem">👨‍🏫</div>
+      <h2 style="font-family:'Fredoka One',cursive;font-size:1.8rem;color:#1e3a5f;margin-bottom:0.3rem">Área do Professor</h2>
+      <p style="color:#64748B;font-size:0.9rem">Digite seu nome para continuar</p>
+    </div>
+    <label style="display:block;font-weight:800;font-size:0.85rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">👤 Primeiro Nome do Professor</label>
+    <input type="text" id="inputNomeProf" placeholder="Ex: Carlos" maxlength="40" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box" onkeydown="if(event.key==='Enter')document.getElementById('inputTurmaProf').focus()">
+    <label style="display:block;font-weight:800;font-size:0.85rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">🏫 Turma que Leciona</label>
+    <input type="text" id="inputTurmaProf" placeholder="Ex: 5º Ano A" maxlength="30" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box" onkeydown="if(event.key==='Enter')irParaSenhaProf()">
+    <label style="display:block;font-weight:800;font-size:0.85rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">🔑 Senha de Acesso</label>
+    <input type="password" id="inputSenhaAdmin" placeholder="Senha do professor" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box" onkeydown="if(event.key==='Enter')loginAdmin()">
+    <div id="erroAdmin" style="color:#DC2626;font-size:0.85rem;font-weight:700;margin-bottom:0.75rem;display:none;background:#FEE2E2;padding:0.6rem 0.9rem;border-radius:8px"></div>
+    <button onclick="loginAdmin()" style="width:100%;padding:1rem;background:linear-gradient(135deg,#1e3a5f,#2563EB);color:#fff;border:none;border-radius:10px;font-family:'Fredoka One',cursive;font-size:1.2rem;cursor:pointer;margin-bottom:0.75rem;transition:transform 0.15s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">🔓 Entrar no Painel</button>
+    <button onclick="voltarParaInicio()" style="width:100%;padding:0.8rem;background:transparent;color:#64748B;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer">← Voltar</button>
+  </div>
+</div>
+
+<!-- ===== APP PRINCIPAL ===== -->
+<div id="app">
+  <header>
+    <div class="header-logo">🦸 TecnoHerói</div>
+    <div class="header-info">
+      <span class="player-name" id="headerNome">Herói</span>
+      <span class="nivel-badge" id="headerNivel">⭐ Nível 1</span>
+      <span class="xp-badge" id="headerXP">✨ 0 XP</span>
+    </div>
+  </header>
+
+  <!-- Tela lista de aulas -->
+  <div id="tela-aulas">
+    <div class="boas-vindas-banner">
+      <div class="icon">🎮</div>
+      <div>
+        <h2>Bem-vindo à sua Aventura Digital, <span id="bannerNome">Herói</span>!</h2>
+        <p>Complete as aulas, ganhe XP e se torne um TecnoHerói! 10 missões te aguardam. 💪</p>
+      </div>
+    </div>
+
+    <div class="progresso-geral">
+      <h3>⚡ Progresso Geral</h3>
+      <div class="barra-progresso">
+        <div class="barra-progresso-fill" id="barraProgresso" style="width:0%"></div>
+      </div>
+      <p class="progresso-texto" id="textoProgresso">0 de 10 aulas concluídas • 0 XP ganhos</p>
+    </div>
+
+    <h2 class="titulo-secao">📚 Suas Missões</h2>
+    <div class="grid-aulas" id="gridAulas"></div>
+
+    <div class="conquistas-section">
+      <h2 class="titulo-secao" style="margin-bottom:0">🏆 Conquistas</h2>
+      <div class="conquistas-grid" id="conquistasGrid"></div>
+    </div>
+  </div>
+
+  <!-- Tela da aula -->
+  <div id="tela-aula"></div>
+</div>
+
+<!-- ===== DASHBOARD DO PROFESSOR ===== -->
+<div id="tela-dashboard" style="display:none">
+  <div style="background:#1e3a5f;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.3);flex-wrap:wrap;gap:0.75rem">
+    <div style="display:flex;align-items:center;gap:0.75rem">
+      <span style="font-size:1.6rem">👨‍🏫</span>
+      <div>
+        <div style="font-family:'Fredoka One',cursive;font-size:1.2rem;color:#fff" id="dashNomeProf">Painel do Professor</div>
+        <div style="font-size:0.75rem;color:rgba(255,255,255,0.7)" id="dashTurmaProf">TecnoHerói — Monitoramento</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap">
+      <button onclick="mostrarCadastroAluno()" style="background:#2563EB;color:#fff;border:none;padding:0.5rem 1rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer">➕ Cadastrar Aluno</button>
+      <button onclick="exportarRelatorio()" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);padding:0.5rem 1rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer">📥 Exportar CSV</button>
+      <button onclick="limparDados()" style="background:rgba(220,38,38,0.3);color:#fca5a5;border:1px solid rgba(220,38,38,0.4);padding:0.5rem 1rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer">🗑️ Limpar Dados</button>
+      <button onclick="sairAdmin()" style="background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);padding:0.5rem 1rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer">🚪 Sair</button>
+    </div>
+  </div>
+  <div style="max-width:1200px;margin:0 auto;padding:2rem 1.5rem">
+    <!-- Cards de resumo -->
+    <div id="dash-resumo" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem"></div>
+
+    <!-- CADASTRO DE ALUNO (inline, inicialmente oculto) -->
+    <div id="painel-cadastro-aluno" style="display:none;background:#fff;border-radius:14px;padding:1.75rem;margin-bottom:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,0.1);border:2px solid #2563EB">
+      <h3 style="font-family:'Fredoka One',cursive;font-size:1.3rem;color:#1e3a5f;margin-bottom:1.25rem">➕ Cadastrar Novo Aluno</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:1rem;align-items:end">
+        <div>
+          <label style="display:block;font-weight:800;font-size:0.82rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">Nome Completo do Aluno</label>
+          <input type="text" id="inputNomeAluno" placeholder="Ex: João Pedro Silva" maxlength="60" style="width:100%;padding:0.8rem 1rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:0.95rem;outline:none;box-sizing:border-box" onkeydown="if(event.key==='Enter')document.getElementById('inputTurmaAluno').focus()">
+        </div>
+        <div>
+          <label style="display:block;font-weight:800;font-size:0.82rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">Turma</label>
+          <input type="text" id="inputTurmaAluno" placeholder="Ex: 5º Ano A" maxlength="30" style="width:100%;padding:0.8rem 1rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:0.95rem;outline:none;box-sizing:border-box" onkeydown="if(event.key==='Enter')cadastrarAluno()">
+        </div>
+        <div style="display:flex;gap:0.5rem">
+          <button onclick="cadastrarAluno()" style="padding:0.8rem 1.4rem;background:#2563EB;color:#fff;border:none;border-radius:10px;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;white-space:nowrap">✅ Cadastrar</button>
+          <button onclick="fecharCadastroAluno()" style="padding:0.8rem 1rem;background:#f1f5f9;color:#64748B;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer">✕</button>
+        </div>
+      </div>
+      <div id="erroCadastroAluno" style="margin-top:0.75rem;display:none;color:#DC2626;font-weight:700;font-size:0.85rem;background:#FEE2E2;padding:0.6rem 0.9rem;border-radius:8px"></div>
+      <div id="sucessoCadastroAluno" style="margin-top:0.75rem;display:none;color:#16A34A;font-weight:700;font-size:0.85rem;background:#DCFCE7;padding:0.6rem 0.9rem;border-radius:8px"></div>
+    </div>
+
+    <!-- Filtros -->
+    <div style="background:#fff;border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,0.08);display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+      <span style="font-weight:800;font-size:0.9rem;color:#1e3a5f">🔍 Filtrar:</span>
+      <input type="text" id="filtroNome" placeholder="Buscar aluno..." oninput="renderizarDashboard()" style="padding:0.5rem 0.9rem;border:2px solid #e2e8f0;border-radius:8px;font-family:'Nunito',sans-serif;font-size:0.9rem;outline:none;flex:1;min-width:150px">
+      <select id="filtroTurma" onchange="renderizarDashboard()" style="padding:0.5rem 0.9rem;border:2px solid #e2e8f0;border-radius:8px;font-family:'Nunito',sans-serif;font-size:0.9rem;outline:none">
+        <option value="">Todas as turmas</option>
+      </select>
+      <select id="filtroAula" onchange="renderizarDashboard()" style="padding:0.5rem 0.9rem;border:2px solid #e2e8f0;border-radius:8px;font-family:'Nunito',sans-serif;font-size:0.9rem;outline:none">
+        <option value="">Todas as aulas</option>
+        <option value="1">Aula 1</option><option value="2">Aula 2</option><option value="3">Aula 3</option>
+        <option value="4">Aula 4</option><option value="5">Aula 5</option><option value="6">Aula 6</option>
+        <option value="7">Aula 7</option><option value="8">Aula 8</option><option value="9">Aula 9</option>
+        <option value="10">Aula 10</option>
+      </select>
+      <select id="filtroStatus" onchange="renderizarDashboard()" style="padding:0.5rem 0.9rem;border:2px solid #e2e8f0;border-radius:8px;font-family:'Nunito',sans-serif;font-size:0.9rem;outline:none">
+        <option value="">Todos</option>
+        <option value="ativo">Logou hoje</option>
+        <option value="concluiu">Iniciou aulas</option>
+        <option value="cadastrado">Nunca logou</option>
+      </select>
+    </div>
+    <!-- Tabela de alunos -->
+    <div style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.08);margin-bottom:2rem">
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between">
+        <h2 style="font-family:'Fredoka One',cursive;font-size:1.3rem;color:#1e3a5f">👥 Alunos Cadastrados</h2>
+        <span id="dash-total-alunos" style="font-size:0.85rem;font-weight:700;color:#64748B"></span>
+      </div>
+      <div id="dash-tabela" style="overflow-x:auto"></div>
+    </div>
+    <!-- Detalhe por aula -->
+    <div style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.08)">
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #f1f5f9">
+        <h2 style="font-family:'Fredoka One',cursive;font-size:1.3rem;color:#1e3a5f">📊 Desempenho por Aula</h2>
+      </div>
+      <div id="dash-aulas" style="padding:1.5rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Conquista -->
+<div class="modal-overlay" id="modalConquista">
+  <div class="modal-conquista">
+    <span class="trophy">🏆</span>
+    <h2 id="modalTitulo">Conquista Desbloqueada!</h2>
+    <p id="modalDesc">Você ganhou uma nova conquista!</p>
+    <button class="btn-fechar-modal" onclick="fecharModal()">Arrasou! 🎉</button>
+  </div>
+</div>
+
+<!-- ===== FIREBASE SDK ===== -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // ══════════════════════════════════════════════════════════════════
+  //  🔧 CONFIGURAÇÃO DO FIREBASE — substitua pelos dados do seu projeto
+  //  Acesse: https://console.firebase.google.com → seu projeto → ⚙️ Configurações
+  // ══════════════════════════════════════════════════════════════════
+  const firebaseConfig = {
+    apiKey:            "AIzaSyDEfGXW0Hx1YF3fGuDnD_9k5zlAcAfQuEo",
+    authDomain:        "tecnoheroi.firebaseapp.com",
+    projectId:         "tecnoheroi",
+    storageBucket:     "tecnoheroi.firebasestorage.app",
+    messagingSenderId: "1061505503503",
+    appId:             "1:1061505503503:web:e41423d92a7b38d9ef6e7a"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  // ── Expõe funções globais para o restante do script ──────────────
+  window._fb = {
+    async carregarTodos() {
+      const snap = await getDocs(collection(db, "alunos"));
+      const resultado = {};
+      snap.forEach(d => { resultado[d.id] = d.data(); });
+      return resultado;
+    },
+    async carregarAluno(nome) {
+      const ref  = doc(db, "alunos", nome);
+      const snap = await getDoc(ref);
+      return snap.exists() ? snap.data() : null;
+    },
+    async salvarAluno(nome, dados) {
+      await setDoc(doc(db, "alunos", nome), dados);
+    },
+    async atualizarAluno(nome, campos) {
+      await updateDoc(doc(db, "alunos", nome), campos);
+    },
+    async removerAluno(nome) {
+      await deleteDoc(doc(db, "alunos", nome));
+    }
+  };
+
+  // Sinaliza que o Firebase está pronto
+  window._fbPronto = true;
+  document.dispatchEvent(new Event("firebase-pronto"));
+</script>
+
+<script>
+// =================== DADOS DO CURSO ===================
+
+const AULAS = [
+  {
+    id: 1,
+    emoji: "💻",
+    titulo: "Conhecendo o Chromebook",
+    descricao: "Descubra as partes do seu computador e aprenda como ligá-lo e desligá-lo!",
+    cor: "#2563EB",
+    corClaro: "#DBEAFE",
+    xp: 100,
+    tempo: "40 min",
+    video: {
+      id: "HRx8CzAxj7I",
+      titulo: "Amiguinhos da Tecnologia - As Partes do Computador",
+      descricao: "Conheça as partes do computador com os Amiguinhos da Tecnologia! Uma historinha animada super divertida para aprender sobre monitor, teclado, mouse e muito mais! 🖥️"
+    },
+    secoes: [
+      {
+        titulo: "O que é um Chromebook?",
+        cor: "#2563EB",
+        icone: "💡",
+        conteudo: `<p>Um <strong>Chromebook</strong> é um tipo especial de computador! Ele é leve, rápido e funciona com a internet. É diferente dos computadores comuns porque usa o sistema <strong>Google Chrome OS</strong>.</p>
+        <p>Você sabia que o Chromebook é como um caderno mágico? Você pode fazer desenhos, escrever textos, assistir vídeos e muito mais!</p>
+        <div class="conceito-grid">
+          <div class="conceito-item">
+            <span class="icon">⌨️</span>
+            <h4>Teclado</h4>
+            <p>Serve para digitar letras, números e comandos</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🖥️</span>
+            <h4>Tela</h4>
+            <p>Mostra tudo o que está acontecendo no computador</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🖱️</span>
+            <h4>Touchpad</h4>
+            <p>É como um mouse, você desliza o dedo para mover o cursor</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🔋</span>
+            <h4>Bateria</h4>
+            <p>Guarda energia para o computador funcionar sem fio</p>
+          </div>
+        </div>
+        <div class="tip-box">
+          <span class="icon">💡</span>
+          <p><strong>Dica do TecnoHerói:</strong> O Chromebook funciona melhor com internet! Mas você ainda pode fazer algumas coisas sem ela.</p>
+        </div>`
+      },
+      {
+        titulo: "Ligando e Desligando",
+        cor: "#7C3AED",
+        icone: "🔌",
+        conteudo: `<p>Aprender a ligar e desligar corretamente é muito importante para cuidar bem do seu Chromebook!</p>
+        <div class="passo-a-passo">
+          <div class="passo">
+            <div class="passo-numero">1</div>
+            <div class="passo-content">
+              <h4>🔋 Verifique a bateria</h4>
+              <p>Antes de ligar, veja se o Chromebook está carregado ou conectado na tomada!</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">2</div>
+            <div class="passo-content">
+              <h4>⚡ Pressione o botão Power</h4>
+              <p>O botão fica no lado superior direito do teclado. Pressione uma vez e espere a tela acender.</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">3</div>
+            <div class="passo-content">
+              <h4>🔐 Faça login</h4>
+              <p>Digite seu usuário e senha para entrar no seu perfil. Na escola, use o e-mail da escola!</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">4</div>
+            <div class="passo-content">
+              <h4>🌙 Para desligar: clique no relógio</h4>
+              <p>No canto inferior direito, clique no relógio, depois em "Desligar". Nunca feche só a tampa sem desligar!</p>
+            </div>
+          </div>
+        </div>
+        <div class="atividade-pratica">
+          <h4>🎯 Pratique Agora!</h4>
+          <ol>
+            <li>Ligue seu Chromebook seguindo os passos acima</li>
+            <li>Espere carregar completamente</li>
+            <li>Observe as partes que aprendemos</li>
+            <li>Tente desligar corretamente pelo menu</li>
+          </ol>
+        </div>`
+      },
+      {
+        titulo: "Cuidando do Seu Chromebook",
+        cor: "#16A34A",
+        icone: "🛡️",
+        conteudo: `<p>O Chromebook é uma ferramenta importante! Precisamos cuidar muito bem dele para que funcione por muito tempo.</p>
+        <ul class="lista-conteudo">
+          <li>🚫 <strong>Nunca coma ou beba</strong> perto do computador</li>
+          <li>🧹 <strong>Limpe a tela</strong> apenas com pano macio e seco</li>
+          <li>📦 <strong>Carregue com cuidado</strong> - sempre fechado e com as duas mãos</li>
+          <li>🔌 <strong>Não puxe o carregador</strong> pelo fio, segure no conector</li>
+          <li>☀️ <strong>Evite o sol direto</strong> - o calor pode danificar a bateria</li>
+          <li>💧 <strong>Longe da água</strong> - líquidos e computadores não combinam!</li>
+        </ul>
+        <div class="tip-box">
+          <span class="icon">🤗</span>
+          <p><strong>Lembre-se:</strong> O Chromebook pertence à escola! Cuide como se fosse seu, pois outros colegas também usarão!</p>
+        </div>`
+      }
+    ],
+    quiz: [
+      {
+        pergunta: "Qual sistema operacional usa o Chromebook?",
+        opcoes: ["Windows", "Google Chrome OS", "Linux", "MacOS"],
+        correta: 1,
+        explicacao: "O Chromebook usa o Google Chrome OS, feito pelo Google!"
+      },
+      {
+        pergunta: "Como você desliga corretamente o Chromebook?",
+        opcoes: ["Fecha a tampa", "Clica no relógio e depois em Desligar", "Tira a bateria", "Aperta qualquer tecla"],
+        correta: 1,
+        explicacao: "Sempre desligue pelo menu do relógio para não perder arquivos!"
+      },
+      {
+        pergunta: "O que é o touchpad do Chromebook?",
+        opcoes: ["A tela do computador", "O botão de ligar", "Uma área que funciona como mouse", "O teclado"],
+        correta: 2,
+        explicacao: "O touchpad é uma superfície onde você desliza o dedo para mover o cursor, como um mouse!"
+      },
+      {
+        pergunta: "O que NÃO devemos fazer com o Chromebook?",
+        opcoes: ["Digitar textos", "Comer e beber perto dele", "Fazer pesquisas", "Assistir vídeos"],
+        correta: 1,
+        explicacao: "Comida e bebida podem danificar o computador! Mantenha-os longe!"
+      },
+      {
+        pergunta: "Onde fica o botão para ligar o Chromebook?",
+        opcoes: ["No lado esquerdo", "Na parte de baixo", "No canto superior direito do teclado", "Na tela"],
+        correta: 2,
+        explicacao: "O botão Power fica no canto superior direito do teclado!"
+      }
+    ]
+  },
+  {
+    id: 2,
+    emoji: "🖱️",
+    titulo: "Dominando o Mouse e Teclado",
+    descricao: "Aprenda a usar o touchpad como um pro e conheça as teclas especiais!",
+    cor: "#7C3AED",
+    corClaro: "#EDE9FE",
+    xp: 120,
+    tempo: "40 min",
+    video: {
+      id: "lMHPIy6bbk8",
+      titulo: "O Teclado - Amiguinhos da Tecnologia",
+      descricao: "Aprenda sobre o teclado do computador com os Amiguinhos da Tecnologia! Descubra as teclas especiais e como usá-las de forma correta e divertida! ⌨️"
+    },
+    secoes: [
+      {
+        titulo: "Maestro do Touchpad",
+        cor: "#7C3AED",
+        icone: "🖱️",
+        conteudo: `<p>O <strong>touchpad</strong> é sua varinha mágica no Chromebook! Com ele você controla tudo na tela usando apenas os dedos.</p>
+        <div class="conceito-grid">
+          <div class="conceito-item">
+            <span class="icon">👆</span>
+            <h4>Toque simples</h4>
+            <p>Como um clique do mouse - abre programas e links</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">✌️</span>
+            <h4>Dois dedos</h4>
+            <p>Role a página para cima e para baixo facilmente</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🤏</span>
+            <h4>Pinça</h4>
+            <p>Aproxime ou afaste dois dedos para dar zoom</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">👇</span>
+            <h4>Pressionar</h4>
+            <p>Como o botão direito - mostra um menu de opções</p>
+          </div>
+        </div>
+        <div class="atividade-pratica">
+          <h4>🎯 Treino de Touchpad!</h4>
+          <ol>
+            <li>Abra o navegador Chrome com um toque simples</li>
+            <li>Role a página usando dois dedos</li>
+            <li>Experimente dar zoom em uma imagem com a pinça</li>
+            <li>Clique com dois dedos em um link para ver o menu</li>
+          </ol>
+        </div>`
+      },
+      {
+        titulo: "Super Teclado - Teclas Especiais",
+        cor: "#EA580C",
+        icone: "⌨️",
+        conteudo: `<p>O teclado não serve só para digitar letras! Ele tem <strong>teclas especiais</strong> que são como superpoderes do computador!</p>
+        <div class="conceito-grid">
+          <div class="conceito-item">
+            <span class="icon">🔍</span>
+            <h4>Tecla de Busca</h4>
+            <p>Abre o mecanismo de busca (onde fica o Caps Lock nos outros teclados)</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">↩️</span>
+            <h4>Enter</h4>
+            <p>Confirma ações e vai para a próxima linha no texto</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">⬅️</span>
+            <h4>Backspace</h4>
+            <p>Apaga a letra antes do cursor - seu borracha digital!</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">⇧</span>
+            <h4>Shift</h4>
+            <p>Faz letras maiúsculas e acessa os símbolos das teclas</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">Ctrl</span>
+            <h4>Control (Ctrl)</h4>
+            <p>Combinado com outras teclas cria atalhos poderosos!</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🌐</span>
+            <h4>Alt</h4>
+            <p>Usado em combinações para acessar funções especiais</p>
+          </div>
+        </div>`
+      },
+      {
+        titulo: "Atalhos Mágicos!",
+        cor: "#D97706",
+        icone: "✨",
+        conteudo: `<p>Os <strong>atalhos de teclado</strong> são como truques de mágica! Eles fazem coisas incríveis super rápido!</p>
+        <ul class="lista-conteudo">
+          <li>⚡ <strong>Ctrl + C</strong> = Copiar (como tirar uma foto de um texto)</li>
+          <li>📋 <strong>Ctrl + V</strong> = Colar (como colocar a foto num lugar novo)</li>
+          <li>✂️ <strong>Ctrl + X</strong> = Recortar (copia E apaga do lugar original)</li>
+          <li>↩️ <strong>Ctrl + Z</strong> = Desfazer (voltar no tempo! Apagou sem querer? Use isso!)</li>
+          <li>🔍 <strong>Ctrl + F</strong> = Encontrar palavras na página</li>
+          <li>🖨️ <strong>Ctrl + P</strong> = Imprimir</li>
+          <li>💾 <strong>Ctrl + S</strong> = Salvar arquivo</li>
+          <li>🔄 <strong>Ctrl + A</strong> = Selecionar tudo</li>
+        </ul>
+        <div class="tip-box">
+          <span class="icon">🧠</span>
+          <p><strong>Macete para lembrar:</strong> C de Copiar, V de Vir aqui (colar), Z de Zerar (desfazer)! Fácil, né?</p>
+        </div>
+        <div class="atividade-pratica">
+          <h4>🎯 Desafio dos Atalhos!</h4>
+          <ol>
+            <li>Abra o Google Docs e escreva seu nome</li>
+            <li>Selecione com Ctrl+A e copie com Ctrl+C</li>
+            <li>Cole três vezes com Ctrl+V</li>
+            <li>Desfaça uma ação com Ctrl+Z</li>
+          </ol>
+        </div>`
+      }
+    ],
+    quiz: [
+      {
+        pergunta: "O que acontece quando você usa dois dedos no touchpad?",
+        opcoes: ["Abre um programa", "Rola a página", "Fecha o navegador", "Copia um texto"],
+        correta: 1,
+        explicacao: "Dois dedos no touchpad servem para rolar a página para cima e para baixo!"
+      },
+      {
+        pergunta: "Qual atalho serve para COPIAR um texto?",
+        opcoes: ["Ctrl + V", "Ctrl + Z", "Ctrl + C", "Ctrl + X"],
+        correta: 2,
+        explicacao: "Ctrl + C copia o texto selecionado! C de Copiar!"
+      },
+      {
+        pergunta: "O que faz a tecla Backspace?",
+        opcoes: ["Salva o arquivo", "Apaga a letra antes do cursor", "Vai para a próxima linha", "Copia texto"],
+        correta: 1,
+        explicacao: "Backspace é a sua borracha digital - apaga a letra antes do cursor!"
+      },
+      {
+        pergunta: "Qual atalho desfaz uma ação (tipo apagar algo sem querer)?",
+        opcoes: ["Ctrl + S", "Ctrl + A", "Ctrl + P", "Ctrl + Z"],
+        correta: 3,
+        explicacao: "Ctrl + Z é a máquina do tempo! Desfaz a última ação feita."
+      },
+      {
+        pergunta: "O que significa fazer uma pinça no touchpad?",
+        opcoes: ["Rolar a página", "Dar zoom na imagem", "Abrir um link", "Fechar uma janela"],
+        correta: 1,
+        explicacao: "A pinça (aproximar ou afastar dois dedos) serve para dar zoom!"
+      }
+    ]
+  },
+  {
+    id: 3,
+    emoji: "🌐",
+    titulo: "Navegando na Internet",
+    descricao: "Explore o navegador Chrome e aprenda a pesquisar com segurança!",
+    cor: "#EA580C",
+    corClaro: "#FFEDD5",
+    xp: 130,
+    tempo: "40 min",
+    video: {
+      id: "znppuiRxQKQ",
+      titulo: "Pocoyo - Dia da Internet Segura (Português Brasil)",
+      descricao: "O Pocoyo ensina como usar a internet com segurança e responsabilidade! Um episódio especial do Dia da Internet Segura, dublado em português do Brasil. 🌐🔒"
+    },
+    secoes: [
+      {
+        titulo: "O Navegador Chrome",
+        cor: "#EA580C",
+        icone: "🌐",
+        conteudo: `<p>O <strong>Google Chrome</strong> é o seu portal para a internet! É como uma janela mágica que te leva a qualquer lugar do mundo digital.</p>
+        <div class="conceito-grid">
+          <div class="conceito-item">
+            <span class="icon">📍</span>
+            <h4>Barra de Endereços</h4>
+            <p>É onde você digita o endereço de um site (ex: google.com)</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">⬅️➡️</span>
+            <h4>Botões Avançar/Voltar</h4>
+            <p>Navegam entre as páginas que você visitou</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🔄</span>
+            <h4>Recarregar</h4>
+            <p>Atualiza a página atual (quando algo não carrega)</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">📑</span>
+            <h4>Abas</h4>
+            <p>Permitem ter vários sites abertos ao mesmo tempo</p>
+          </div>
+        </div>
+        <p>Para abrir uma <strong>nova aba</strong>, pressione <strong>Ctrl + T</strong>. Para fechar, <strong>Ctrl + W</strong>!</p>`
+      },
+      {
+        titulo: "Pesquisando no Google",
+        cor: "#16A34A",
+        icone: "🔍",
+        conteudo: `<p>O <strong>Google</strong> é como uma biblioteca gigante com bilhões de livros! Mas você precisa saber como pedir as informações certas.</p>
+        <div class="passo-a-passo">
+          <div class="passo">
+            <div class="passo-numero">1</div>
+            <div class="passo-content">
+              <h4>🎯 Seja específico</h4>
+              <p>Em vez de "animal", pesquise "animais da floresta amazônica"</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">2</div>
+            <div class="passo-content">
+              <h4>💡 Use palavras-chave</h4>
+              <p>Pense nas palavras mais importantes do que você quer saber</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">3</div>
+            <div class="passo-content">
+              <h4>📚 Verifique a fonte</h4>
+              <p>Sites de escolas, museus e governo são mais confiáveis!</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">4</div>
+            <div class="passo-content">
+              <h4>🔄 Compare resultados</h4>
+              <p>Leia pelo menos 2 sites diferentes para confirmar a informação</p>
+            </div>
+          </div>
+        </div>
+        <div class="atividade-pratica">
+          <h4>🎯 Missão de Pesquisa!</h4>
+          <p>Pesquise no Google: <strong>"animais em extinção no Brasil"</strong> e encontre 3 animais ameaçados. Anote em um papel!</p>
+        </div>`
+      },
+      {
+        titulo: "Segurança na Internet",
+        cor: "#DC2626",
+        icone: "🛡️",
+        conteudo: `<p>A internet é incrível, mas precisamos usá-la com <strong>responsabilidade e segurança</strong>!</p>
+        <ul class="lista-conteudo">
+          <li>🔐 <strong>Nunca compartilhe</strong> seu endereço, escola ou telefone online</li>
+          <li>👨‍👩‍👧 <strong>Conte para um adulto</strong> se alguém esquisito falar com você</li>
+          <li>🚫 <strong>Não clique em pop-ups</strong> que aparecem pedindo dados</li>
+          <li>📵 <strong>Não marque encontros</strong> com pessoas que conheceu online</li>
+          <li>🔒 <strong>Use senhas fortes</strong> e não as compartilhe com amigos</li>
+          <li>📸 <strong>Cuidado com fotos</strong> - pense antes de postar qualquer imagem</li>
+        </ul>
+        <div class="tip-box">
+          <span class="icon">🦸</span>
+          <p><strong>Regra de Ouro:</strong> Se na internet alguém te pede algo que te deixa desconfortável, feche o computador e fale com um adulto de confiança imediatamente!</p>
+        </div>`
+      }
+    ],
+    quiz: [
+      {
+        pergunta: "Para que serve a barra de endereços no navegador?",
+        opcoes: ["Para salvar fotos", "Para digitar o endereço de sites", "Para ouvir música", "Para imprimir páginas"],
+        correta: 1,
+        explicacao: "A barra de endereços é onde digitamos o endereço do site que queremos visitar!"
+      },
+      {
+        pergunta: "Como abrir uma nova aba no Chrome?",
+        opcoes: ["Ctrl + N", "Ctrl + A", "Ctrl + T", "Ctrl + W"],
+        correta: 2,
+        explicacao: "Ctrl + T abre uma nova aba no Chrome! T de Tab (aba em inglês)."
+      },
+      {
+        pergunta: "O que você deve fazer se alguém esquisito falar com você online?",
+        opcoes: ["Responder normalmente", "Ignorar e continuar navegando", "Contar para um adulto de confiança", "Dar seu endereço"],
+        correta: 2,
+        explicacao: "Sempre conte para um adulto de confiança! Sua segurança é o mais importante."
+      },
+      {
+        pergunta: "Para uma pesquisa melhor no Google, você deve:",
+        opcoes: ["Usar apenas uma palavra", "Ser específico e usar palavras-chave", "Digitar perguntas longas demais", "Pesquisar sempre a mesma coisa"],
+        correta: 1,
+        explicacao: "Pesquisas específicas com palavras-chave encontram melhores resultados!"
+      },
+      {
+        pergunta: "Quais sites são mais confiáveis para pesquisas?",
+        opcoes: ["Sites aleatórios", "Sites de escolas, museus e governo", "Qualquer blog", "Redes sociais"],
+        correta: 1,
+        explicacao: "Sites educacionais, de museus e governamentais têm informações verificadas e confiáveis!"
+      }
+    ]
+  },
+  {
+    id: 4,
+    emoji: "✍️",
+    titulo: "Escrevendo com Google Docs",
+    descricao: "Crie documentos incríveis, formate textos e salve tudo na nuvem!",
+    cor: "#2563EB",
+    corClaro: "#DBEAFE",
+    xp: 150,
+    tempo: "40 min",
+    video: {
+      id: "2jH467uU42Q",
+      titulo: "As Partes do Computador - Música Educativa Infantil",
+      descricao: "Aprenda sobre as ferramentas do computador com música! Uma animação dos Amiguinhos da Tecnologia que mostra como usar o computador para criar e escrever. ✍️🎵"
+    },
+    secoes: [
+      {
+        titulo: "O que é o Google Docs?",
+        cor: "#2563EB",
+        icone: "📝",
+        conteudo: `<p>O <strong>Google Docs</strong> é como um caderno digital mágico! Você escreve, e ele salva automaticamente na internet (na "nuvem"). Isso significa que você pode acessar seus textos de qualquer computador!</p>
+        <div class="conceito-grid">
+          <div class="conceito-item">
+            <span class="icon">☁️</span>
+            <h4>Salva Automático</h4>
+            <p>Nunca perde seu trabalho! Salva sozinho enquanto você escreve</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🤝</span>
+            <h4>Compartilhar</h4>
+            <p>Pode trabalhar no mesmo texto com colegas ao mesmo tempo!</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">📱</span>
+            <h4>Em qualquer lugar</h4>
+            <p>Acesse seus documentos do celular, tablet ou outro computador</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🆓</span>
+            <h4>Gratuito</h4>
+            <p>É de graça! Basta ter uma conta Google (Gmail)</p>
+          </div>
+        </div>`
+      },
+      {
+        titulo: "Formatando Seu Texto",
+        cor: "#7C3AED",
+        icone: "🎨",
+        conteudo: `<p>Formatar texto é como decorar uma redação! Você pode deixar ela mais bonita e organizada usando as ferramentas de formatação.</p>
+        <div class="passo-a-passo">
+          <div class="passo">
+            <div class="passo-numero">1</div>
+            <div class="passo-content">
+              <h4>🔤 Negrito, Itálico e Sublinhado</h4>
+              <p><strong>Ctrl+B</strong> = <strong>Negrito</strong> (palavras importantes) | <strong>Ctrl+I</strong> = <em>Itálico</em> (livros, filmes) | <strong>Ctrl+U</strong> = Sublinhado</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">2</div>
+            <div class="passo-content">
+              <h4>📏 Tamanho e Fonte</h4>
+              <p>Mude o tamanho dos números (10, 12, 14...) e o tipo de letra no menu superior!</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">3</div>
+            <div class="passo-content">
+              <h4>🖌️ Cor do Texto</h4>
+              <p>Clique no ícone "A" com cor embaixo para mudar a cor das letras</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">4</div>
+            <div class="passo-content">
+              <h4>📋 Títulos e Subtítulos</h4>
+              <p>Use "Título 1", "Título 2" no menu de estilos para organizar seu texto</p>
+            </div>
+          </div>
+        </div>
+        <div class="atividade-pratica">
+          <h4>🎯 Atividade: Minha Apresentação!</h4>
+          <ol>
+            <li>Abra o Google Docs (docs.google.com)</li>
+            <li>Escreva seu nome em <strong>Negrito</strong> e tamanho 18</li>
+            <li>Escreva sua turma em <em>Itálico</em></li>
+            <li>Escreva 3 coisas que você gosta com cores diferentes</li>
+            <li>Adicione um título "Sobre Mim" usando o estilo Título 1</li>
+          </ol>
+        </div>`
+      },
+      {
+        titulo: "Organização e Boas Práticas",
+        cor: "#16A34A",
+        icone: "📂",
+        conteudo: `<p>Um documento bem organizado é muito mais fácil de ler e mostra que você caprichou! Veja algumas dicas:</p>
+        <ul class="lista-conteudo">
+          <li>📌 <strong>Sempre coloque um título</strong> no seu documento</li>
+          <li>🔡 <strong>Use parágrafos</strong> - não coloque tudo numa linha só</li>
+          <li>🔢 <strong>Listas numeradas</strong> para passos e listas com bolinhas para itens</li>
+          <li>📏 <strong>Espaçamento adequado</strong> - não deixe o texto muito apertado</li>
+          <li>🔍 <strong>Revise antes de entregar</strong> - leia o texto em voz alta para encontrar erros</li>
+        </ul>
+        <div class="tip-box">
+          <span class="icon">📝</span>
+          <p><strong>Dica Pro:</strong> O Google Docs sublinha palavras com erros de ortografia em vermelho. Clique com dois dedos no touchpad sobre a palavra para ver a sugestão de correção!</p>
+        </div>`
+      }
+    ],
+    quiz: [
+      {
+        pergunta: "Qual é uma vantagem do Google Docs em relação a um caderno físico?",
+        opcoes: ["É mais caro", "Salva automaticamente na nuvem", "Só funciona sem internet", "Não permite compartilhar"],
+        correta: 1,
+        explicacao: "O Google Docs salva automaticamente na nuvem - você nunca perde seu trabalho!"
+      },
+      {
+        pergunta: "Qual atalho deixa o texto em Negrito?",
+        opcoes: ["Ctrl + I", "Ctrl + U", "Ctrl + N", "Ctrl + B"],
+        correta: 3,
+        explicacao: "Ctrl + B (de Bold em inglês) deixa o texto em negrito!"
+      },
+      {
+        pergunta: "Por que a 'nuvem' é útil no Google Docs?",
+        opcoes: ["É mais bonita", "Você acessa seus arquivos de qualquer computador", "Deixa a internet mais rápida", "Imprime automático"],
+        correta: 1,
+        explicacao: "A nuvem guarda seus arquivos na internet, então você acessa de qualquer lugar!"
+      },
+      {
+        pergunta: "O Google Docs sublinha palavras em vermelho. O que isso significa?",
+        opcoes: ["Palavra em destaque", "Possível erro de ortografia", "Palavra importante", "Link para outro site"],
+        correta: 1,
+        explicacao: "Palavras em vermelho podem ter erros! Clique sobre elas para ver sugestões."
+      },
+      {
+        pergunta: "Qual atalho faz o texto ficar em Itálico?",
+        opcoes: ["Ctrl + B", "Ctrl + I", "Ctrl + U", "Ctrl + S"],
+        correta: 1,
+        explicacao: "Ctrl + I (de Itálico) coloca o texto em estilo itálico!"
+      }
+    ]
+  },
+  {
+    id: 5,
+    emoji: "📊",
+    titulo: "Apresentações com Slides",
+    descricao: "Crie apresentações coloridas e incríveis no Google Slides!",
+    cor: "#D97706",
+    corClaro: "#FEF3C7",
+    xp: 150,
+    tempo: "40 min",
+    video: {
+      id: "dvxnUoZydSA",
+      titulo: "Cuidados com o Computador - Editora Krieduc",
+      descricao: "Um videoclipe animado super divertido que ensina os cuidados que devemos ter com o computador e como usar as ferramentas digitais com responsabilidade! 📊🎨"
+    },
+    secoes: [
+      {
+        titulo: "O Google Slides",
+        cor: "#D97706",
+        icone: "📊",
+        conteudo: `<p>O <strong>Google Slides</strong> é uma ferramenta para criar apresentações! Pense nele como um livro de imagens digital que você pode mostrar numa tela grande.</p>
+        <p>Professores usam o Slides para dar aulas. Pesquisadores usam para mostrar descobertas. E você vai usar para apresentar seus projetos da escola!</p>
+        <div class="conceito-grid">
+          <div class="conceito-item">
+            <span class="icon">🃏</span>
+            <h4>Slides</h4>
+            <p>Cada "página" da apresentação é chamada de slide</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🎨</span>
+            <h4>Temas</h4>
+            <p>Conjuntos de cores e estilos prontos para deixar bonito</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🖼️</span>
+            <h4>Imagens</h4>
+            <p>Adicione fotos e ilustrações para enriquecer sua apresentação</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">▶️</span>
+            <h4>Apresentar</h4>
+            <p>Clique em "Apresentar" para mostrar em tela cheia para todos</p>
+          </div>
+        </div>`
+      },
+      {
+        titulo: "Criando Sua Primeira Apresentação",
+        cor: "#7C3AED",
+        icone: "✨",
+        conteudo: `<p>Vamos criar uma apresentação passo a passo! Siga estes passos no seu Chromebook:</p>
+        <div class="passo-a-passo">
+          <div class="passo">
+            <div class="passo-numero">1</div>
+            <div class="passo-content">
+              <h4>🌐 Acesse o Slides</h4>
+              <p>Abra o Chrome e vá para <strong>slides.google.com</strong>. Clique em "Em branco" para começar do zero!</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">2</div>
+            <div class="passo-content">
+              <h4>🎨 Escolha um tema</h4>
+              <p>Clique em "Slide" → "Alterar tema" para escolher cores bonitas!</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">3</div>
+            <div class="passo-content">
+              <h4>✍️ Escreva no slide</h4>
+              <p>Clique em cima do texto "Clique para adicionar título" e escreva o título da sua apresentação</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">4</div>
+            <div class="passo-content">
+              <h4>➕ Adicione mais slides</h4>
+              <p>Clique em "+" na barra lateral esquerda para adicionar novos slides</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">5</div>
+            <div class="passo-content">
+              <h4>🖼️ Insira imagens</h4>
+              <p>Clique em "Inserir" → "Imagem" para adicionar fotos da internet</p>
+            </div>
+          </div>
+        </div>
+        <div class="atividade-pratica">
+          <h4>🎯 Projeto: Meu Animal Favorito!</h4>
+          <ol>
+            <li>Crie uma apresentação de 4 slides</li>
+            <li>Slide 1: Título com o nome do animal</li>
+            <li>Slide 2: Onde ele vive</li>
+            <li>Slide 3: O que ele come</li>
+            <li>Slide 4: Uma curiosidade legal!</li>
+          </ol>
+        </div>`
+      },
+      {
+        titulo: "Dicas para uma Boa Apresentação",
+        cor: "#EA580C",
+        icone: "💡",
+        conteudo: `<p>Uma boa apresentação não é só ter informação - ela precisa ser clara e bonita para quem vai ver!</p>
+        <ul class="lista-conteudo">
+          <li>✅ <strong>Menos é mais:</strong> coloque poucas palavras em cada slide</li>
+          <li>✅ <strong>Letras grandes:</strong> pelo menos tamanho 24 para textos</li>
+          <li>✅ <strong>Use imagens:</strong> uma imagem vale mais que mil palavras!</li>
+          <li>✅ <strong>Cores que combinam:</strong> não use mais de 3 cores diferentes</li>
+          <li>✅ <strong>Fundo limpo:</strong> fundos muito ocupados atrapalham a leitura</li>
+          <li>❌ <strong>Evite:</strong> parágrafos enormes em slides - deixe para o Docs!</li>
+        </ul>
+        <div class="tip-box">
+          <span class="icon">🎤</span>
+          <p><strong>Lembre-se:</strong> Os slides são um APOIO para o que você vai FALAR. Não leia o slide! Use-o como guia para contar a história com suas palavras.</p>
+        </div>`
+      }
+    ],
+    quiz: [
+      {
+        pergunta: "O que é um 'slide' no Google Slides?",
+        opcoes: ["Um tipo de imagem", "Cada página da apresentação", "Uma fonte de texto", "Um atalho de teclado"],
+        correta: 1,
+        explicacao: "Cada página de uma apresentação é chamada de slide!"
+      },
+      {
+        pergunta: "Qual é uma boa prática ao criar slides?",
+        opcoes: ["Colocar muito texto em cada slide", "Usar fundos bem coloridos e ocupados", "Colocar poucas palavras e usar imagens", "Usar letras pequenas para caber mais"],
+        correta: 2,
+        explicacao: "Slides bons têm poucas palavras e boas imagens. Menos é mais!"
+      },
+      {
+        pergunta: "Onde você acessa o Google Slides pelo navegador?",
+        opcoes: ["slides.google.com", "google.slides.com", "slides.com/google", "apresentacoes.google.br"],
+        correta: 0,
+        explicacao: "O endereço correto é slides.google.com!"
+      },
+      {
+        pergunta: "Qual o tamanho mínimo recomendado para letras num slide?",
+        opcoes: ["10", "14", "24", "48"],
+        correta: 2,
+        explicacao: "Letras de pelo menos tamanho 24 garantem que todos consigam ler!"
+      },
+      {
+        pergunta: "O que você deve fazer ao apresentar um slide para a turma?",
+        opcoes: ["Ler exatamente o que está escrito", "Usar o slide como guia e falar com suas palavras", "Ficar de costas para o público", "Não olhar para o slide"],
+        correta: 1,
+        explicacao: "Os slides são um apoio! Use-os como guia e conte com suas próprias palavras."
+      }
+    ]
+  },
+  {
+    id: 6,
+    emoji: "📧",
+    titulo: "Comunicação Digital",
+    descricao: "Aprenda a enviar e-mails educados e usar ferramentas de comunicação!",
+    cor: "#DC2626",
+    corClaro: "#FEE2E2",
+    xp: 120,
+    tempo: "40 min",
+    video: {
+      id: "3ZM65Y3Cjnw",
+      titulo: "O Computador e as Invenções Humanas - Editora Krieduc",
+      descricao: "Um videoclipe musical e animado que mostra como o computador e a comunicação digital mudaram o mundo! Aprenda sobre a história e importância das ferramentas digitais. 📧🌍"
+    },
+    secoes: [
+      {
+        titulo: "O que é um E-mail?",
+        cor: "#DC2626",
+        icone: "📧",
+        conteudo: `<p>O <strong>e-mail</strong> (correio eletrônico) é como uma carta digital! Você escreve uma mensagem e ela chega na hora para qualquer pessoa no mundo, sem precisar de papel ou envelope.</p>
+        <div class="conceito-grid">
+          <div class="conceito-item">
+            <span class="icon">📮</span>
+            <h4>Para:</h4>
+            <p>O endereço de e-mail de quem vai receber a mensagem</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🏷️</span>
+            <h4>Assunto:</h4>
+            <p>Um título curto que descreve o e-mail (muito importante!)</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">✉️</span>
+            <h4>Corpo:</h4>
+            <p>É o texto principal da sua mensagem</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">📎</span>
+            <h4>Anexo:</h4>
+            <p>Arquivos que você pode enviar junto com o e-mail</p>
+          </div>
+        </div>
+        <p>Todo e-mail tem um <strong>@</strong> (arroba) no endereço, como: <strong>seunome@gmail.com</strong></p>`
+      },
+      {
+        titulo: "Escrevendo um E-mail Educado",
+        cor: "#7C3AED",
+        icone: "✍️",
+        conteudo: `<p>E-mails para professores e pessoas mais velhas precisam ser <strong>formais e educados</strong>. Veja como estruturar!</p>
+        <div class="passo-a-passo">
+          <div class="passo">
+            <div class="passo-numero">1</div>
+            <div class="passo-content">
+              <h4>🏷️ Escreva um bom assunto</h4>
+              <p>Exemplo: "Dúvida sobre a tarefa de matemática" - seja claro e específico!</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">2</div>
+            <div class="passo-content">
+              <h4>👋 Comece com uma saudação</h4>
+              <p>"Olá, Professor(a) [Nome]," ou "Prezado(a) Professor(a) [Nome],"</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">3</div>
+            <div class="passo-content">
+              <h4>📝 Apresente-se</h4>
+              <p>"Sou [seu nome], aluno(a) do [sua turma]."</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">4</div>
+            <div class="passo-content">
+              <h4>💬 Escreva sua mensagem</h4>
+              <p>Seja claro e gentil. Explique bem o que você precisa.</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">5</div>
+            <div class="passo-content">
+              <h4>🙏 Finalize com agradecimento</h4>
+              <p>"Agradeço a atenção. Atenciosamente, [Seu nome]"</p>
+            </div>
+          </div>
+        </div>
+        <div class="atividade-pratica">
+          <h4>🎯 Escreva um E-mail!</h4>
+          <p>Abra o Gmail e escreva um e-mail para um colega contando sobre o que você está aprendendo no TecnoHerói! Use a estrutura que aprendemos.</p>
+        </div>`
+      },
+      {
+        titulo: "Netiqueta - Boas Maneiras Online",
+        cor: "#16A34A",
+        icone: "🤝",
+        conteudo: `<p><strong>Netiqueta</strong> são as regras de boas maneiras na internet! Assim como na vida real, precisamos ser gentis e respeitosos no mundo digital.</p>
+        <ul class="lista-conteudo">
+          <li>🔤 <strong>Não escreva TUDO EM MAIÚSCULAS</strong> - parece que você está gritando!</li>
+          <li>😊 <strong>Use palavras gentis</strong> - não escreva algo que você não diria na cara</li>
+          <li>🤔 <strong>Revise antes de enviar</strong> - e-mails enviados não têm como voltar!</li>
+          <li>⏰ <strong>Responda quando puder</strong> - não é obrigado a responder na hora</li>
+          <li>🔇 <strong>Não compartilhe boatos</strong> - verifique a informação antes de passar adiante</li>
+          <li>🔒 <strong>Respeite a privacidade</strong> - não compartilhe informações de outros sem permissão</li>
+        </ul>
+        <div class="tip-box">
+          <span class="icon">💭</span>
+          <p><strong>Pense antes de postar!</strong> Tudo que você escreve online pode ser visto por muitas pessoas. Pergunte a si mesmo: "Eu ficaria envergonhado se minha família lesse isso?"</p>
+        </div>`
+      }
+    ],
+    quiz: [
+      {
+        pergunta: "O que é o 'Assunto' em um e-mail?",
+        opcoes: ["O endereço de quem recebe", "Um título que descreve o e-mail", "O arquivo anexado", "A assinatura"],
+        correta: 1,
+        explicacao: "O Assunto é um título curto e claro que descreve sobre o que é o e-mail!"
+      },
+      {
+        pergunta: "O símbolo @ no e-mail é chamado de:",
+        opcoes: ["Asterisco", "Cifrão", "Arroba", "Hashtag"],
+        correta: 2,
+        explicacao: "O símbolo @ é chamado de arroba e é parte essencial de todo endereço de e-mail!"
+      },
+      {
+        pergunta: "Escrever TUDO EM MAIÚSCULAS num e-mail significa:",
+        opcoes: ["Que é muito importante", "Que você está gritando (é indelicado!)", "Que é uma formal", "Que tem erros"],
+        correta: 1,
+        explicacao: "Na netiqueta, MAIÚSCULAS = gritar! Evite isso para ser educado."
+      },
+      {
+        pergunta: "Como deve ser o primeiro parágrafo de um e-mail para o professor?",
+        opcoes: ["Ir direto ao assunto sem saudação", "Cumprimentar e se identificar", "Colocar emojis e abreviações", "Usar gírias"],
+        correta: 1,
+        explicacao: "Comece com uma saudação e se identifique: quem você é e de qual turma!"
+      },
+      {
+        pergunta: "O que é 'Netiqueta'?",
+        opcoes: ["Um tipo de rede Wi-Fi", "Um aplicativo de e-mail", "Boas maneiras na internet", "Uma linguagem de programação"],
+        correta: 2,
+        explicacao: "Netiqueta são as regras de boas maneiras que devemos seguir na internet!"
+      }
+    ]
+  },
+  {
+    id: 7,
+    emoji: "🗂️",
+    titulo: "Organizando Arquivos",
+    descricao: "Aprenda a criar pastas e organizar seus arquivos como um profissional!",
+    cor: "#16A34A",
+    corClaro: "#DCFCE7",
+    xp: 130,
+    tempo: "40 min",
+    video: {
+      id: "iExTUZUoDPo",
+      titulo: "Informática na Educação Infantil - Tia Blue",
+      descricao: "A Tia Blue apresenta o mundo da informática para crianças de forma super animada! Aprenda sobre organização digital, arquivos e pastas no computador. 🗂️📁"
+    },
+    secoes: [
+      {
+        titulo: "Arquivos e Pastas",
+        cor: "#16A34A",
+        icone: "📁",
+        conteudo: `<p>Imagine sua mochila escolar: você tem pastas separadas para matemática, português, ciências... O computador funciona igual!</p>
+        <div class="conceito-grid">
+          <div class="conceito-item">
+            <span class="icon">📄</span>
+            <h4>Arquivo</h4>
+            <p>É qualquer coisa salva: texto, foto, vídeo, música...</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">📁</span>
+            <h4>Pasta</h4>
+            <p>É um "armário" que guarda arquivos organizados</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">📂</span>
+            <h4>Subpasta</h4>
+            <p>Uma pasta dentro de outra pasta - organização avançada!</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">☁️</span>
+            <h4>Google Drive</h4>
+            <p>Seu armário na nuvem - acesse de qualquer lugar!</p>
+          </div>
+        </div>
+        <p>No Chromebook, o <strong>Google Drive</strong> é o local principal para salvar seus arquivos. Eles ficam seguros na internet!</p>`
+      },
+      {
+        titulo: "Gerenciando o Google Drive",
+        cor: "#2563EB",
+        icone: "☁️",
+        conteudo: `<p>O <strong>Google Drive</strong> é seu armário digital! Vamos aprender a organizar tudo direitinho.</p>
+        <div class="passo-a-passo">
+          <div class="passo">
+            <div class="passo-numero">1</div>
+            <div class="passo-content">
+              <h4>📁 Criar uma pasta</h4>
+              <p>Clique no botão <strong>+ Novo</strong> → "Pasta". Dê um nome claro, como "Escola 2025".</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">2</div>
+            <div class="passo-content">
+              <h4>📤 Subir arquivos</h4>
+              <p>Clique em <strong>+ Novo</strong> → "Upload de arquivo" para enviar do computador.</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">3</div>
+            <div class="passo-content">
+              <h4>✏️ Renomear</h4>
+              <p>Clique com dois dedos no arquivo → "Renomear" para dar um nome melhor.</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">4</div>
+            <div class="passo-content">
+              <h4>🔍 Encontrar arquivos</h4>
+              <p>Use a barra de busca no topo para encontrar qualquer arquivo rapidamente!</p>
+            </div>
+          </div>
+        </div>
+        <div class="atividade-pratica">
+          <h4>🎯 Organize sua Escola!</h4>
+          <ol>
+            <li>Abra o Google Drive (drive.google.com)</li>
+            <li>Crie uma pasta chamada "TecnoHerói"</li>
+            <li>Dentro dela, crie pastas para: "Aulas", "Projetos", "Pesquisas"</li>
+            <li>Mova um documento que você já criou para a pasta correta</li>
+          </ol>
+        </div>`
+      },
+      {
+        titulo: "Tipos de Arquivos",
+        cor: "#D97706",
+        icone: "🔠",
+        conteudo: `<p>Cada tipo de arquivo tem uma <strong>extensão</strong> - as letrinhas que aparecem depois do ponto no nome. Elas dizem ao computador como abrir aquele arquivo!</p>
+        <ul class="lista-conteudo">
+          <li>📝 <strong>.doc / .docx</strong> = Documento de texto (Word/Docs)</li>
+          <li>📊 <strong>.ppt / .pptx</strong> = Apresentação (PowerPoint/Slides)</li>
+          <li>🖼️ <strong>.jpg / .png</strong> = Imagens e fotos</li>
+          <li>🎵 <strong>.mp3</strong> = Arquivo de música</li>
+          <li>🎬 <strong>.mp4</strong> = Arquivo de vídeo</li>
+          <li>📋 <strong>.pdf</strong> = Documento que não pode ser editado facilmente</li>
+          <li>📦 <strong>.zip</strong> = Pasta comprimida (com vários arquivos dentro)</li>
+        </ul>
+        <div class="tip-box">
+          <span class="icon">💡</span>
+          <p><strong>Dica:</strong> Ao salvar seus trabalhos, use nomes descritivos como "Redacao_Medio_Ambiente_João.docx" e não apenas "trabalho.docx"!</p>
+        </div>`
+      }
+    ],
+    quiz: [
+      {
+        pergunta: "O que é uma 'pasta' no computador?",
+        opcoes: ["Um tipo de arquivo de imagem", "Um armário que guarda arquivos organizados", "Um programa de edição", "Uma conexão de internet"],
+        correta: 1,
+        explicacao: "Uma pasta é como um armário digital que organiza seus arquivos!"
+      },
+      {
+        pergunta: "Qual extensão identifica uma imagem?",
+        opcoes: [".mp3", ".docx", ".jpg", ".pdf"],
+        correta: 2,
+        explicacao: "Arquivos .jpg (e .png) são imagens! MP3 é áudio, docx é texto."
+      },
+      {
+        pergunta: "Qual é o principal local para salvar arquivos no Chromebook?",
+        opcoes: ["Pen drive", "Google Drive", "Desktop", "Impressora"],
+        correta: 1,
+        explicacao: "O Google Drive é o armazenamento principal do Chromebook, salvando na nuvem!"
+      },
+      {
+        pergunta: "Como criar uma nova pasta no Google Drive?",
+        opcoes: ["Ctrl + N", "Clicar em + Novo → Pasta", "Arrastar um arquivo", "Abrir configurações"],
+        correta: 1,
+        explicacao: "Para criar pasta no Drive: clique em + Novo e depois em Pasta!"
+      },
+      {
+        pergunta: "Por que é importante dar nomes claros aos arquivos?",
+        opcoes: ["Para ficar mais bonito", "Para encontrá-los facilmente depois", "Para impressionar os colegas", "Não tem importância"],
+        correta: 1,
+        explicacao: "Nomes claros como 'Redacao_João_2025' ajudam você a encontrar o arquivo rapidamente!"
+      }
+    ]
+  },
+  {
+    id: 8,
+    emoji: "🎨",
+    titulo: "Criatividade Digital",
+    descricao: "Crie arte digital, desenhos e projetos criativos online!",
+    cor: "#7C3AED",
+    corClaro: "#EDE9FE",
+    xp: 160,
+    tempo: "40 min",
+    video: {
+      id: "SgzUz9BdhaM",
+      titulo: "Informática para Crianças - Editora Krieduc",
+      descricao: "Uma coleção animada e colorida sobre informática para crianças! Aprenda como usar o computador de forma criativa, fazendo desenhos, animações e projetos incríveis. 🎨✨"
+    },
+    secoes: [
+      {
+        titulo: "Ferramentas Criativas Online",
+        cor: "#7C3AED",
+        icone: "🎨",
+        conteudo: `<p>O computador não é só para trabalho - é também uma <strong>tela infinita de criatividade</strong>! Existem ferramentas incríveis para criar arte digital, animações e muito mais.</p>
+        <div class="conceito-grid">
+          <div class="conceito-item">
+            <span class="icon">🖌️</span>
+            <h4>Google Drawings</h4>
+            <p>Crie desenhos e diagramas simples direto no navegador</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🎭</span>
+            <h4>Canva</h4>
+            <p>Crie cartazes, cards e designs incríveis com modelos prontos</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🎬</span>
+            <h4>Google Slides (animado)</h4>
+            <p>Use transições e animações para criar histórias em movimento</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🗺️</span>
+            <h4>Google Maps</h4>
+            <p>Explore o mundo, crie roteiros e descubra lugares incríveis</p>
+          </div>
+        </div>
+        <div class="tip-box">
+          <span class="icon">🌟</span>
+          <p><strong>Sabia que?</strong> Muitos artistas digitais famosos começaram desenhando no computador exatamente como você vai fazer agora!</p>
+        </div>`
+      },
+      {
+        titulo: "Projeto: Cartaz Digital",
+        cor: "#EA580C",
+        icone: "🖼️",
+        conteudo: `<p>Vamos criar um <strong>cartaz digital</strong> usando o Google Slides como ferramenta de criação! Slides não é só para apresentações - é uma tela livre!</p>
+        <div class="passo-a-passo">
+          <div class="passo">
+            <div class="passo-numero">1</div>
+            <div class="passo-content">
+              <h4>📐 Configure a página</h4>
+              <p>Clique em "Arquivo" → "Configurar página" → escolha "Personalizado" e coloque 21cm x 29,7cm (formato A4)</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">2</div>
+            <div class="passo-content">
+              <h4>🌈 Escolha um fundo colorido</h4>
+              <p>Clique com dois dedos no slide → "Alterar fundo" → escolha uma cor vibrante!</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">3</div>
+            <div class="passo-content">
+              <h4>🔤 Adicione textos criativos</h4>
+              <p>Insira caixas de texto, mude fontes, tamanhos e cores. Use títulos grandes e impactantes!</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">4</div>
+            <div class="passo-content">
+              <h4>🖼️ Busque imagens</h4>
+              <p>Clique em "Inserir" → "Imagem" → "Pesquisar na web" para encontrar fotos!</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">5</div>
+            <div class="passo-content">
+              <h4>✨ Ajuste tudo</h4>
+              <p>Arraste, redimensione e organize os elementos até ficar com cara de cartaz profissional!</p>
+            </div>
+          </div>
+        </div>
+        <div class="atividade-pratica">
+          <h4>🎨 Tema do Cartaz: Meio Ambiente!</h4>
+          <p>Crie um cartaz sobre a importância de cuidar do meio ambiente. Use pelo menos: 1 título grande, 3 imagens e 2 frases de impacto!</p>
+        </div>`
+      },
+      {
+        titulo: "Direitos Autorais Digitais",
+        cor: "#DC2626",
+        icone: "©️",
+        conteudo: `<p>Quando você cria algo, seja um desenho, texto ou música, ele pertence a <strong>você</strong>! E as criações de outras pessoas também pertencem a elas.</p>
+        <ul class="lista-conteudo">
+          <li>©️ <strong>Direito Autoral:</strong> protege a criação de quem fez</li>
+          <li>🚫 <strong>Não copie sem citar:</strong> usar a obra de alguém sem permissão é errado</li>
+          <li>✅ <strong>Creative Commons:</strong> algumas obras têm licença livre para usar</li>
+          <li>📸 <strong>Imagens gratuitas:</strong> use o Google com filtro "Reutilização permitida"</li>
+          <li>📝 <strong>Sempre cite a fonte:</strong> mesmo que seja permitido, diga de onde veio!</li>
+        </ul>
+        <div class="tip-box">
+          <span class="icon">🏆</span>
+          <p><strong>Regra de ouro:</strong> Crie com sua própria imaginação sempre que puder. Uma criação original sua vale mil vezes mais que copiar o trabalho de outro!</p>
+        </div>`
+      }
+    ],
+    quiz: [
+      {
+        pergunta: "Qual ferramenta você usaria para criar um cartaz digital no Chromebook?",
+        opcoes: ["Google Calculator", "Google Slides ou Canva", "Google Translate", "Google Calendar"],
+        correta: 1,
+        explicacao: "Google Slides e Canva são ótimas ferramentas para criar cartazes digitais!"
+      },
+      {
+        pergunta: "O que significa 'direito autoral'?",
+        opcoes: ["Direito de usar qualquer coisa da internet", "Proteção da criação de quem fez", "Direito de copiar trabalhos", "Uma licença para fotos"],
+        correta: 1,
+        explicacao: "Direito autoral protege a obra de quem criou - só ela pode decidir como usar!"
+      },
+      {
+        pergunta: "O que você deve fazer ao usar uma imagem da internet em seu trabalho?",
+        opcoes: ["Usar qualquer imagem sem preocupação", "Verificar se é permitido e citar a fonte", "Sempre pagar pelo uso", "Só usar imagens suas"],
+        correta: 1,
+        explicacao: "Verifique a licença e sempre cite de onde veio a imagem!"
+      },
+      {
+        pergunta: "O que são imagens 'Creative Commons'?",
+        opcoes: ["Imagens pagas", "Imagens com licença que permite uso livre", "Imagens do governo", "Imagens animadas"],
+        correta: 1,
+        explicacao: "Creative Commons são licenças que permitem usar obras com certas condições (geralmente citando o autor)!"
+      },
+      {
+        pergunta: "No Google Slides, como você encontra imagens para inserir?",
+        opcoes: ["Só pode usar imagens do computador", "Inserir → Imagem → Pesquisar na web", "Copiar e colar qualquer imagem", "Precisar de um programa extra"],
+        correta: 1,
+        explicacao: "No Slides: Inserir → Imagem → Pesquisar na web para buscar imagens!"
+      }
+    ]
+  },
+  {
+    id: 9,
+    emoji: "🔒",
+    titulo: "Segurança e Cidadania Digital",
+    descricao: "Proteja suas informações e seja um cidadão digital responsável!",
+    cor: "#DC2626",
+    corClaro: "#FEE2E2",
+    xp: 140,
+    tempo: "40 min",
+    video: {
+      id: "znppuiRxQKQ",
+      titulo: "Pocoyo - Segurança na Internet (Português Brasil)",
+      descricao: "O Pocoyo e seus amigos ensinam sobre segurança na internet, cyberbullying, senhas seguras e como ser um cidadão digital responsável! Dublado em português do Brasil. 🔒🛡️"
+    },
+    secoes: [
+      {
+        titulo: "Pegada Digital",
+        cor: "#2563EB",
+        icone: "👣",
+        conteudo: `<p>Sabia que tudo o que você faz na internet deixa uma marca? A sua <strong>pegada digital</strong> é como um rastro que mostra onde você esteve e o que fez online!</p>
+        <div class="conceito-grid">
+          <div class="conceito-item">
+            <span class="icon">👣</span>
+            <h4>Rastro ativo</h4>
+            <p>O que você posta, curte, comenta voluntariamente</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🔍</span>
+            <h4>Rastro passivo</h4>
+            <p>Informações coletadas sem você perceber (como localização)</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">♾️</span>
+            <h4>É permanente</h4>
+            <p>O que vai para internet pode ficar lá para sempre!</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🤔</span>
+            <h4>Pense antes</h4>
+            <p>Cada post, foto e comentário fica registrado</p>
+          </div>
+        </div>
+        <div class="tip-box">
+          <span class="icon">💭</span>
+          <p><strong>Pergunta importante:</strong> Você ficaria orgulhoso se seu professor, seus pais ou você mesmo visse o que está postando daqui a 10 anos?</p>
+        </div>`
+      },
+      {
+        titulo: "Senhas Fortes e Seguras",
+        cor: "#7C3AED",
+        icone: "🔐",
+        conteudo: `<p>Sua senha é como a chave da sua casa digital! Uma senha fraca é como deixar a porta aberta para ladrões.</p>
+        <p><strong>Senha FRACA ❌</strong>: 123456, senha, seu nome, data de nascimento</p>
+        <p><strong>Senha FORTE ✅</strong>: mistura letras maiúsculas, minúsculas, números e símbolos!</p>
+        <div class="passo-a-passo">
+          <div class="passo">
+            <div class="passo-numero">1</div>
+            <div class="passo-content">
+              <h4>🔠 Use pelo menos 8 caracteres</h4>
+              <p>Quanto mais longa, mais difícil de adivinhar!</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">2</div>
+            <div class="passo-content">
+              <h4>🎯 Misture tudo</h4>
+              <p>Letras maiúsculas (A, B), minúsculas (a, b), números (1, 2) e símbolos (!@#)</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">3</div>
+            <div class="passo-content">
+              <h4>🤫 Nunca compartilhe</h4>
+              <p>Nem com seu melhor amigo! Senhas são pessoais e intransferíveis.</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">4</div>
+            <div class="passo-content">
+              <h4>🔄 Não repita senhas</h4>
+              <p>Use senhas diferentes para cada site importante</p>
+            </div>
+          </div>
+        </div>
+        <div class="atividade-pratica">
+          <h4>🎯 Teste sua senha!</h4>
+          <p>Crie uma senha forte usando a fórmula: <strong>3 letras maiúsculas + 3 números + 2 símbolos</strong>. Exemplo: <em>TEC2025!@</em></p>
+        </div>`
+      },
+      {
+        titulo: "Cyberbullying - Nunca com você!",
+        cor: "#DC2626",
+        icone: "🛡️",
+        conteudo: `<p>O <strong>cyberbullying</strong> é quando alguém usa a internet para machucar, humilhar ou intimidar outra pessoa. É tão errado quanto o bullying na escola - e tem consequências sérias!</p>
+        <ul class="lista-conteudo">
+          <li>🚫 <strong>Nunca faça:</strong> não compartilhe fotos ou textos para humilhar alguém</li>
+          <li>🛑 <strong>Bloqueie e reporte:</strong> se alguém te machucar online, bloqueie e denuncie</li>
+          <li>🗣️ <strong>Conte para alguém:</strong> nunca guarde sozinho - fale com pais ou professores</li>
+          <li>📸 <strong>Guarde provas:</strong> tire print das mensagens para mostrar para os adultos</li>
+          <li>💪 <strong>Apoie colegas:</strong> se ver alguém sendo cyberbullying, não ria - ajude!</li>
+          <li>📵 <strong>Ignore provocações:</strong> responder geralmente piora. Bloqueie e saia!</li>
+        </ul>
+        <div class="tip-box">
+          <span class="icon">❤️</span>
+          <p><strong>Lembre-se:</strong> Do outro lado da tela tem uma pessoa real com sentimentos reais. Trate as pessoas online da mesma forma que gostaria de ser tratado!</p>
+        </div>`
+      }
+    ],
+    quiz: [
+      {
+        pergunta: "O que é 'pegada digital'?",
+        opcoes: ["Uma imagem de pegadas na internet", "O rastro de tudo que você faz online", "Uma senha digital", "Um tipo de vírus"],
+        correta: 1,
+        explicacao: "Pegada digital é o rastro que você deixa em tudo que faz na internet!"
+      },
+      {
+        pergunta: "Qual destas é uma senha FORTE?",
+        opcoes: ["123456", "seunome", "Tec@2025!", "abcdef"],
+        correta: 2,
+        explicacao: "Tec@2025! mistura letras maiúsculas, minúsculas, números e símbolo - muito mais segura!"
+      },
+      {
+        pergunta: "O que é cyberbullying?",
+        opcoes: ["Um jogo online", "Usar a internet para machucar ou humilhar alguém", "Um tipo de vírus de computador", "Uma forma de pesquisar"],
+        correta: 1,
+        explicacao: "Cyberbullying é usar meios digitais para intimidar, humilhar ou machucar pessoas!"
+      },
+      {
+        pergunta: "Se você sofrer cyberbullying, o que deve fazer primeiro?",
+        opcoes: ["Responder com insultos", "Contar para um adulto de confiança", "Ficar quieto e não falar nada", "Fazer a mesma coisa de volta"],
+        correta: 1,
+        explicacao: "Sempre conte para um adulto confiável! Nunca enfrente sozinho."
+      },
+      {
+        pergunta: "Por que não devemos compartilhar nossa senha com amigos?",
+        opcoes: ["Porque é desnecessário", "Porque senhas são pessoais e protegem nossa privacidade", "Porque é difícil de decorar", "Não há motivo"],
+        correta: 1,
+        explicacao: "Senhas são como chaves da sua casa digital! Nunca compartilhe com ninguém."
+      }
+    ]
+  },
+  {
+    id: 10,
+    emoji: "🚀",
+    titulo: "Projeto Final - TecnoHerói!",
+    descricao: "Mostre tudo que aprendeu criando um projeto completo e épico!",
+    cor: "#D97706",
+    corClaro: "#FEF3C7",
+    xp: 200,
+    tempo: "40 min",
+    video: {
+      id: "dvxnUoZydSA",
+      titulo: "Cuidados com o Computador - Editora Krieduc",
+      descricao: "Relembre todos os cuidados importantes que devemos ter com o computador! Um videoclipe animado perfeito para revisar tudo que aprendemos antes de concluir sua jornada de TecnoHerói! 🚀🏆"
+    },
+    secoes: [
+      {
+        titulo: "Revisando Sua Jornada",
+        cor: "#7C3AED",
+        icone: "🗺️",
+        conteudo: `<p>Parabéns, TecnoHerói! Você chegou à última aula! Antes do projeto final, vamos relembrar tudo que você aprendeu nessa incrível jornada:</p>
+        <div class="conceito-grid">
+          <div class="conceito-item">
+            <span class="icon">💻</span>
+            <h4>Aula 1</h4>
+            <p>Partes e cuidados com o Chromebook</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🖱️</span>
+            <h4>Aula 2</h4>
+            <p>Touchpad, teclado e atalhos</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🌐</span>
+            <h4>Aula 3</h4>
+            <p>Navegação segura na internet</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">✍️</span>
+            <h4>Aula 4</h4>
+            <p>Google Docs - escrita digital</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">📊</span>
+            <h4>Aula 5</h4>
+            <p>Google Slides - apresentações</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">📧</span>
+            <h4>Aula 6</h4>
+            <p>E-mail e netiqueta</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🗂️</span>
+            <h4>Aula 7</h4>
+            <p>Organização de arquivos</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🎨</span>
+            <h4>Aula 8</h4>
+            <p>Criatividade digital</p>
+          </div>
+          <div class="conceito-item">
+            <span class="icon">🔒</span>
+            <h4>Aula 9</h4>
+            <p>Segurança e cidadania digital</p>
+          </div>
+        </div>`
+      },
+      {
+        titulo: "Projeto Final: Minha Aventura Digital",
+        cor: "#D97706",
+        icone: "🏆",
+        conteudo: `<p>Você vai criar um <strong>portfólio digital</strong> mostrando tudo que aprendeu! Um portfólio é uma coleção dos seus melhores trabalhos - como os artistas fazem!</p>
+        <div class="passo-a-passo">
+          <div class="passo">
+            <div class="passo-numero">1</div>
+            <div class="passo-content">
+              <h4>📁 Organize no Drive</h4>
+              <p>Crie uma pasta chamada "Portfólio TecnoHerói - [Seu Nome]" e organize todos os trabalhos das aulas anteriores nela.</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">2</div>
+            <div class="passo-content">
+              <h4>📊 Crie a apresentação</h4>
+              <p>Abra o Google Slides e crie uma apresentação de pelo menos <strong>8 slides</strong> - um para cada habilidade que aprendeu!</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">3</div>
+            <div class="passo-content">
+              <h4>📝 Escreva sua história</h4>
+              <p>No Google Docs, escreva um texto contando sua jornada: o que você achava mais difícil, o que aprendeu, o que mais gostou!</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">4</div>
+            <div class="passo-content">
+              <h4>🎨 Crie um cartaz final</h4>
+              <p>Usando o que aprendeu na aula de criatividade, crie um cartaz com o tema "TecnoHerói - Tudo que Aprendi!"</p>
+            </div>
+          </div>
+          <div class="passo">
+            <div class="passo-numero">5</div>
+            <div class="passo-content">
+              <h4>📧 Envie para o professor</h4>
+              <p>Compartilhe a pasta do Drive por e-mail para seu professor. Use tudo que aprendeu sobre netiqueta!</p>
+            </div>
+          </div>
+        </div>`
+      },
+      {
+        titulo: "Você é um TecnoHerói!",
+        cor: "#16A34A",
+        icone: "🦸",
+        conteudo: `<p>Chegou ao fim da sua aventura digital - mas na verdade, este é só o <strong>começo</strong>! A tecnologia está sempre evoluindo, e agora você tem a base para continuar aprendendo!</p>
+        <p>Lembre-se das regras do TecnoHerói:</p>
+        <ul class="lista-conteudo">
+          <li>🛡️ <strong>Use a tecnologia com responsabilidade</strong> - você sabe o que é certo!</li>
+          <li>💡 <strong>Continue aprendendo</strong> - cada dia há algo novo para descobrir</li>
+          <li>🤝 <strong>Ajude outros</strong> - compartilhe o que sabe com colegas e família</li>
+          <li>🔒 <strong>Mantenha-se seguro</strong> - suas informações são preciosas</li>
+          <li>🎨 <strong>Seja criativo</strong> - use a tecnologia para criar coisas incríveis!</li>
+          <li>❤️ <strong>Seja gentil online</strong> - há pessoas reais do outro lado da tela</li>
+        </ul>
+        <div class="tip-box">
+          <span class="icon">🌟</span>
+          <p><strong>Parabéns, TecnoHerói!</strong> Você completou as 10 missões e se tornou um verdadeiro herói do mundo digital. O futuro é seu para construir com criatividade, responsabilidade e muita curiosidade! 🚀</p>
+        </div>`
+      }
+    ],
+    quiz: [
+      {
+        pergunta: "O que é um portfólio digital?",
+        opcoes: ["Uma senha forte", "Uma coleção dos seus melhores trabalhos", "Um tipo de pasta do Drive", "Um aplicativo de desenho"],
+        correta: 1,
+        explicacao: "Portfólio é uma coleção organizada dos seus melhores trabalhos - artistas e profissionais usam para mostrar o que sabem fazer!"
+      },
+      {
+        pergunta: "Qual habilidade você aprendeu na Aula 3?",
+        opcoes: ["Usar o teclado", "Criar apresentações", "Navegar com segurança na internet", "Organizar arquivos"],
+        correta: 2,
+        explicacao: "Na Aula 3 aprendemos a navegar com segurança na internet e a pesquisar no Google!"
+      },
+      {
+        pergunta: "Ao enviar o portfólio para o professor por e-mail, o que você deve lembrar?",
+        opcoes: ["Usar gírias e abreviações", "Usar netiqueta e educação", "Não colocar assunto", "Enviar sem revisar"],
+        correta: 1,
+        explicacao: "Sempre use netiqueta! Cumprimente, se identifique e seja educado no e-mail."
+      },
+      {
+        pergunta: "Qual destas NÃO é uma habilidade que você aprendeu no curso?",
+        opcoes: ["Usar o Google Docs", "Programar jogos 3D", "Criar apresentações no Slides", "Organizar arquivos no Drive"],
+        correta: 1,
+        explicacao: "Programar jogos 3D é para cursos mais avançados! Mas você aprendeu muitas outras coisas incríveis!"
+      },
+      {
+        pergunta: "O que você deve continuar fazendo após o curso?",
+        opcoes: ["Parar de usar o computador", "Esquecer o que aprendeu", "Continuar aprendendo e usando a tecnologia com responsabilidade", "Nunca mais navegar na internet"],
+        correta: 2,
+        explicacao: "A jornada continua! Continue aprendendo, criando e usando a tecnologia de forma responsável!"
+      }
+    ]
+  }
+];
+
+const CONQUISTAS = [
+  { id: "primeira_aula", titulo: "Primeira Missão!", icone: "🎯", desc: "Completou a primeira aula" },
+  { id: "metade", titulo: "Na Metade!", icone: "⚡", desc: "Completou 5 aulas" },
+  { id: "todas_aulas", titulo: "TecnoHerói!", icone: "🦸", desc: "Completou todas as 10 aulas" },
+  { id: "xp_500", titulo: "Mago do XP!", icone: "✨", desc: "Ganhou 500 XP" },
+  { id: "perfect_quiz", titulo: "Gênio Digital!", icone: "🧠", desc: "Tirou 100% em um quiz" },
+  { id: "nivel5", titulo: "Nível 5!", icone: "⭐", desc: "Atingiu o nível 5" },
+];
+
+// =================== ESTADO DO JOGO ===================
+let estado = {
+  nome: "",
+  aulasCompletas: new Set(),
+  xpTotal: 0,
+  nivel: 1,
+  conquistasDesbloqueadas: new Set(),
+  aulaAtual: null,
+  quizAtual: { perguntaIndex: 0, pontos: 0, respondida: false }
+};
+
+// =================== PERSISTÊNCIA FIREBASE (NUVEM) ===================
+// O progresso fica salvo online — funciona em qualquer Chromebook!
+
+const ADMIN_SENHA = "prof2025";
+
+// Cache local para não travar a tela a cada ação
+let _cacheDB = null;
+
+async function carregarDB() {
+  if (_cacheDB) return _cacheDB;
+  try {
+    _cacheDB = await window._fb.carregarTodos();
+  } catch(e) {
+    console.warn("Firebase offline — usando cache vazio", e);
+    _cacheDB = {};
+  }
+  return _cacheDB;
+}
+
+function invalidarCache() { _cacheDB = null; }
+
+async function salvarAluno(nome, dados) {
+  try {
+    await window._fb.salvarAluno(nome, dados);
+    if (_cacheDB) _cacheDB[nome] = dados;
+  } catch(e) { console.error("Erro ao salvar no Firebase:", e); }
+}
+
+async function registrarLogin(nome) {
+  let dados = null;
+  try { dados = await window._fb.carregarAluno(nome); } catch(e) {}
+
+  if (!dados) {
+    dados = {
+      nome,
+      primeiroLogin: new Date().toISOString(),
+      ultimoLogin: new Date().toISOString(),
+      totalLogins: 1,
+      xpTotal: 0, nivel: 1, aulas: {}, conquistas: [],
+      turma: "", cadastradoPor: "", dataCadastro: new Date().toISOString()
+    };
+  } else {
+    dados.ultimoLogin  = new Date().toISOString();
+    dados.totalLogins  = (dados.totalLogins || 0) + 1;
+  }
+
+  // Restaurar progresso no estado local
+  estado.aulasCompletas          = new Set(Object.keys(dados.aulas || {}).map(Number));
+  estado.xpTotal                 = dados.xpTotal || 0;
+  estado.nivel                   = dados.nivel   || 1;
+  estado.conquistasDesbloqueadas = new Set(dados.conquistas || []);
+
+  await salvarAluno(nome, dados);
+}
+
+async function registrarConclusaoAula(idAula, xpGanho, acertos, total, tentativas) {
+  const db    = await carregarDB();
+  const nome  = estado.nome;
+  if (!db[nome]) return;
+  const dados = db[nome];
+  if (!dados.aulas[idAula]) {
+    dados.aulas[idAula] = {
+      idAula,
+      titulo: AULAS.find(a => a.id === idAula)?.titulo || "",
+      xpGanho, acertos, total,
+      tentativas: tentativas || 1,
+      dataConclusao: new Date().toISOString()
+    };
+    dados.xpTotal    = estado.xpTotal;
+    dados.nivel      = estado.nivel;
+    dados.conquistas = [...estado.conquistasDesbloqueadas];
+    await salvarAluno(nome, dados);
+  }
+}
+
+async function registrarTentativaQuiz(idAula) {
+  const db   = await carregarDB();
+  const nome = estado.nome;
+  if (!db[nome] || !db[nome].aulas[idAula]) return;
+  db[nome].aulas[idAula].tentativas = (db[nome].aulas[idAula].tentativas || 1) + 1;
+  await salvarAluno(nome, db[nome]);
+}
+
+// =================== FUNÇÕES PRINCIPAIS ===================
+
+let profLogado = { nome: "", turma: "" };
+
+function mostrarLoginAdmin() {
+  document.getElementById("tela-boas-vindas").style.display = "none";
+  const tela = document.getElementById("tela-admin-login");
+  tela.style.display = "flex";
+  setTimeout(() => document.getElementById("inputNomeProf").focus(), 100);
+}
+
+function voltarParaInicio() {
+  document.getElementById("tela-admin-login").style.display = "none";
+  document.getElementById("tela-boas-vindas").style.display = "flex";
+}
+
+function loginAdmin() {
+  const nome  = document.getElementById("inputNomeProf").value.trim();
+  const turma = document.getElementById("inputTurmaProf").value.trim();
+  const senha = document.getElementById("inputSenhaAdmin").value;
+  const erro  = document.getElementById("erroAdmin");
+  erro.style.display = "none";
+  if (!nome)  { erro.textContent="❌ Informe seu nome!"; erro.style.display="block"; document.getElementById("inputNomeProf").focus(); return; }
+  if (!turma) { erro.textContent="❌ Informe a turma!"; erro.style.display="block"; document.getElementById("inputTurmaProf").focus(); return; }
+  if (senha !== ADMIN_SENHA) {
+    erro.textContent = "❌ Senha incorreta!";
+    erro.style.display = "block";
+    document.getElementById("inputSenhaAdmin").value = "";
+    document.getElementById("inputSenhaAdmin").focus();
+    return;
+  }
+  profLogado = { nome, turma };
+  document.getElementById("tela-admin-login").style.display = "none";
+  document.getElementById("tela-dashboard").style.display = "block";
+  document.getElementById("dashNomeProf").textContent = `👨‍🏫 Prof. ${nome}`;
+  document.getElementById("dashTurmaProf").textContent = `Turma: ${turma} — TecnoHerói`;
+  renderizarDashboard();
+}
+
+function sairAdmin() {
+  document.getElementById("tela-dashboard").style.display = "none";
+  document.getElementById("tela-boas-vindas").style.display = "flex";
+  ["inputNomeProf","inputTurmaProf","inputSenhaAdmin"].forEach(id => { const el=document.getElementById(id); if(el) el.value=""; });
+  document.getElementById("erroAdmin").style.display = "none";
+  profLogado = { nome:"", turma:"" };
+}
+
+function mostrarCadastroAluno() {
+  const painel = document.getElementById("painel-cadastro-aluno");
+  painel.style.display = painel.style.display === "none" ? "block" : "none";
+  if (painel.style.display === "block") {
+    document.getElementById("inputNomeAluno").value = "";
+    document.getElementById("inputTurmaAluno").value = profLogado.turma;
+    document.getElementById("erroCadastroAluno").style.display = "none";
+    document.getElementById("sucessoCadastroAluno").style.display = "none";
+    setTimeout(() => document.getElementById("inputNomeAluno").focus(), 100);
+  }
+}
+
+function fecharCadastroAluno() {
+  document.getElementById("painel-cadastro-aluno").style.display = "none";
+}
+
+async function cadastrarAluno() {
+  const nomeAluno  = document.getElementById("inputNomeAluno").value.trim();
+  const turmaAluno = document.getElementById("inputTurmaAluno").value.trim();
+  const erroEl     = document.getElementById("erroCadastroAluno");
+  const sucessoEl  = document.getElementById("sucessoCadastroAluno");
+  erroEl.style.display = "none";
+  sucessoEl.style.display = "none";
+  if (!nomeAluno || nomeAluno.length < 5) { erroEl.textContent="❌ Informe o nome completo do aluno (mín. 5 caracteres)!"; erroEl.style.display="block"; return; }
+  if (!turmaAluno) { erroEl.textContent="❌ Informe a turma!"; erroEl.style.display="block"; return; }
+  const db = await carregarDB();
+  const chave = nomeAluno.toLowerCase();
+  if (Object.keys(db).some(k => k.toLowerCase() === chave)) {
+    erroEl.textContent = `⚠️ "${nomeAluno}" já está cadastrado!`;
+    erroEl.style.display = "block";
+    return;
+  }
+  const novoAluno = {
+    nome: nomeAluno, turma: turmaAluno,
+    cadastradoPor: profLogado.nome, dataCadastro: new Date().toISOString(),
+    primeiroLogin: null, ultimoLogin: null, totalLogins: 0,
+    xpTotal: 0, nivel: 1, aulas: {}, conquistas: []
+  };
+  await salvarAluno(nomeAluno, novoAluno);
+  invalidarCache();
+  sucessoEl.textContent = `✅ "${nomeAluno}" da turma "${turmaAluno}" cadastrado com sucesso!`;
+  sucessoEl.style.display = "block";
+  document.getElementById("inputNomeAluno").value = "";
+  document.getElementById("inputNomeAluno").focus();
+  renderizarDashboard();
+  setTimeout(() => { if(sucessoEl) sucessoEl.style.display="none"; }, 4000);
+}
+
+async function removerAluno(nome) {
+  if (!confirm(`⚠️ Remover "${nome}" e todos os seus dados?`)) return;
+  await window._fb.removerAluno(nome);
+  invalidarCache();
+  renderizarDashboard();
+}
+
+async function filtrarSugestoesAluno(valor) {
+  const lista = document.getElementById("listaSugestoes");
+  const erro  = document.getElementById("erroLoginAluno");
+  if (erro) erro.style.display = "none";
+  if (valor.trim().length < 2) { lista.style.display="none"; return; }
+  const db = await carregarDB();
+  const v = valor.toLowerCase();
+  const matches = Object.values(db).filter(a => a.nome && a.nome.toLowerCase().includes(v));
+  if (matches.length === 0) { lista.style.display="none"; return; }
+  lista.innerHTML = matches.map(a => `
+    <div onclick="selecionarAluno('${a.nome.replace(/'/g,"\\'")}')"
+      style="padding:0.75rem 1rem;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;color:#1E293B;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center"
+      onmouseover="this.style.background='#EDE9FE'" onmouseout="this.style.background='#fff'">
+      <span>🎮 ${a.nome}</span>
+      <span style="font-size:0.78rem;color:#7C3AED;font-weight:800">Turma: ${a.turma||'—'}</span>
+    </div>`).join("");
+  lista.style.display = "block";
+}
+
+function selecionarAluno(nome) {
+  document.getElementById("inputNome").value = nome;
+  document.getElementById("listaSugestoes").style.display = "none";
+}
+
+async function iniciarCurso() {
+  const nomeInput = document.getElementById("inputNome");
+  const nome = nomeInput.value.trim();
+  const erro = document.getElementById("erroLoginAluno");
+  document.getElementById("listaSugestoes").style.display = "none";
+  if (erro) erro.style.display = "none";
+  if (!nome) {
+    nomeInput.style.borderColor = "#DC2626";
+    nomeInput.placeholder = "Por favor, escreva seu nome completo! 😊";
+    return;
+  }
+
+  // Mostra feedback de carregamento
+  const btnEntrar = document.querySelector("#tela-boas-vindas button[onclick='iniciarCurso()']") ||
+                    document.querySelector("#tela-boas-vindas .btn-comecar");
+  const textoOriginal = btnEntrar ? btnEntrar.textContent : null;
+  if (btnEntrar) { btnEntrar.textContent = "⏳ Carregando..."; btnEntrar.disabled = true; }
+
+  try {
+    const db = await carregarDB();
+    const alunoKey = Object.keys(db).find(k => k.toLowerCase() === nome.toLowerCase());
+    if (!alunoKey) {
+      if (erro) {
+        erro.textContent = "❌ Você ainda não foi cadastrado! Peça ao seu professor para te cadastrar antes de entrar.";
+        erro.style.display = "block";
+      }
+      nomeInput.style.borderColor = "#DC2626";
+      return;
+    }
+    estado.nome = alunoKey;
+    await registrarLogin(alunoKey);
+    document.getElementById("tela-boas-vindas").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    await atualizarHeader();
+    renderizarAulas();
+    renderizarConquistas();
+  } catch(e) {
+    if (erro) { erro.textContent = "❌ Erro de conexão. Verifique a internet e tente novamente."; erro.style.display = "block"; }
+  } finally {
+    if (btnEntrar) { btnEntrar.textContent = textoOriginal || "Entrar"; btnEntrar.disabled = false; }
+  }
+}
+
+async function atualizarHeader() {
+  const db = await carregarDB();
+  const aluno = db[estado.nome] || {};
+  const turma = aluno.turma ? ` • ${aluno.turma}` : "";
+  document.getElementById("headerNome").textContent = estado.nome + turma;
+  document.getElementById("headerNivel").textContent = `⭐ Nível ${estado.nivel}`;
+  document.getElementById("headerXP").textContent = `✨ ${estado.xpTotal} XP`;
+}
+
+function renderizarAulas() {
+  const grid = document.getElementById("gridAulas");
+  grid.innerHTML = "";
+  const total = AULAS.length;
+  const completas = estado.aulasCompletas.size;
+  document.getElementById("barraProgresso").style.width = `${(completas/total)*100}%`;
+  document.getElementById("textoProgresso").textContent = `${completas} de ${total} aulas concluídas • ${estado.xpTotal} XP ganhos`;
+  document.getElementById("bannerNome").textContent = estado.nome.split(" ")[0];
+  AULAS.forEach((aula, idx) => {
+    const concluida    = estado.aulasCompletas.has(aula.id);
+    const desbloqueada = idx === 0 || estado.aulasCompletas.has(AULAS[idx-1].id);
+    let classe = "card-aula", statusTxt = "", statusClasse = "";
+    if (concluida)          { classe+=" concluida"; statusTxt="✅ Concluída"; statusClasse="status-concluida"; }
+    else if (!desbloqueada) { classe+=" bloqueada"; statusTxt="🔒 Bloqueada"; statusClasse="status-bloqueada"; }
+    else                    { classe+=" atual";     statusTxt="▶️ Jogar";     statusClasse="status-atual"; }
+    grid.innerHTML += `
+      <div class="${classe}" onclick="${desbloqueada?`abrirAula(${aula.id})`:'mostrarBloqueada()'}">
+        ${!concluida&&desbloqueada?`<div class="xp-card">+${aula.xp} XP</div>`:''}
+        <div class="card-aula-header">
+          <span class="aula-numero">Aula ${aula.id}</span>
+          <span class="aula-status ${statusClasse}">${statusTxt}</span>
+        </div>
+        <span class="aula-emoji">${aula.emoji}</span>
+        <h3 class="aula-titulo">${aula.titulo}</h3>
+        <p class="aula-descricao">${aula.descricao}</p>
+        <div class="aula-meta"><span>⏱️ ${aula.tempo}</span><span>❓ ${aula.quiz.length} perguntas</span></div>
+        ${!desbloqueada?'<div class="lock-icon">🔒</div>':''}
+      </div>`;
+  });
+}
+
+// =================== DASHBOARD DO PROFESSOR ===================
+
+async function renderizarDashboard() {
+  invalidarCache();
+  const db = await carregarDB();
+  const todos = Object.values(db).filter(a => a.nome);
+  const filtroNome   = (document.getElementById("filtroNome")?.value   || "").toLowerCase();
+  const filtroAula   =  document.getElementById("filtroAula")?.value   || "";
+  const filtroTurma  =  document.getElementById("filtroTurma")?.value  || "";
+  const filtroStatus =  document.getElementById("filtroStatus")?.value || "";
+
+  // Popula select de turmas
+  const turmasUnicas = [...new Set(todos.map(a=>a.turma).filter(Boolean))].sort();
+  const selTurma = document.getElementById("filtroTurma");
+  if (selTurma) {
+    const valAtual = selTurma.value;
+    selTurma.innerHTML = `<option value="">Todas as turmas</option>` +
+      turmasUnicas.map(t=>`<option value="${t}" ${t===valAtual?'selected':''}>${t}</option>`).join("");
+  }
+
+  // Filtra
+  const filtrados = todos.filter(a => {
+    if (filtroNome  && !a.nome.toLowerCase().includes(filtroNome)) return false;
+    if (filtroTurma && a.turma !== filtroTurma) return false;
+    if (filtroAula  && !a.aulas[filtroAula]) return false;
+    if (filtroStatus === "ativo")      { if(!a.ultimoLogin) return false; return new Date(a.ultimoLogin).toDateString()===new Date().toDateString(); }
+    if (filtroStatus === "concluiu")   return Object.keys(a.aulas).length > 0;
+    if (filtroStatus === "cadastrado") return !a.ultimoLogin || a.totalLogins === 0;
+    return true;
+  });
+
+  // Resumo
+  const totalAlunos  = todos.length;
+  const logouHoje    = todos.filter(a=>a.ultimoLogin&&new Date(a.ultimoLogin).toDateString()===new Date().toDateString()).length;
+  const iniciaram    = todos.filter(a=>Object.keys(a.aulas).length>0).length;
+  const concluiuTudo = todos.filter(a=>Object.keys(a.aulas).length===10).length;
+  const nuncaLogou   = todos.filter(a=>!a.ultimoLogin||a.totalLogins===0).length;
+  const xpMedio      = todos.length>0 ? Math.round(todos.reduce((s,a)=>s+(a.xpTotal||0),0)/todos.length) : 0;
+
+  document.getElementById("dash-resumo").innerHTML = [
+    {icon:"👥",label:"Alunos Cadastrados",val:totalAlunos, cor:"#2563EB",bg:"#DBEAFE"},
+    {icon:"🟢",label:"Logaram Hoje",       val:logouHoje,  cor:"#16A34A",bg:"#DCFCE7"},
+    {icon:"📚",label:"Iniciaram Aulas",    val:iniciaram,  cor:"#7C3AED",bg:"#EDE9FE"},
+    {icon:"🏆",label:"Concluíram Tudo",    val:concluiuTudo,cor:"#D97706",bg:"#FEF3C7"},
+    {icon:"😴",label:"Nunca Logaram",      val:nuncaLogou, cor:"#DC2626",bg:"#FEE2E2"},
+    {icon:"✨",label:"XP Médio",           val:xpMedio,    cor:"#EA580C",bg:"#FFEDD5"},
+  ].map(c=>`
+    <div style="background:${c.bg};border-radius:14px;padding:1.25rem;text-align:center">
+      <div style="font-size:2rem">${c.icon}</div>
+      <div style="font-size:2rem;font-family:'Fredoka One',cursive;color:${c.cor}">${c.val}</div>
+      <div style="font-size:0.8rem;font-weight:700;color:${c.cor};opacity:0.85">${c.label}</div>
+    </div>`).join("");
+
+  document.getElementById("dash-total-alunos").textContent = `${filtrados.length} aluno(s) encontrado(s)`;
+
+  if (filtrados.length === 0) {
+    document.getElementById("dash-tabela").innerHTML =
+      `<div style="padding:3rem;text-align:center;color:#64748B;font-weight:700">😕 Nenhum aluno encontrado.</div>`;
+  } else {
+    const linhas = filtrados.map(a => {
+      const aulasC   = Object.keys(a.aulas).length;
+      const pct      = Math.round((aulasC/10)*100);
+      const totalTent= Object.values(a.aulas).reduce((s,x)=>s+(x.tentativas||1),0);
+      const refizeram= Object.values(a.aulas).filter(x=>(x.tentativas||1)>1).length;
+      const logado   = !!a.ultimoLogin && a.totalLogins > 0;
+      const hoje     = logado && new Date(a.ultimoLogin).toDateString()===new Date().toDateString();
+      const dataLogin= logado ? new Date(a.ultimoLogin).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",year:"2-digit",hour:"2-digit",minute:"2-digit"}) : "—";
+      const dataCad  = new Date(a.dataCadastro).toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit",year:"2-digit"});
+      const statusLogin = !logado
+        ? `<span style="background:#FEE2E2;color:#DC2626;padding:0.25rem 0.7rem;border-radius:50px;font-size:0.78rem;font-weight:800">⚪ Nunca logou</span>`
+        : hoje
+          ? `<span style="background:#DCFCE7;color:#16A34A;padding:0.25rem 0.7rem;border-radius:50px;font-size:0.78rem;font-weight:800">🟢 Hoje</span>`
+          : `<span style="background:#F1F5F9;color:#64748B;padding:0.25rem 0.7rem;border-radius:50px;font-size:0.78rem;font-weight:800">${dataLogin}</span>`;
+      const nomeEsc = a.nome.replace(/'/g,"\\'");
+      return `<tr style="border-bottom:1px solid #f1f5f9">
+        <td style="padding:0.9rem 1.25rem;font-weight:700;white-space:nowrap">
+          <div style="display:flex;align-items:center;gap:0.6rem">
+            <div style="width:36px;height:36px;border-radius:50%;background:#EDE9FE;display:flex;align-items:center;justify-content:center;font-weight:800;color:#7C3AED;font-size:0.9rem;flex-shrink:0">${a.nome.charAt(0).toUpperCase()}</div>
+            <div>
+              <div style="font-size:0.9rem">${a.nome}</div>
+              <div style="font-size:0.72rem;color:#94a3b8">Cad. ${dataCad} • Prof. ${a.cadastradoPor||'—'}</div>
+            </div>
+          </div>
+        </td>
+        <td style="padding:0.9rem 1rem;text-align:center"><span style="background:#EDE9FE;color:#7C3AED;padding:0.25rem 0.7rem;border-radius:50px;font-size:0.78rem;font-weight:800">${a.turma||'—'}</span></td>
+        <td style="padding:0.9rem 1rem;text-align:center">${statusLogin}</td>
+        <td style="padding:0.9rem 1rem;text-align:center;font-weight:700;color:#1e3a5f">${a.totalLogins||0}x</td>
+        <td style="padding:0.9rem 1rem;min-width:160px">
+          <div style="display:flex;align-items:center;gap:0.5rem">
+            <div style="flex:1;background:#f1f5f9;border-radius:50px;height:8px;overflow:hidden">
+              <div style="height:100%;background:${pct===100?'#16A34A':'#7C3AED'};width:${pct}%;border-radius:50px"></div>
+            </div>
+            <span style="font-size:0.8rem;font-weight:800;color:${pct===100?'#16A34A':'#7C3AED'};white-space:nowrap">${aulasC}/10</span>
+          </div>
+        </td>
+        <td style="padding:0.9rem 1rem;text-align:center"><span style="font-family:'Fredoka One',cursive;font-size:1rem;color:#D97706">${a.xpTotal||0} XP</span></td>
+        <td style="padding:0.9rem 1rem;text-align:center"><span style="background:#FEF3C7;color:#D97706;padding:0.25rem 0.7rem;border-radius:50px;font-size:0.78rem;font-weight:800">⭐ Nv. ${a.nivel||1}</span></td>
+        <td style="padding:0.9rem 1rem;text-align:center;font-size:0.82rem;font-weight:700;color:${refizeram>0?'#EA580C':'#94a3b8'}">
+          ${refizeram>0?`🔄 ${refizeram} aula(s)<br><span style="font-size:0.72rem">${totalTent} tentativas</span>`:'—'}
+        </td>
+        <td style="padding:0.9rem 1rem;text-align:center">
+          <button onclick="mostrarDetalheAluno('${nomeEsc}')" style="background:#EDE9FE;color:#7C3AED;border:none;padding:0.35rem 0.7rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer;display:block;width:100%;margin-bottom:0.3rem">📋 Detalhes</button>
+          <button onclick="removerAluno('${nomeEsc}')" style="background:#FEE2E2;color:#DC2626;border:none;padding:0.35rem 0.7rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer;display:block;width:100%">🗑️ Remover</button>
+        </td>
+      </tr>`;
+    }).join("");
+    document.getElementById("dash-tabela").innerHTML = `
+      <table style="width:100%;border-collapse:collapse;font-family:'Nunito',sans-serif;font-size:0.88rem">
+        <thead><tr style="background:#f8fafc;border-bottom:2px solid #e2e8f0">
+          <th style="padding:0.75rem 1.25rem;text-align:left;font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;color:#64748B">Aluno</th>
+          <th style="padding:0.75rem 1rem;text-align:center;font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;color:#64748B">Turma</th>
+          <th style="padding:0.75rem 1rem;text-align:center;font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;color:#64748B">Último Login</th>
+          <th style="padding:0.75rem 1rem;text-align:center;font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;color:#64748B">Logins</th>
+          <th style="padding:0.75rem 1rem;text-align:left;font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;color:#64748B">Progresso</th>
+          <th style="padding:0.75rem 1rem;text-align:center;font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;color:#64748B">XP</th>
+          <th style="padding:0.75rem 1rem;text-align:center;font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;color:#64748B">Nível</th>
+          <th style="padding:0.75rem 1rem;text-align:center;font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;color:#64748B">Refez Quiz</th>
+          <th style="padding:0.75rem 1rem;text-align:center;font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;color:#64748B">Ações</th>
+        </tr></thead>
+        <tbody>${linhas}</tbody>
+      </table>`;
+  }
+
+  // Cards por aula
+  document.getElementById("dash-aulas").innerHTML = AULAS.map(aula => {
+    const conc = todos.filter(a=>a.aulas[aula.id]).length;
+    const tent = todos.reduce((s,a)=>s+((a.aulas[aula.id]?.tentativas)||0),0);
+    const xpMed= conc>0?Math.round(todos.reduce((s,a)=>s+(a.aulas[aula.id]?.xpGanho||0),0)/conc):0;
+    const pct  = todos.length>0?Math.round((conc/todos.length)*100):0;
+    return `<div style="background:#f8fafc;border-radius:12px;padding:1.1rem;border:2px solid ${pct===100?'#16A34A':'#e2e8f0'}">
+      <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
+        <span style="font-size:1.5rem">${aula.emoji}</span>
+        <div><div style="font-weight:800;font-size:0.85rem;color:#1e3a5f">Aula ${aula.id}</div>
+        <div style="font-size:0.72rem;color:#64748B">${aula.titulo}</div></div>
+      </div>
+      <div style="background:#e2e8f0;border-radius:50px;height:6px;margin-bottom:0.5rem;overflow:hidden">
+        <div style="height:100%;background:${aula.cor};width:${pct}%;border-radius:50px"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.78rem;font-weight:700">
+        <span style="color:#64748B">${conc}/${todos.length} (${pct}%)</span>
+        <span style="color:#D97706">${xpMed>0?xpMed+' XP med.':'—'}</span>
+      </div>
+      ${tent>conc?`<div style="margin-top:0.4rem;font-size:0.72rem;color:#EA580C;font-weight:700">🔄 ${tent} tentativas totais</div>`:''}
+    </div>`;
+  }).join("");
+}
+
+async function mostrarDetalheAluno(nome) {
+  const db = await carregarDB();
+  const a  = db[nome];
+  if (!a) return;
+  const dataCad  = new Date(a.dataCadastro).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",year:"2-digit",hour:"2-digit",minute:"2-digit"});
+  const primLog  = a.primeiroLogin ? new Date(a.primeiroLogin).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",year:"2-digit",hour:"2-digit",minute:"2-digit"}) : "Nunca logou";
+  const ultLog   = a.ultimoLogin   ? new Date(a.ultimoLogin).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",year:"2-digit",hour:"2-digit",minute:"2-digit"})   : "—";
+  const linhas = AULAS.map(aula => {
+    const d = a.aulas[aula.id];
+    if (!d) return `<tr style="background:#fafafa"><td style="padding:0.6rem 1rem;font-size:0.83rem">${aula.emoji} Aula ${aula.id} — ${aula.titulo}</td><td colspan="4" style="padding:0.6rem 1rem;text-align:center;color:#94a3b8;font-size:0.78rem">Não concluída</td></tr>`;
+    const dt = new Date(d.dataConclusao).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",year:"2-digit",hour:"2-digit",minute:"2-digit"});
+    return `<tr style="border-bottom:1px solid #f1f5f9">
+      <td style="padding:0.6rem 1rem;font-size:0.83rem;font-weight:700">${aula.emoji} Aula ${aula.id} — ${aula.titulo}</td>
+      <td style="padding:0.6rem 1rem;text-align:center"><span style="background:#DCFCE7;color:#16A34A;padding:0.2rem 0.6rem;border-radius:50px;font-size:0.72rem;font-weight:800">✅ ${dt}</span></td>
+      <td style="padding:0.6rem 1rem;text-align:center;font-weight:800;color:#D97706">${d.acertos}/5</td>
+      <td style="padding:0.6rem 1rem;text-align:center;font-weight:800;color:#7C3AED">${d.xpGanho} XP</td>
+      <td style="padding:0.6rem 1rem;text-align:center;color:${(d.tentativas||1)>1?'#EA580C':'#64748B'};font-weight:700">${d.tentativas||1}x ${(d.tentativas||1)>1?'🔄':''}</td>
+    </tr>`;
+  }).join("");
+  const nomeEsc = nome.replace(/'/g,"\\'");
+  const html = `<div style="padding:1.5rem">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap">
+      <div style="width:52px;height:52px;border-radius:50%;background:#EDE9FE;display:flex;align-items:center;justify-content:center;font-weight:800;color:#7C3AED;font-size:1.4rem;flex-shrink:0">${a.nome.charAt(0).toUpperCase()}</div>
+      <div>
+        <div style="font-family:'Fredoka One',cursive;font-size:1.4rem;color:#1e3a5f">${a.nome}</div>
+        <div style="font-size:0.82rem;color:#64748B;font-weight:700">Turma: ${a.turma||'—'} • Cad. por Prof. ${a.cadastradoPor||'—'} em ${dataCad}</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:0.5rem;flex-wrap:wrap">
+        <div style="background:#DBEAFE;border-radius:10px;padding:0.5rem 0.9rem;text-align:center"><div style="font-family:'Fredoka One',cursive;font-size:1.2rem;color:#2563EB">${a.xpTotal||0}</div><div style="font-size:0.68rem;color:#2563EB;font-weight:700">XP Total</div></div>
+        <div style="background:#EDE9FE;border-radius:10px;padding:0.5rem 0.9rem;text-align:center"><div style="font-family:'Fredoka One',cursive;font-size:1.2rem;color:#7C3AED">${Object.keys(a.aulas).length}/10</div><div style="font-size:0.68rem;color:#7C3AED;font-weight:700">Aulas</div></div>
+        <div style="background:#DCFCE7;border-radius:10px;padding:0.5rem 0.9rem;text-align:center"><div style="font-family:'Fredoka One',cursive;font-size:1.2rem;color:#16A34A">${a.totalLogins||0}</div><div style="font-size:0.68rem;color:#16A34A;font-weight:700">Logins</div></div>
+      </div>
+    </div>
+    <div style="background:#f8fafc;border-radius:10px;padding:0.8rem 1rem;margin-bottom:1rem;display:flex;gap:1.5rem;flex-wrap:wrap;font-size:0.82rem;font-weight:700;color:#64748B">
+      <span>🔐 1º Login: ${primLog}</span><span>🕐 Último: ${ultLog}</span><span>⭐ Nível: ${a.nivel||1}</span>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-family:'Nunito',sans-serif;font-size:0.85rem">
+      <thead><tr style="background:#f8fafc;border-bottom:2px solid #e2e8f0">
+        <th style="padding:0.5rem 1rem;text-align:left;color:#64748B;font-size:0.72rem;text-transform:uppercase">Aula</th>
+        <th style="padding:0.5rem 1rem;text-align:center;color:#64748B;font-size:0.72rem;text-transform:uppercase">Conclusão</th>
+        <th style="padding:0.5rem 1rem;text-align:center;color:#64748B;font-size:0.72rem;text-transform:uppercase">Acertos</th>
+        <th style="padding:0.5rem 1rem;text-align:center;color:#64748B;font-size:0.72rem;text-transform:uppercase">XP</th>
+        <th style="padding:0.5rem 1rem;text-align:center;color:#64748B;font-size:0.72rem;text-transform:uppercase">Tentativas</th>
+      </tr></thead>
+      <tbody>${linhas}</tbody>
+    </table>
+    <div style="margin-top:1.25rem;display:flex;gap:0.75rem;flex-wrap:wrap">
+      <button onclick="fecharDetalhe()" style="background:#7C3AED;color:#fff;border:none;padding:0.7rem 2rem;border-radius:10px;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer">✕ Fechar</button>
+      <button onclick="removerAluno('${nomeEsc}')" style="background:#FEE2E2;color:#DC2626;border:none;padding:0.7rem 1.5rem;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer">🗑️ Remover Aluno</button>
+    </div>
+  </div>`;
+  const modal = document.getElementById("modalConquista");
+  modal.innerHTML = `<div style="background:#fff;border-radius:16px;max-width:750px;width:100%;max-height:90vh;overflow-y:auto">${html}</div>`;
+  modal.classList.add("ativo");
+}
+
+function fecharDetalhe() {
+  const modal = document.getElementById("modalConquista");
+  modal.classList.remove("ativo");
+  modal.innerHTML = `<div class="modal-conquista"><span class="trophy">🏆</span><h2 id="modalTitulo">Conquista Desbloqueada!</h2><p id="modalDesc">Você ganhou uma nova conquista!</p><button class="btn-fechar-modal" onclick="fecharModal()">Arrasou! 🎉</button></div>`;
+}
+
+async function exportarRelatorio() {
+  const db = await carregarDB();
+  let csv = "Nome,Turma,Cadastrado Por,Data Cadastro,Primeiro Login,Último Login,Total Logins,Aulas Concluídas,XP Total,Nível,Refez Quiz\n";
+  Object.values(db).filter(a=>a.nome).forEach(a => {
+    const aulasC  = Object.keys(a.aulas||{}).length;
+    const refiz   = Object.values(a.aulas||{}).filter(x=>(x.tentativas||1)>1).length;
+    const primLog = a.primeiroLogin?new Date(a.primeiroLogin).toLocaleString("pt-BR"):"—";
+    const ultLog  = a.ultimoLogin  ?new Date(a.ultimoLogin).toLocaleString("pt-BR")  :"—";
+    const dataCad = a.dataCadastro ?new Date(a.dataCadastro).toLocaleString("pt-BR") :"—";
+    csv += `"${a.nome}","${a.turma||''}","${a.cadastradoPor||''}","${dataCad}","${primLog}","${ultLog}",${a.totalLogins||0},${aulasC},${a.xpTotal||0},${a.nivel||1},${refiz}\n`;
+  });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8;"}));
+  link.download = `TecnoHeroi_Relatorio_${new Date().toLocaleDateString("pt-BR").replace(/\//g,"_")}.csv`;
+  link.click();
+}
+
+async function limparDados() {
+  if (confirm("⚠️ Apagar TODOS os dados? Esta ação não pode ser desfeita!")) {
+    if (confirm("🔴 Confirmar exclusão definitiva?")) {
+      const db = await carregarDB();
+      for (const nome of Object.keys(db)) {
+        await window._fb.removerAluno(nome);
+      }
+      invalidarCache();
+      renderizarDashboard();
+      alert("✅ Dados apagados!");
+    }
+  }
+}
+
+// =================== INICIALIZAÇÃO ===================
+
+const fundo = document.getElementById("estrelasFundo");
+for (let i = 0; i < 20; i++) {
+  const s = document.createElement("span");
+  s.className = "estrela";
+  s.textContent = ["⭐","✨","🌟"][Math.floor(Math.random()*3)];
+  s.style.left = Math.random()*100 + "%";
+  s.style.top  = Math.random()*100 + "%";
+  s.style.animationDelay = Math.random()*3 + "s";
+  fundo.appendChild(s);
+}
+
+document.getElementById("inputNome").addEventListener("keydown", e => {
+  if (e.key === "Enter") iniciarCurso();
+});
+
+document.addEventListener("click", e => {
+  const lista = document.getElementById("listaSugestoes");
+  const input = document.getElementById("inputNome");
+  if (lista && !lista.contains(e.target) && e.target !== input) lista.style.display = "none";
+});
+
+function mostrarBloqueada() {
+  alert("🔒 Complete a aula anterior primeiro para desbloquear esta missão!");
+}
+
+function abrirAula(idAula) {
+  const aula = AULAS.find(a => a.id === idAula);
+  estado.aulaAtual = aula;
+  
+  document.getElementById("tela-aulas").style.display = "none";
+  const telaAula = document.getElementById("tela-aula");
+  telaAula.style.display = "block";
+
+  telaAula.innerHTML = `
+    <div class="aula-header">
+      <button class="btn-voltar" onclick="voltarParaAulas()">← Voltar</button>
+      <h1 class="aula-titulo-header">${aula.emoji} ${aula.titulo}</h1>
+    </div>
+    <div class="progresso-aula">
+      <span class="progresso-aula-texto">⏱️ Tempo estimado: ${aula.tempo}</span>
+      <div class="barra-progresso" style="flex:1">
+        <div class="barra-progresso-fill" style="width:${(aula.id/AULAS.length*100).toFixed(0)}%; background:${aula.cor}"></div>
+      </div>
+      <span style="font-size:0.85rem;font-weight:700;color:var(--cinza)">Aula ${aula.id} de 10</span>
+    </div>
+    ${aula.video ? `
+    <div class="video-section">
+      <div class="video-header">
+        <span style="font-size:1.5rem">▶️</span>
+        Vídeo da Aula
+      </div>
+      <div class="video-body">
+        <p class="video-descricao">🎬 <strong>${aula.video.titulo}</strong><br>${aula.video.descricao}</p>
+        <a href="https://www.youtube.com/watch?v=${aula.video.id}" target="_blank" rel="noopener" class="video-play-card" onclick="void(0)">
+          <div class="video-thumb">
+            <img src="https://img.youtube.com/vi/${aula.video.id}/hqdefault.jpg" alt="Thumbnail do vídeo" onerror="this.style.display='none'">
+            <div class="video-play-btn">
+              <svg viewBox="0 0 68 48" width="68" height="48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#ff0000"/><path d="M45 24 27 14v20" fill="#fff"/></svg>
+            </div>
+          </div>
+          <div class="video-play-info">
+            <span class="video-play-titulo">${aula.video.titulo}</span>
+            <span class="video-play-sub">▶ Clique para assistir no YouTube (abre em nova aba)</span>
+          </div>
+        </a>
+        <div class="video-aviso">💡 O vídeo abre no YouTube em uma nova aba. Após assistir, volte aqui para continuar a aula!</div>
+      </div>
+    </div>` : ''}
+    <div class="secoes-container" id="secoesContainer">
+      ${aula.secoes.map((secao,i) => `
+        <div class="secao-card">
+          <div class="secao-header" style="background:${secao.cor}">
+            <span style="font-size:1.5rem">${secao.icone}</span>
+            ${secao.titulo}
+          </div>
+          <div class="secao-body">${secao.conteudo}</div>
+        </div>
+      `).join('')}
+    </div>
+    <button class="btn-iniciar-quiz" onclick="iniciarQuiz()">
+      🎮 Hora do Desafio! Iniciar Quiz →
+    </button>
+    <div class="quiz-container" id="quizContainer" style="margin-top:2rem;display:none"></div>
+  `;
+}
+
+function voltarParaAulas() {
+  document.getElementById("tela-aula").style.display = "none";
+  document.getElementById("tela-aulas").style.display = "block";
+  renderizarAulas();
+}
+
+function iniciarQuiz() {
+  const aula = estado.aulaAtual;
+  const jaFezQuiz = estado.aulasCompletas.has(aula.id);
+  // Conta tentativa se já concluiu (está refazendo) ou se está reiniciando
+  if (estado.quizAtual.perguntaIndex > 0 || jaFezQuiz) {
+    registrarTentativaQuiz(aula.id);
+  }
+  estado.quizAtual = { perguntaIndex: 0, pontos: 0, respondida: false, tentativas: (estado.quizAtual.tentativas || 0) + 1 };
+  document.getElementById("quizContainer").style.display = "block";
+  document.getElementById("quizContainer").scrollIntoView({ behavior: 'smooth' });
+  renderizarPergunta();
+}
+
+function renderizarPergunta() {
+  const aula = estado.aulaAtual;
+  const { perguntaIndex } = estado.quizAtual;
+  const total = aula.quiz.length;
+  
+  if (perguntaIndex >= total) {
+    mostrarResultado();
+    return;
+  }
+
+  const q = aula.quiz[perguntaIndex];
+  const letras = ['A', 'B', 'C', 'D'];
+
+  document.getElementById("quizContainer").innerHTML = `
+    <div class="quiz-header">
+      <h2>🎮 Desafio do TecnoHerói!</h2>
+      <p>Teste seus conhecimentos sobre ${aula.titulo}</p>
+    </div>
+    <div class="quiz-body">
+      <div class="quiz-contador">
+        <span class="quiz-numero">Pergunta ${perguntaIndex+1} de ${total}</span>
+        <span class="quiz-pontos">⭐ ${estado.quizAtual.pontos} pts</span>
+      </div>
+      <div class="barra-progresso" style="margin-bottom:1.5rem">
+        <div class="barra-progresso-fill" style="width:${(perguntaIndex/total)*100}%"></div>
+      </div>
+      <p class="quiz-pergunta">${q.pergunta}</p>
+      <div class="opcoes-grid">
+        ${q.opcoes.map((opcao,i) => `
+          <button class="opcao-btn" onclick="responder(${i})" id="opcao${i}">
+            <span class="opcao-letra">${letras[i]}</span>
+            ${opcao}
+          </button>
+        `).join('')}
+      </div>
+      <div class="feedback-resposta" id="feedbackResposta"></div>
+      <button class="btn-quiz btn-proxima" id="btnProxima" onclick="proximaPergunta()">
+        ${perguntaIndex + 1 < total ? 'Próxima Pergunta →' : 'Ver Resultado! 🏆'}
+      </button>
+    </div>`;
+}
+
+function responder(indice) {
+  if (estado.quizAtual.respondida) return;
+  estado.quizAtual.respondida = true;
+
+  const aula = estado.aulaAtual;
+  const q = aula.quiz[estado.quizAtual.perguntaIndex];
+  const correto = indice === q.correta;
+  
+  const btns = document.querySelectorAll('.opcao-btn');
+  btns.forEach(b => b.disabled = true);
+  btns[q.correta].classList.add('correta');
+  if (!correto) btns[indice].classList.add('errada');
+
+  if (correto) estado.quizAtual.pontos += 20;
+
+  const feedback = document.getElementById("feedbackResposta");
+  feedback.style.display = "flex";
+  feedback.className = `feedback-resposta ${correto ? 'correto' : 'errado'}`;
+  feedback.innerHTML = `<span>${correto ? '🎉' : '😅'}</span> ${correto ? 'Correto! ' : 'Quase! '} ${q.explicacao}`;
+
+  document.getElementById("btnProxima").style.display = "block";
+}
+
+function proximaPergunta() {
+  estado.quizAtual.perguntaIndex++;
+  estado.quizAtual.respondida = false;
+  renderizarPergunta();
+}
+
+function mostrarResultado() {
+  const aula = estado.aulaAtual;
+  const { pontos } = estado.quizAtual;
+  const maxPontos = aula.quiz.length * 20;
+  const pct = Math.round((pontos / maxPontos) * 100);
+  const acertos = pontos / 20;
+  const passou = pct >= 80;
+
+  let emoji, titulo, msg;
+  if (pct === 100) { emoji = "🏆"; titulo = "PERFEITO! Incrível!"; msg = "Você acertou tudo! É um verdadeiro TecnoHerói!"; }
+  else if (pct >= 80) { emoji = "🌟"; titulo = "Muito bem!"; msg = "Você acertou " + acertos + " de 5! Missão cumprida — pode avançar! 🚀"; }
+  else if (pct >= 60) { emoji = "😅"; titulo = "Quase lá!"; msg = "Você acertou " + acertos + " de 5. Precisa de 4 acertos (80%) para avançar. Revise o conteúdo e tente de novo!"; }
+  else { emoji = "💪"; titulo = "Continue tentando!"; msg = "Você acertou " + acertos + " de 5. Precisa de 4 acertos (80%) para avançar. Releia a aula e tente novamente!"; }
+
+  const xpGanho = passou ? Math.round((pct / 100) * aula.xp) : 0;
+
+  document.getElementById("quizContainer").innerHTML = `
+    <div class="quiz-resultado" style="display:block">
+      <span class="resultado-emoji">${emoji}</span>
+      <h2 class="resultado-titulo">${titulo}</h2>
+      <p>${msg}</p>
+      <div class="resultado-pontuacao">${acertos}/5</div>
+      ${passou ? `<div class="resultado-xp">+${xpGanho} XP ganhos!</div>` : `
+        <div style="background:#FEE2E2;color:#DC2626;padding:0.75rem 1.5rem;border-radius:50px;font-weight:800;font-size:1rem;display:inline-block;margin:0.75rem 0;">
+          ⚠️ Mínimo: 4 acertos para avançar
+        </div>`}
+      <br><br>
+      ${passou
+        ? `<button class="btn-concluir-aula" onclick="concluirAula(${xpGanho}, ${pct === 100})">✅ Concluir Aula</button>`
+        : `<button class="btn-concluir-aula" style="background:#64748B;cursor:not-allowed;opacity:0.5;" disabled>🔒 Avançar Bloqueado</button>`}
+      <button class="btn-repetir-quiz" onclick="iniciarQuiz()">
+        🔄 ${passou ? 'Repetir Quiz' : 'Tentar Novamente'}
+      </button>
+    </div>`;
+}
+
+function concluirAula(xpGanho, perfeito) {
+  const aula = estado.aulaAtual;
+  const acertos = xpGanho > 0 ? Math.round((xpGanho / aula.xp) * 5) : 4;
+  if (!estado.aulasCompletas.has(aula.id)) {
+    estado.aulasCompletas.add(aula.id);
+    estado.xpTotal += xpGanho;
+    calcularNivel();
+    verificarConquistas(perfeito);
+    atualizarHeader();
+    registrarConclusaoAula(aula.id, xpGanho, acertos, 5, estado.quizAtual.tentativas || 1);
+  }
+  voltarParaAulas();
+}
+
+function calcularNivel() {
+  const niveis = [0, 100, 250, 450, 700, 1000, 1350, 1750];
+  for (let i = niveis.length - 1; i >= 0; i--) {
+    if (estado.xpTotal >= niveis[i]) {
+      estado.nivel = i + 1;
+      break;
+    }
+  }
+}
+
+function verificarConquistas(perfeito) {
+  const novas = [];
+
+  if (estado.aulasCompletas.size === 1 && !estado.conquistasDesbloqueadas.has("primeira_aula")) {
+    novas.push("primeira_aula");
+  }
+  if (estado.aulasCompletas.size === 5 && !estado.conquistasDesbloqueadas.has("metade")) {
+    novas.push("metade");
+  }
+  if (estado.aulasCompletas.size === 10 && !estado.conquistasDesbloqueadas.has("todas_aulas")) {
+    novas.push("todas_aulas");
+  }
+  if (estado.xpTotal >= 500 && !estado.conquistasDesbloqueadas.has("xp_500")) {
+    novas.push("xp_500");
+  }
+  if (perfeito && !estado.conquistasDesbloqueadas.has("perfect_quiz")) {
+    novas.push("perfect_quiz");
+  }
+  if (estado.nivel >= 5 && !estado.conquistasDesbloqueadas.has("nivel5")) {
+    novas.push("nivel5");
+  }
+
+  novas.forEach(id => estado.conquistasDesbloqueadas.add(id));
+
+  if (novas.length > 0) {
+    const conquista = CONQUISTAS.find(c => c.id === novas[0]);
+    setTimeout(() => mostrarModalConquista(conquista), 800);
+  }
+}
+
+function fecharDetalhe() {
+  const modal = document.getElementById("modalConquista");
+  modal.classList.remove("ativo");
+  // Restaura HTML original do modal de conquista
+  modal.innerHTML = `<div class="modal-conquista">
+    <span class="trophy">🏆</span>
+    <h2 id="modalTitulo">Conquista Desbloqueada!</h2>
+    <p id="modalDesc">Você ganhou uma nova conquista!</p>
+    <button class="btn-fechar-modal" onclick="fecharModal()">Arrasou! 🎉</button>
+  </div>`;
+}
+
+function fecharModal() {
+  document.getElementById("modalConquista").classList.remove("ativo");
+}
+
+function mostrarModalConquista(conquista) {
+  // Garante que o HTML do modal está correto antes de exibir
+  const modal = document.getElementById("modalConquista");
+  modal.innerHTML = `<div class="modal-conquista">
+    <span class="trophy">${conquista.icone}</span>
+    <h2 id="modalTitulo">Conquista Desbloqueada!</h2>
+    <p id="modalDesc">${conquista.titulo} — ${conquista.desc}</p>
+    <button class="btn-fechar-modal" onclick="fecharModal()">Arrasou! 🎉</button>
+  </div>`;
+  modal.classList.add("ativo");
+}
+
+function renderizarConquistas() {
+  const grid = document.getElementById("conquistasGrid");
+  grid.innerHTML = CONQUISTAS.map(c => {
+    const desbloqueada = estado.conquistasDesbloqueadas.has(c.id);
+    return `<div class="conquista-item ${desbloqueada ? 'desbloqueada' : 'bloqueada-c'}">
+      <span>${c.icone}</span> ${c.titulo}
+    </div>`;
+  }).join('');
+}
+
+// FIM - funções principais
+</script>
+</body>
+</html>
