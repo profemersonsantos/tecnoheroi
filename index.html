@@ -1060,22 +1060,54 @@
 <!-- ===== TELA LOGIN / CADASTRO PROFESSOR ===== -->
 <div id="tela-admin-login" style="display:none;min-height:100vh;background:linear-gradient(135deg,#1e3a5f,#0f2027);align-items:center;justify-content:center;flex-direction:column;padding:2rem">
 
-  <!-- PASSO 1: Identificação do professor -->
-  <div id="admin-passo1" style="background:#fff;border-radius:20px;padding:2.5rem;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.4)">
+  <!-- PAINEL: LOGIN -->
+  <div id="admin-painel-login" style="background:#fff;border-radius:20px;padding:2.5rem;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.4)">
     <div style="text-align:center;margin-bottom:1.5rem">
       <div style="font-size:3rem">👨‍🏫</div>
       <h2 style="font-family:'Fredoka One',cursive;font-size:1.8rem;color:#1e3a5f;margin-bottom:0.3rem">Área do Professor</h2>
-      <p style="color:#64748B;font-size:0.9rem">Digite seu nome para continuar</p>
+      <p style="color:#64748B;font-size:0.9rem">Entre com sua conta ou crie uma nova</p>
     </div>
-    <label style="display:block;font-weight:800;font-size:0.85rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">👤 Primeiro Nome do Professor</label>
-    <input type="text" id="inputNomeProf" placeholder="Ex: Carlos" maxlength="40" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box" onkeydown="if(event.key==='Enter')document.getElementById('inputTurmaProf').focus()">
-    <label style="display:block;font-weight:800;font-size:0.85rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">🏫 Turma que Leciona</label>
-    <input type="text" id="inputTurmaProf" placeholder="Ex: 5º Ano A" maxlength="30" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box" onkeydown="if(event.key==='Enter')irParaSenhaProf()">
-    <label style="display:block;font-weight:800;font-size:0.85rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">🔑 Senha de Acesso</label>
-    <input type="password" id="inputSenhaAdmin" placeholder="Senha do professor" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box" onkeydown="if(event.key==='Enter')loginAdmin()">
+
+    <label style="display:block;font-weight:800;font-size:0.85rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">👤 Nome do Professor</label>
+    <input type="text" id="inputNomeProf" placeholder="Ex: Carlos Silva" maxlength="60" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box">
+
+    <label style="display:block;font-weight:800;font-size:0.85rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">🔑 Senha</label>
+    <input type="password" id="inputSenhaAdmin" placeholder="Sua senha" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box" onkeydown="if(event.key==='Enter')loginAdmin()">
+
     <div id="erroAdmin" style="color:#DC2626;font-size:0.85rem;font-weight:700;margin-bottom:0.75rem;display:none;background:#FEE2E2;padding:0.6rem 0.9rem;border-radius:8px"></div>
+
     <button onclick="loginAdmin()" style="width:100%;padding:1rem;background:linear-gradient(135deg,#1e3a5f,#2563EB);color:#fff;border:none;border-radius:10px;font-family:'Fredoka One',cursive;font-size:1.2rem;cursor:pointer;margin-bottom:0.75rem;transition:transform 0.15s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">🔓 Entrar no Painel</button>
+
+    <div style="text-align:center;margin:0.5rem 0;color:#94a3b8;font-size:0.85rem;font-weight:700">— ou —</div>
+
+    <button onclick="mostrarCadastroProf()" style="width:100%;padding:0.9rem;background:#EDE9FE;color:#7C3AED;border:none;border-radius:10px;font-family:'Fredoka One',cursive;font-size:1.1rem;cursor:pointer;margin-bottom:0.75rem">✨ Criar Nova Conta</button>
     <button onclick="voltarParaInicio()" style="width:100%;padding:0.8rem;background:transparent;color:#64748B;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer">← Voltar</button>
+  </div>
+
+  <!-- PAINEL: CADASTRO DE NOVO PROFESSOR -->
+  <div id="admin-painel-cadastro" style="display:none;background:#fff;border-radius:20px;padding:2.5rem;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.4)">
+    <div style="text-align:center;margin-bottom:1.5rem">
+      <div style="font-size:3rem">✨</div>
+      <h2 style="font-family:'Fredoka One',cursive;font-size:1.8rem;color:#7C3AED;margin-bottom:0.3rem">Criar Conta</h2>
+      <p style="color:#64748B;font-size:0.9rem">Preencha os dados para se cadastrar</p>
+    </div>
+
+    <label style="display:block;font-weight:800;font-size:0.85rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">👤 Nome Completo</label>
+    <input type="text" id="inputNomeProfCad" placeholder="Ex: Carlos Silva" maxlength="60" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box">
+
+    <label style="display:block;font-weight:800;font-size:0.85rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">🏫 Turma que Leciona</label>
+    <input type="text" id="inputTurmaProfCad" placeholder="Ex: 5B" maxlength="30" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box">
+
+    <label style="display:block;font-weight:800;font-size:0.85rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">🔑 Criar Senha</label>
+    <input type="password" id="inputSenhaProfCad" placeholder="Mínimo 4 caracteres" maxlength="40" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box">
+
+    <label style="display:block;font-weight:800;font-size:0.85rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">🔑 Confirmar Senha</label>
+    <input type="password" id="inputSenhaConfCad" placeholder="Repita a senha" maxlength="40" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box" onkeydown="if(event.key==='Enter')cadastrarProf()">
+
+    <div id="erroCadProf" style="color:#DC2626;font-size:0.85rem;font-weight:700;margin-bottom:0.75rem;display:none;background:#FEE2E2;padding:0.6rem 0.9rem;border-radius:8px"></div>
+
+    <button onclick="cadastrarProf()" style="width:100%;padding:1rem;background:linear-gradient(135deg,#7C3AED,#2563EB);color:#fff;border:none;border-radius:10px;font-family:'Fredoka One',cursive;font-size:1.2rem;cursor:pointer;margin-bottom:0.75rem;transition:transform 0.15s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">✅ Criar Minha Conta</button>
+    <button onclick="mostrarLoginProf()" style="width:100%;padding:0.8rem;background:transparent;color:#64748B;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer">← Já tenho conta</button>
   </div>
 </div>
 
@@ -2749,7 +2781,7 @@ let estado = {
 // =================== PERSISTÊNCIA FIREBASE (NUVEM) ===================
 // O progresso fica salvo online — funciona em qualquer Chromebook!
 
-const ADMIN_SENHA = "prof2025";
+// Senha única global removida — cada professor cria sua própria senha
 
 // Cache local para não travar a tela a cada ação
 let _cacheDB = null;
@@ -2831,13 +2863,30 @@ async function registrarTentativaQuiz(idAula) {
 
 // =================== FUNÇÕES PRINCIPAIS ===================
 
-let profLogado = { nome: "", turma: "" };
+// =================== SISTEMA DE PROFESSORES ===================
+// Cada professor tem conta própria com senha escolhida por ele.
+// Alunos são únicos na escola toda, mas cada professor só vê os seus.
+
+let profLogado = { id: "", nome: "", turma: "" };
 
 function mostrarLoginAdmin() {
   document.getElementById("tela-boas-vindas").style.display = "none";
-  const tela = document.getElementById("tela-admin-login");
-  tela.style.display = "flex";
+  document.getElementById("tela-admin-login").style.display = "flex";
+  mostrarLoginProf();
   setTimeout(() => document.getElementById("inputNomeProf").focus(), 100);
+}
+
+function mostrarLoginProf() {
+  document.getElementById("admin-painel-login").style.display = "block";
+  document.getElementById("admin-painel-cadastro").style.display = "none";
+  document.getElementById("erroAdmin").style.display = "none";
+}
+
+function mostrarCadastroProf() {
+  document.getElementById("admin-painel-login").style.display = "none";
+  document.getElementById("admin-painel-cadastro").style.display = "block";
+  document.getElementById("erroCadProf").style.display = "none";
+  setTimeout(() => document.getElementById("inputNomeProfCad").focus(), 100);
 }
 
 function voltarParaInicio() {
@@ -2845,35 +2894,117 @@ function voltarParaInicio() {
   document.getElementById("tela-boas-vindas").style.display = "flex";
 }
 
-function loginAdmin() {
+// Hash simples para não guardar senha em texto puro
+function hashSenha(senha) {
+  let h = 0;
+  for (let i = 0; i < senha.length; i++) {
+    h = Math.imul(31, h) + senha.charCodeAt(i) | 0;
+  }
+  return h.toString(36);
+}
+
+async function cadastrarProf() {
+  const nome   = document.getElementById("inputNomeProfCad").value.trim();
+  const turma  = document.getElementById("inputTurmaProfCad").value.trim();
+  const senha  = document.getElementById("inputSenhaProfCad").value;
+  const conf   = document.getElementById("inputSenhaConfCad").value;
+  const erro   = document.getElementById("erroCadProf");
+  erro.style.display = "none";
+
+  if (!nome || nome.length < 3)  { erro.textContent = "❌ Informe seu nome completo (mín. 3 caracteres)!"; erro.style.display = "block"; return; }
+  if (!turma)                     { erro.textContent = "❌ Informe a turma!"; erro.style.display = "block"; return; }
+  if (senha.length < 4)           { erro.textContent = "❌ A senha deve ter pelo menos 4 caracteres!"; erro.style.display = "block"; return; }
+  if (senha !== conf)             { erro.textContent = "❌ As senhas não coincidem!"; erro.style.display = "block"; return; }
+
+  // ID único = nome normalizado
+  const profId = "prof_" + nome.toLowerCase().replace(/\s+/g, "_").replace(/[^a-z0-9_]/g, "");
+
+  try {
+    const btn = document.querySelector("#admin-painel-cadastro button[onclick='cadastrarProf()']");
+    if (btn) { btn.textContent = "⏳ Criando conta..."; btn.disabled = true; }
+
+    // Verifica se já existe
+    const existente = await window._fb.carregarAluno("__prof__" + profId);
+    if (existente) {
+      erro.textContent = `⚠️ Já existe uma conta com o nome "${nome}". Tente fazer login ou use um nome diferente.`;
+      erro.style.display = "block";
+      if (btn) { btn.textContent = "✅ Criar Minha Conta"; btn.disabled = false; }
+      return;
+    }
+
+    await window._fb.salvarAluno("__prof__" + profId, {
+      tipo: "professor",
+      nome, turma,
+      senhaHash: hashSenha(senha),
+      dataCadastro: new Date().toISOString()
+    });
+
+    // Loga direto após cadastro
+    profLogado = { id: profId, nome, turma };
+    _abrirDashboard();
+    if (btn) { btn.textContent = "✅ Criar Minha Conta"; btn.disabled = false; }
+  } catch(e) {
+    erro.textContent = "❌ Erro de conexão. Verifique a internet e tente novamente.";
+    erro.style.display = "block";
+  }
+}
+
+async function loginAdmin() {
   const nome  = document.getElementById("inputNomeProf").value.trim();
-  const turma = document.getElementById("inputTurmaProf").value.trim();
   const senha = document.getElementById("inputSenhaAdmin").value;
   const erro  = document.getElementById("erroAdmin");
   erro.style.display = "none";
-  if (!nome)  { erro.textContent="❌ Informe seu nome!"; erro.style.display="block"; document.getElementById("inputNomeProf").focus(); return; }
-  if (!turma) { erro.textContent="❌ Informe a turma!"; erro.style.display="block"; document.getElementById("inputTurmaProf").focus(); return; }
-  if (senha !== ADMIN_SENHA) {
-    erro.textContent = "❌ Senha incorreta!";
+
+  if (!nome)  { erro.textContent = "❌ Informe seu nome!"; erro.style.display = "block"; return; }
+  if (!senha) { erro.textContent = "❌ Informe sua senha!"; erro.style.display = "block"; return; }
+
+  const profId = "prof_" + nome.toLowerCase().replace(/\s+/g, "_").replace(/[^a-z0-9_]/g, "");
+  const btn = document.querySelector("#admin-painel-login button[onclick='loginAdmin()']");
+  if (btn) { btn.textContent = "⏳ Entrando..."; btn.disabled = true; }
+
+  try {
+    const prof = await window._fb.carregarAluno("__prof__" + profId);
+    if (!prof) {
+      erro.textContent = "❌ Professor não encontrado. Verifique o nome ou crie uma nova conta.";
+      erro.style.display = "block";
+      if (btn) { btn.textContent = "🔓 Entrar no Painel"; btn.disabled = false; }
+      return;
+    }
+    if (prof.senhaHash !== hashSenha(senha)) {
+      erro.textContent = "❌ Senha incorreta!";
+      erro.style.display = "block";
+      document.getElementById("inputSenhaAdmin").value = "";
+      document.getElementById("inputSenhaAdmin").focus();
+      if (btn) { btn.textContent = "🔓 Entrar no Painel"; btn.disabled = false; }
+      return;
+    }
+    profLogado = { id: profId, nome: prof.nome, turma: prof.turma };
+    _abrirDashboard();
+    if (btn) { btn.textContent = "🔓 Entrar no Painel"; btn.disabled = false; }
+  } catch(e) {
+    erro.textContent = "❌ Erro de conexão. Verifique a internet e tente novamente.";
     erro.style.display = "block";
-    document.getElementById("inputSenhaAdmin").value = "";
-    document.getElementById("inputSenhaAdmin").focus();
-    return;
+    if (btn) { btn.textContent = "🔓 Entrar no Painel"; btn.disabled = false; }
   }
-  profLogado = { nome, turma };
+}
+
+function _abrirDashboard() {
   document.getElementById("tela-admin-login").style.display = "none";
   document.getElementById("tela-dashboard").style.display = "block";
-  document.getElementById("dashNomeProf").textContent = `👨‍🏫 Prof. ${nome}`;
-  document.getElementById("dashTurmaProf").textContent = `Turma: ${turma} — TecnoHerói`;
+  document.getElementById("dashNomeProf").textContent = `👨‍🏫 Prof. ${profLogado.nome}`;
+  document.getElementById("dashTurmaProf").textContent = `Turma: ${profLogado.turma} — TecnoHerói`;
+  // Limpa inputs
+  ["inputNomeProf","inputSenhaAdmin","inputNomeProfCad","inputTurmaProfCad","inputSenhaProfCad","inputSenhaConfCad"].forEach(id => {
+    const el = document.getElementById(id); if(el) el.value = "";
+  });
   renderizarDashboard();
 }
 
 function sairAdmin() {
   document.getElementById("tela-dashboard").style.display = "none";
   document.getElementById("tela-boas-vindas").style.display = "flex";
-  ["inputNomeProf","inputTurmaProf","inputSenhaAdmin"].forEach(id => { const el=document.getElementById(id); if(el) el.value=""; });
   document.getElementById("erroAdmin").style.display = "none";
-  profLogado = { nome:"", turma:"" };
+  profLogado = { id: "", nome: "", turma: "" };
 }
 
 function mostrarCadastroAluno() {
@@ -2938,7 +3069,7 @@ async function filtrarSugestoesAluno(valor) {
   if (valor.trim().length < 2) { lista.style.display="none"; return; }
   const db = await carregarDB();
   const v = valor.toLowerCase();
-  const matches = Object.values(db).filter(a => a.nome && a.nome.toLowerCase().includes(v));
+  const matches = Object.values(db).filter(a => a.nome && a.tipo !== "professor" && a.nome.toLowerCase().includes(v));
   if (matches.length === 0) { lista.style.display="none"; return; }
   lista.innerHTML = matches.map(a => `
     <div onclick="selecionarAluno('${a.nome.replace(/'/g,"\\'")}')"
@@ -2975,7 +3106,7 @@ async function iniciarCurso() {
 
   try {
     const db = await carregarDB();
-    const alunoKey = Object.keys(db).find(k => k.toLowerCase() === nome.toLowerCase());
+    const alunoKey = Object.keys(db).find(k => !k.startsWith("__prof__") && k.toLowerCase() === nome.toLowerCase());
     if (!alunoKey) {
       if (erro) {
         erro.textContent = "❌ Você ainda não foi cadastrado! Peça ao seu professor para te cadastrar antes de entrar.";
@@ -3043,7 +3174,8 @@ function renderizarAulas() {
 async function renderizarDashboard() {
   invalidarCache();
   const db = await carregarDB();
-  const todos = Object.values(db).filter(a => a.nome);
+  // Filtra apenas alunos cadastrados por este professor (exclui registros de professores)
+  const todos = Object.values(db).filter(a => a.nome && a.tipo !== "professor" && a.cadastradoPor === profLogado.nome);
   const filtroNome   = (document.getElementById("filtroNome")?.value   || "").toLowerCase();
   const filtroAula   =  document.getElementById("filtroAula")?.value   || "";
   const filtroTurma  =  document.getElementById("filtroTurma")?.value  || "";
