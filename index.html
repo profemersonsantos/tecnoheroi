@@ -986,6 +986,238 @@
     gap: 0.5rem;
   }
 
+
+  /* ===== JOGOS PRÉ-QUIZ ===== */
+  .jogo-section {
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--sombra);
+    margin-bottom: 1.5rem;
+  }
+  .jogo-header {
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    color: #fff;
+    background: linear-gradient(135deg, #7C3AED, #2563EB);
+  }
+  .jogo-body { padding: 1.5rem; }
+  .jogo-instrucoes {
+    background: var(--roxo-claro);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1.1rem;
+    font-size: 0.9rem;
+    color: var(--roxo);
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .jogo-placar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .jogo-placar-item {
+    background: var(--fundo);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 1rem;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: var(--texto);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  /* PUZZLE */
+  #puzzle-board {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 3px;
+    max-width: 480px;
+    margin: 0 auto 1rem;
+    user-select: none;
+  }
+  .puzzle-piece {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    cursor: grab;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+    background-size: 600% 400%;
+  }
+  .puzzle-piece:hover { transform: scale(1.04); box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
+  .puzzle-piece.dragging { opacity: 0.5; border-color: var(--roxo); transform: scale(1.1); cursor: grabbing; }
+  .puzzle-piece.correta { border-color: var(--verde) !important; box-shadow: 0 0 0 2px var(--verde); }
+  .puzzle-piece.errada  { border-color: var(--vermelho); animation: shake 0.3s; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
+  @keyframes pulse-btn {
+    0%,100% { box-shadow: 0 6px 20px rgba(124,58,237,0.45); }
+    50%      { box-shadow: 0 6px 28px rgba(124,58,237,0.75); transform: scale(1.02); }
+  }
+  .puzzle-concluido {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--verde-claro);
+    border-radius: var(--radius-sm);
+    display: none;
+  }
+  /* MEMÓRIA */
+  #memoria-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 500px;
+    margin: 0 auto 1rem;
+    user-select: none;
+  }
+  .mem-card {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    cursor: pointer;
+    perspective: 600px;
+    min-height: 80px;
+  }
+  .mem-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+    border-radius: 10px;
+  }
+  .mem-card.virada .mem-inner { transform: rotateY(180deg); }
+  .mem-frente, .mem-verso {
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mem-frente {
+    background: linear-gradient(135deg, #7C3AED, #2563EB);
+    font-size: 1.8rem;
+    color: #fff;
+    font-weight: 800;
+    font-family: 'Fredoka One', cursive;
+    box-shadow: 0 4px 12px rgba(124,58,237,0.25);
+  }
+  .mem-verso {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    font-size: 1.5rem;
+    transform: rotateY(180deg);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .mem-card.acertou .mem-frente,
+  .mem-card.acertou .mem-verso {
+    background: linear-gradient(135deg, #16A34A, #22C55E);
+    border-color: var(--verde);
+  }
+  .mem-card.acertou .mem-verso { font-size: 1.5rem; }
+  /* CAÇA-PALAVRA */
+  #caca-board {
+    display: inline-grid;
+    gap: 2px;
+    margin: 0 auto 1rem;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: crosshair;
+  }
+  .caca-cell {
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.95rem;
+    font-family: 'Fredoka One', cursive;
+    background: #f8faff;
+    border: 1.5px solid #e2e8f0;
+    transition: background 0.15s;
+    color: var(--texto);
+  }
+  .caca-cell.selecionada { background: #C4B5FD; border-color: var(--roxo); color: var(--roxo); }
+  .caca-cell.encontrada  { background: linear-gradient(135deg,#7C3AED,#2563EB); color: #fff; border-color: transparent; transform: scale(1.05); }
+  .caca-palavras {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+  }
+  .caca-palavra-item {
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    background: var(--fundo);
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: var(--cinza);
+    border: 2px solid #e2e8f0;
+    transition: all 0.2s;
+  }
+  .caca-palavra-item.encontrada {
+    background: var(--verde-claro);
+    color: var(--verde);
+    border-color: var(--verde);
+    text-decoration: line-through;
+  }
+  /* Botão avançar para quiz */
+  .btn-avancar-quiz {
+    width: 100%;
+    background: linear-gradient(135deg, #16A34A, #22C55E);
+    color: #fff;
+    border: none;
+    padding: 1.1rem;
+    border-radius: var(--radius-sm);
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+  .btn-avancar-quiz:hover { transform: translateY(-2px); box-shadow: var(--sombra); }
+  .btn-avancar-quiz.visivel { display: flex; }
+  /* BLOQUEIO 24H */
+  .aula-bloqueada-24h {
+    background: linear-gradient(135deg,#1e3a5f,#2563EB);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 2rem;
+    text-align: center;
+    margin: 2rem auto;
+    max-width: 500px;
+    box-shadow: var(--sombra-lg);
+  }
+  .countdown-display {
+    font-family: 'Fredoka One', cursive;
+    font-size: 3rem;
+    color: #FDE68A;
+    letter-spacing: 2px;
+    margin: 1rem 0;
+  }
+  .lock-badge-24 {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    animation: bounce 2s infinite;
+  }
+
   /* ===== UTILITY ===== */
   .hidden { display: none !important; }
 
@@ -3138,6 +3370,30 @@ async function atualizarHeader() {
   document.getElementById("headerXP").textContent = `✨ ${estado.xpTotal} XP`;
 }
 
+// ===== SISTEMA DE BLOQUEIO 24H =====
+function getBloqueioKey(idAula) {
+  return `tecnohero_bloqueio_${estado.nome}_aula${idAula}`;
+}
+function salvarBloqueio(idAula) {
+  const liberacaoEm = new Date();
+  liberacaoEm.setDate(liberacaoEm.getDate() + 1); // +24h
+  localStorage.setItem(getBloqueioKey(idAula), liberacaoEm.toISOString());
+}
+function getBloqueioRestante(idAula) {
+  const val = localStorage.getItem(getBloqueioKey(idAula));
+  if (!val) return 0;
+  const libera = new Date(val).getTime();
+  const agora  = Date.now();
+  return Math.max(0, libera - agora);
+}
+function formatarCountdown(ms) {
+  if (ms <= 0) return "00:00:00";
+  const h  = Math.floor(ms / 3600000);
+  const m  = Math.floor((ms % 3600000) / 60000);
+  const s  = Math.floor((ms % 60000) / 1000);
+  return `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+}
+
 function renderizarAulas() {
   const grid = document.getElementById("gridAulas");
   grid.innerHTML = "";
@@ -3148,25 +3404,71 @@ function renderizarAulas() {
   document.getElementById("bannerNome").textContent = estado.nome.split(" ")[0];
   AULAS.forEach((aula, idx) => {
     const concluida    = estado.aulasCompletas.has(aula.id);
-    const desbloqueada = idx === 0 || estado.aulasCompletas.has(AULAS[idx-1].id);
+    const anteriorConc = idx === 0 || estado.aulasCompletas.has(AULAS[idx-1].id);
+    const msRestante   = anteriorConc && !concluida && idx > 0 ? getBloqueioRestante(aula.id) : 0;
+    const bloqueada24h = msRestante > 0;
+    const desbloqueada = anteriorConc && !bloqueada24h;
     let classe = "card-aula", statusTxt = "", statusClasse = "";
-    if (concluida)          { classe+=" concluida"; statusTxt="✅ Concluída"; statusClasse="status-concluida"; }
-    else if (!desbloqueada) { classe+=" bloqueada"; statusTxt="🔒 Bloqueada"; statusClasse="status-bloqueada"; }
-    else                    { classe+=" atual";     statusTxt="▶️ Jogar";     statusClasse="status-atual"; }
+    if (concluida)          { classe+=" concluida"; statusTxt="✅ Concluída";    statusClasse="status-concluida"; }
+    else if (bloqueada24h)  { classe+=" bloqueada"; statusTxt="⏰ Aguarde";      statusClasse="status-bloqueada"; }
+    else if (!anteriorConc) { classe+=" bloqueada"; statusTxt="🔒 Bloqueada";   statusClasse="status-bloqueada"; }
+    else                    { classe+=" atual";     statusTxt="▶️ Jogar";       statusClasse="status-atual"; }
+    const tempoInfo = bloqueada24h
+      ? `<div style="font-size:0.8rem;color:#D97706;font-weight:800;margin-top:0.5rem">⏳ Libera em ${formatarCountdown(msRestante)}</div>`
+      : "";
     grid.innerHTML += `
-      <div class="${classe}" onclick="${desbloqueada?`abrirAula(${aula.id})`:'mostrarBloqueada()'}">
+      <div class="${classe}" id="card-aula-${aula.id}" onclick="${desbloqueada?`abrirAula(${aula.id})`:bloqueada24h?`mostrarBloqueada24h(${aula.id})`:'mostrarBloqueada()'}">
         ${!concluida&&desbloqueada?`<div class="xp-card">+${aula.xp} XP</div>`:''}
         <div class="card-aula-header">
           <span class="aula-numero">Aula ${aula.id}</span>
           <span class="aula-status ${statusClasse}">${statusTxt}</span>
         </div>
-        <span class="aula-emoji">${aula.emoji}</span>
+        <span class="aula-emoji">${bloqueada24h?"⏰":aula.emoji}</span>
         <h3 class="aula-titulo">${aula.titulo}</h3>
         <p class="aula-descricao">${aula.descricao}</p>
         <div class="aula-meta"><span>⏱️ ${aula.tempo}</span><span>❓ ${aula.quiz.length} perguntas</span></div>
-        ${!desbloqueada?'<div class="lock-icon">🔒</div>':''}
+        ${tempoInfo}
+        ${(!anteriorConc||bloqueada24h)?'<div class="lock-icon">🔒</div>':''}
       </div>`;
   });
+  // Atualiza countdowns a cada segundo
+  clearInterval(window._countdownTimer);
+  const temBloqueada = AULAS.some((_,i)=>i>0&&getBloqueioRestante(AULAS[i].id)>0&&!estado.aulasCompletas.has(AULAS[i].id));
+  if (temBloqueada) {
+    window._countdownTimer = setInterval(() => {
+      AULAS.forEach((aula, idx) => {
+        if (idx === 0 || estado.aulasCompletas.has(aula.id)) return;
+        const ms = getBloqueioRestante(aula.id);
+        const card = document.getElementById(`card-aula-${aula.id}`);
+        if (!card) return;
+        const timeEl = card.querySelector(".aula-meta + div");
+        if (ms > 0 && timeEl) timeEl.textContent = `⏳ Libera em ${formatarCountdown(ms)}`;
+        if (ms <= 0 && timeEl) { clearInterval(window._countdownTimer); renderizarAulas(); }
+      });
+    }, 1000);
+  }
+}
+
+function mostrarBloqueada24h(idAula) {
+  const ms = getBloqueioRestante(idAula);
+  const aula = AULAS.find(a => a.id === idAula);
+  const modal = document.getElementById("modalConquista");
+  modal.innerHTML = `
+    <div class="aula-bloqueada-24h" style="max-width:420px;width:100%;animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1)">
+      <span class="lock-badge-24">⏰</span>
+      <h2 style="font-family:'Fredoka One',cursive;font-size:1.7rem;margin-bottom:0.5rem">Próxima Aula Bloqueada</h2>
+      <p style="opacity:0.9;font-size:0.95rem;margin-bottom:0.5rem">${aula ? aula.titulo : ""}</p>
+      <p style="opacity:0.8;font-size:0.85rem;margin-bottom:1rem">A aula será liberada automaticamente quando o contador chegar a zero. Volte amanhã no mesmo horário! 📅</p>
+      <div class="countdown-display" id="modal-countdown">${formatarCountdown(ms)}</div>
+      <button onclick="fecharModal()" style="background:rgba(255,255,255,0.2);color:#fff;border:2px solid rgba(255,255,255,0.4);padding:0.8rem 2rem;border-radius:50px;font-family:'Fredoka One',cursive;font-size:1.1rem;cursor:pointer;margin-top:1rem">OK, vejo amanhã!</button>
+    </div>`;
+  modal.classList.add("ativo");
+  const modalTimer = setInterval(() => {
+    const remaining = getBloqueioRestante(idAula);
+    const el = document.getElementById("modal-countdown");
+    if (el) el.textContent = formatarCountdown(remaining);
+    if (remaining <= 0) clearInterval(modalTimer);
+  }, 1000);
 }
 
 // =================== DASHBOARD DO PROFESSOR ===================
@@ -3437,9 +3739,72 @@ function mostrarBloqueada() {
   alert("🔒 Complete a aula anterior primeiro para desbloquear esta missão!");
 }
 
+// ============================================================
+// DADOS DOS JOGOS POR AULA
+// ============================================================
+const JOGOS_AULAS = {
+  1: { tipo:"forca", tema:"chromebook", emoji:"💻",
+       palavras:[
+         {w:"CHROMEBOOK", d:"Tipo de computador usado na escola"},
+         {w:"MONITOR",    d:"Tela que mostra o que acontece no computador"},
+         {w:"TECLADO",    d:"Serve para digitar letras e números"},
+         {w:"BATERIA",    d:"Guarda energia para o computador funcionar sem fio"},
+         {w:"TOUCHPAD",   d:"Funciona como mouse usando os dedos"},
+         {w:"SISTEMA",    d:"Software que controla o computador"},
+         {w:"CARREGAR",   d:"Colocar energia na bateria do computador"},
+       ]},
+  2: { tipo:"caca", tema:"teclado", imagem:"⌨️", palavras:["TECLADO","TOUCHPAD","CURSOR","SHIFT","CONTROL","BACKSPACE","ENTER","ATALHO"], emoji:"⌨️" },
+  3: { tipo:"memoria", tema:"internet", imagem:"🌐", palavras:[], emoji:"🌐",
+       pares:[
+         {frente:"🌐",verso:"Navegador"},{frente:"🔍",verso:"Pesquisa"},
+         {frente:"🔒",verso:"Segurança"},{frente:"📑",verso:"Aba"},
+         {frente:"⬅️",verso:"Voltar"},{frente:"🔄",verso:"Recarregar"},
+         {frente:"📍",verso:"Endereço"},{frente:"🛡️",verso:"Proteção"}]},
+  4: { tipo:"caca", tema:"editor", imagem:"📝", palavras:["DOCUMENTO","NEGRITO","ITALICO","SALVAR","FORMATAR","CURSOR","NUVEM","GOOGLE"], emoji:"📝" },
+  5: { tipo:"forca", tema:"slides", emoji:"📊",
+       palavras:[
+         {w:"APRESENTAR",  d:"Mostrar seus slides para a turma"},
+         {w:"SLIDE",       d:"Cada página de uma apresentação"},
+         {w:"TEMA",        d:"Conjunto de cores e estilos prontos"},
+         {w:"TRANSICAO",   d:"Efeito de passagem entre um slide e outro"},
+         {w:"IMAGEM",      d:"Foto ou ilustração que você insere no slide"},
+         {w:"TITULO",      d:"Texto principal e maior de cada slide"},
+         {w:"ANIMACAO",    d:"Movimento de textos ou imagens no slide"},
+       ]},
+  6: { tipo:"memoria", tema:"email", imagem:"📧", palavras:[], emoji:"📧",
+       pares:[
+         {frente:"📧",verso:"E-mail"},{frente:"📎",verso:"Anexo"},
+         {frente:"✉️",verso:"Mensagem"},{frente:"📮",verso:"Enviar"},
+         {frente:"@",  verso:"Arroba"},{frente:"🏷️",verso:"Assunto"},
+         {frente:"📋",verso:"Cópia"},{frente:"🤝",verso:"Netiqueta"}]},
+  7: { tipo:"caca", tema:"arquivos", imagem:"🗂️", palavras:["ARQUIVO","PASTA","DRIVE","EXTENSAO","UPLOAD","DOWNLOAD","BACKUP","SALVAR"], emoji:"🗂️" },
+  8: { tipo:"forca", tema:"criativo", emoji:"🎨",
+       palavras:[
+         {w:"CRIATIVIDADE",  d:"Capacidade de criar coisas novas e originais"},
+         {w:"DIGITAL",       d:"Feito por meios eletrônicos e computadores"},
+         {w:"DESENHO",       d:"Arte de representar imagens com linhas e cores"},
+         {w:"CANVA",         d:"Ferramenta online para criar artes e cartazes"},
+         {w:"AUTORAL",       d:"Criado por você, com sua própria ideia original"},
+         {w:"PORTFOLIO",     d:"Coleção dos seus melhores trabalhos criados"},
+         {w:"LICENCA",       d:"Permissão para usar a obra de outra pessoa"},
+       ]},
+  9: { tipo:"memoria", tema:"segurança", imagem:"🔒", palavras:[], emoji:"🔒",
+       pares:[
+         {frente:"🔒",verso:"Senha"},{frente:"👣",verso:"Pegada"},
+         {frente:"🛡️",verso:"Proteção"},{frente:"🚫",verso:"Bloqueio"},
+         {frente:"📸",verso:"Privacidade"},{frente:"👾",verso:"Vírus"},
+         {frente:"💪",verso:"Cidadania"},{frente:"❤️",verso:"Respeito"}]},
+  10:{ tipo:"caca", tema:"revisao", imagem:"🚀", palavras:["PORTFOLIO","PROJETO","INTERNET","TECLADO","ARQUIVO","SEGURANCA","CRIATIVO","EMAIL","SLIDES","HEROI"], emoji:"🚀" }
+};
+
+
+
 function abrirAula(idAula) {
   const aula = AULAS.find(a => a.id === idAula);
   estado.aulaAtual = aula;
+  estado.jogoCompleto = false;
+  window._forcaRodada = 0;
+  window._forcaUltimaPalavra = null;
   
   document.getElementById("tela-aulas").style.display = "none";
   const telaAula = document.getElementById("tela-aula");
@@ -3491,14 +3856,468 @@ function abrirAula(idAula) {
         </div>
       `).join('')}
     </div>
-    <button class="btn-iniciar-quiz" onclick="iniciarQuiz()">
-      🎮 Hora do Desafio! Iniciar Quiz →
+    <div class="jogo-section" id="jogoSection">
+      <div class="jogo-header">
+        <span style="font-size:1.5rem">🎮</span>
+        Mini-Jogo: Complete para Liberar o Quiz!
+      </div>
+      <div class="jogo-body" id="jogoBody">
+        <div style="text-align:center;padding:1rem;color:var(--cinza)">Carregando jogo...</div>
+      </div>
+    </div>
+    <button class="btn-iniciar-quiz" id="btnIniciarQuiz" onclick="iniciarQuiz()" style="display:none">
+      🎯 Jogo Concluído! Iniciar Quiz →
     </button>
     <div class="quiz-container" id="quizContainer" style="margin-top:2rem;display:none"></div>
   `;
+
+  // Inicializa o jogo da aula
+  setTimeout(() => inicializarJogo(aula.id), 100);
+}
+
+// ============================================================
+// ENGINE DOS MINI-JOGOS
+// ============================================================
+
+function inicializarJogo(idAula) {
+  const jogo = JOGOS_AULAS[idAula];
+  if (!jogo) { liberarQuiz(); return; }
+  const body = document.getElementById("jogoBody");
+  if (!body) return;
+  if      (jogo.tipo === "forca")   iniciarForca(body, jogo, idAula);
+  else if (jogo.tipo === "memoria") iniciarMemoria(body, jogo);
+  else if (jogo.tipo === "caca")    iniciarCacaPalavra(body, jogo);
+}
+
+function liberarQuiz() {
+  estado.jogoCompleto = true;
+  const btn = document.getElementById("btnIniciarQuiz");
+  if (btn) {
+    btn.style.display = "flex";
+    btn.classList.add("visivel");
+    btn.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+}
+
+
+// ==================== JOGO DA FORCA ====================
+function iniciarForca(body, jogo, idAula) {
+  // Guarda referência global para o botão "Tentar Novamente"
+  window._forcaJogo    = jogo;
+  window._forcaIdAula  = idAula;
+  window._forcaBody    = body;
+
+  // Sorteia palavra diferente da anterior
+  const lista = jogo.palavras;
+  let escolhida;
+  do {
+    escolhida = lista[Math.floor(Math.random() * lista.length)];
+  } while (lista.length > 1 && escolhida === window._forcaUltimaPalavra);
+  window._forcaUltimaPalavra = escolhida;
+
+  const PALAVRA = escolhida.w.toUpperCase();
+  const DICA    = escolhida.d;
+
+  const MAX_ERROS = 6;
+  let letrasErradas  = [];
+  let letrasCorretas = new Set();
+  let erros          = 0;
+  let jogoAtivo      = true;
+
+  const ALFABETO = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+  const CORES = {
+    1: { bg:"#DBEAFE", acento:"#2563EB", texto:"#1e3a5f" },
+    5: { bg:"#FEF3C7", acento:"#D97706", texto:"#92400E" },
+    8: { bg:"#EDE9FE", acento:"#7C3AED", texto:"#4C1D95" },
+  };
+  const cor = CORES[idAula] || { bg:"#EDE9FE", acento:"#7C3AED", texto:"#4C1D95" };
+
+  const render = () => {
+    const partes = [
+      ``,
+      `<circle cx="270" cy="70" r="22" fill="none" stroke="${cor.acento}" stroke-width="4" stroke-linecap="round"/>`,
+      `<circle cx="270" cy="70" r="22" fill="none" stroke="${cor.acento}" stroke-width="4" stroke-linecap="round"/>
+       <line x1="270" y1="92" x2="270" y2="165" stroke="${cor.acento}" stroke-width="4" stroke-linecap="round"/>`,
+      `<circle cx="270" cy="70" r="22" fill="none" stroke="${cor.acento}" stroke-width="4" stroke-linecap="round"/>
+       <line x1="270" y1="92" x2="270" y2="165" stroke="${cor.acento}" stroke-width="4" stroke-linecap="round"/>
+       <line x1="270" y1="110" x2="230" y2="140" stroke="${cor.acento}" stroke-width="4" stroke-linecap="round"/>`,
+      `<circle cx="270" cy="70" r="22" fill="none" stroke="${cor.acento}" stroke-width="4" stroke-linecap="round"/>
+       <line x1="270" y1="92" x2="270" y2="165" stroke="${cor.acento}" stroke-width="4" stroke-linecap="round"/>
+       <line x1="270" y1="110" x2="230" y2="140" stroke="${cor.acento}" stroke-width="4" stroke-linecap="round"/>
+       <line x1="270" y1="110" x2="310" y2="140" stroke="${cor.acento}" stroke-width="4" stroke-linecap="round"/>`,
+      `<circle cx="270" cy="70" r="22" fill="none" stroke="${cor.acento}" stroke-width="4" stroke-linecap="round"/>
+       <line x1="270" y1="92" x2="270" y2="165" stroke="${cor.acento}" stroke-width="4" stroke-linecap="round"/>
+       <line x1="270" y1="110" x2="230" y2="140" stroke="${cor.acento}" stroke-width="4" stroke-linecap="round"/>
+       <line x1="270" y1="110" x2="310" y2="140" stroke="${cor.acento}" stroke-width="4" stroke-linecap="round"/>
+       <line x1="270" y1="165" x2="235" y2="205" stroke="${cor.acento}" stroke-width="4" stroke-linecap="round"/>`,
+      `<circle cx="270" cy="70" r="22" fill="none" stroke="#DC2626" stroke-width="4" stroke-linecap="round"/>
+       <line x1="258" y1="62" x2="270" y2="74" stroke="#DC2626" stroke-width="3.5"/>
+       <line x1="270" y1="62" x2="258" y2="74" stroke="#DC2626" stroke-width="3.5"/>
+       <line x1="274" y1="62" x2="286" y2="74" stroke="#DC2626" stroke-width="3.5"/>
+       <line x1="286" y1="62" x2="274" y2="74" stroke="#DC2626" stroke-width="3.5"/>
+       <line x1="270" y1="92" x2="270" y2="165" stroke="#DC2626" stroke-width="4" stroke-linecap="round"/>
+       <line x1="270" y1="110" x2="230" y2="140" stroke="#DC2626" stroke-width="4" stroke-linecap="round"/>
+       <line x1="270" y1="110" x2="310" y2="140" stroke="#DC2626" stroke-width="4" stroke-linecap="round"/>
+       <line x1="270" y1="165" x2="235" y2="205" stroke="#DC2626" stroke-width="4" stroke-linecap="round"/>
+       <line x1="270" y1="165" x2="305" y2="205" stroke="#DC2626" stroke-width="4" stroke-linecap="round"/>`,
+    ];
+
+    const vitoria = PALAVRA.split("").filter(l=>l!==" ").every(l=>letrasCorretas.has(l));
+    const derrota = erros >= MAX_ERROS;
+
+    const letrasExibidas = PALAVRA.split("").map(l =>
+      l === " "
+        ? `<span style="display:inline-block;width:18px"></span>`
+        : letrasCorretas.has(l)
+          ? `<span style="display:inline-block;border-bottom:3px solid ${cor.acento};min-width:28px;text-align:center;font-family:'Fredoka One',cursive;font-size:1.5rem;color:${cor.texto};margin:0 3px;padding-bottom:2px">${l}</span>`
+          : `<span style="display:inline-block;border-bottom:3px solid ${cor.acento};min-width:28px;text-align:center;margin:0 3px;font-size:1.5rem"> </span>`
+    ).join("");
+
+    const botoesTeclado = ALFABETO.map(l => {
+      const errada  = letrasErradas.includes(l);
+      const certa   = letrasCorretas.has(l);
+      const usada   = errada || certa;
+      const ativa   = jogoAtivo && !usada;
+      return `<button
+        onclick="${ativa ? `_forcaLetra('${l}')` : ''}"
+        style="width:38px;height:38px;border-radius:8px;
+          border:2px solid ${errada?'#DC2626':certa?cor.acento:'#CBD5E1'};
+          background:${errada?'#FEE2E2':certa?cor.bg:'#fff'};
+          color:${errada?'#DC2626':certa?cor.acento:'#374151'};
+          font-family:'Fredoka One',cursive;font-size:0.9rem;
+          cursor:${ativa?'pointer':'default'};
+          opacity:${usada?0.5:1};
+          ${ativa?'box-shadow:0 2px 6px rgba(0,0,0,0.1)':''}
+        "
+        ${ativa?`onmouseenter="this.style.transform='scale(1.12)'"
+        onmouseleave="this.style.transform='scale(1)'"`:''}>
+        ${l}
+      </button>`;
+    }).join("");
+
+    // Banner de status
+    let statusHTML = "";
+    if (vitoria) {
+      statusHTML = `
+        <div style="background:var(--verde-claro);border-radius:12px;padding:1.25rem;text-align:center;margin-top:1rem;animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1)">
+          <div style="font-size:2.5rem">🎉</div>
+          <div style="font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--verde);margin:0.3rem 0">Você acertou!</div>
+          <div style="color:var(--cinza);font-size:0.9rem">A palavra era: <strong>${PALAVRA}</strong></div>
+        </div>`;
+    } else if (derrota) {
+      statusHTML = `
+        <div style="background:var(--vermelho-claro);border-radius:12px;padding:1.25rem;text-align:center;margin-top:1rem;animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1)">
+          <div style="font-size:2.5rem">😢</div>
+          <div style="font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--vermelho);margin:0.3rem 0">Não foi dessa vez!</div>
+          <div style="color:var(--cinza);font-size:0.9rem;margin-bottom:1rem">A palavra era: <strong style="color:var(--vermelho)">${PALAVRA}</strong></div>
+          <button onclick="_forcaReiniciar()"
+            style="background:linear-gradient(135deg,#7C3AED,#2563EB);color:#fff;border:none;
+              padding:0.9rem 2.2rem;border-radius:50px;font-family:'Fredoka One',cursive;
+              font-size:1.15rem;cursor:pointer;
+              box-shadow:0 6px 20px rgba(124,58,237,0.45);
+              animation:pulse-btn 1.5s ease-in-out infinite;
+              transition:transform 0.15s,box-shadow 0.15s"
+            onmouseenter="this.style.transform='translateY(-3px) scale(1.04)';this.style.boxShadow='0 10px 28px rgba(124,58,237,0.55)'"
+            onmouseleave="this.style.transform='none';this.style.boxShadow='0 6px 20px rgba(124,58,237,0.45)'">
+            🔄 Tentar Novamente — Nova Palavra!
+          </button>
+          <div style="margin-top:0.75rem;font-size:0.82rem;color:#94a3b8;font-weight:700">
+            ♾️ Pode tentar quantas vezes quiser até liberar o Quiz!
+          </div>
+        </div>`;
+    }
+
+    body.innerHTML = `
+      <div class="jogo-instrucoes" style="background:${cor.bg};color:${cor.texto};flex-direction:column;align-items:flex-start;gap:0.4rem">
+        <span>🎯 Descubra a palavra letra por letra! Você tem <strong>${MAX_ERROS} tentativas</strong>.</span>
+        <span style="background:rgba(255,255,255,0.6);border-radius:8px;padding:0.3rem 0.7rem;font-size:0.88rem">
+          💡 Dica: <em><strong>${DICA}</strong></em>
+        </span>
+      </div>
+
+      <div style="display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;justify-content:center;margin-bottom:0.5rem">
+
+        <!-- Forca SVG -->
+        <div style="flex-shrink:0;text-align:center">
+          <svg width="190" height="220" viewBox="0 0 340 230" xmlns="http://www.w3.org/2000/svg">
+            <line x1="60"  y1="220" x2="180" y2="220" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+            <line x1="100" y1="220" x2="100" y2="20"  stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+            <line x1="100" y1="20"  x2="270" y2="20"  stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+            <line x1="270" y1="20"  x2="270" y2="48"  stroke="#94a3b8" stroke-width="4" stroke-linecap="round" stroke-dasharray="4 3"/>
+            ${partes[Math.min(erros, MAX_ERROS)]}
+          </svg>
+          <!-- Vidas -->
+          <div style="margin-top:0.25rem;letter-spacing:2px">
+            ${Array.from({length:MAX_ERROS},(_,i)=>`<span style="font-size:1.1rem">${i<erros?'💀':'❤️'}</span>`).join("")}
+          </div>
+          <div style="font-size:0.78rem;color:#94a3b8;font-weight:700;margin-top:0.2rem">${erros}/${MAX_ERROS} erros</div>
+          <div style="font-size:0.72rem;color:#C4B5FD;font-weight:700;margin-top:0.15rem">Tentativa #${window._forcaRodada||1}</div>
+        </div>
+
+        <!-- Palavra + teclado -->
+        <div style="flex:1;min-width:220px">
+          <div style="text-align:center;margin-bottom:1.25rem;min-height:50px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px">
+            ${letrasExibidas}
+          </div>
+          ${letrasErradas.length > 0 ? `
+          <div style="text-align:center;margin-bottom:0.75rem;font-size:0.85rem;font-weight:700;color:#94a3b8">
+            Erradas: ${letrasErradas.map(l=>`<span style="color:#DC2626;font-weight:900">${l}</span>`).join(" ")}
+          </div>` : ""}
+          <div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center;max-width:340px;margin:0 auto">
+            ${botoesTeclado}
+          </div>
+        </div>
+
+      </div>
+
+      ${statusHTML}
+    `;
+
+    if (vitoria) setTimeout(liberarQuiz, 900);
+  };
+
+  // Função global chamada pelos botões do teclado virtual
+  window._forcaLetra = (l) => {
+    if (!jogoAtivo) return;
+    if (PALAVRA.includes(l)) {
+      letrasCorretas.add(l);
+    } else {
+      if (!letrasErradas.includes(l)) { letrasErradas.push(l); erros++; }
+    }
+    if (erros >= MAX_ERROS) jogoAtivo = false;
+    render();
+  };
+
+  // Contador de rodadas
+  window._forcaRodada = (window._forcaRodada || 0) + 1;
+
+  // Reinicia com nova palavra (mantendo histórico de qual palavra usou)
+  window._forcaReiniciar = () => {
+    if (window._forcaKeyHandler) {
+      document.removeEventListener("keydown", window._forcaKeyHandler);
+      window._forcaKeyHandler = null;
+    }
+    iniciarForca(
+      window._forcaBody,
+      window._forcaJogo,
+      window._forcaIdAula
+    );
+  };
+
+  // Teclado físico do Chromebook
+  if (window._forcaKeyHandler) {
+    document.removeEventListener("keydown", window._forcaKeyHandler);
+  }
+  const keyHandler = (e) => {
+    if (!jogoAtivo) return;
+    const l = e.key.toUpperCase();
+    if (ALFABETO.includes(l) && !letrasErradas.includes(l) && !letrasCorretas.has(l)) {
+      window._forcaLetra(l);
+    }
+  };
+  document.addEventListener("keydown", keyHandler);
+  window._forcaKeyHandler = keyHandler;
+
+  render();
+}
+
+
+// ==================== JOGO DA MEMÓRIA ====================
+function iniciarMemoria(body, jogo) {
+  const pares=[...jogo.pares];
+  let cartas=[];
+  pares.forEach((p,i)=>{
+    cartas.push({id:i*2,  par:i,conteudo:p.frente,tipo:'emoji'});
+    cartas.push({id:i*2+1,par:i,conteudo:p.verso, tipo:'texto'});
+  });
+  for(let i=cartas.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[cartas[i],cartas[j]]=[cartas[j],cartas[i]];}
+
+  const CORES_PAR=['#667eea','#f5576c','#43e97b','#fa709a','#4facfe','#fee140','#30cfd0','#a18cd1'];
+  let viradas=[],acertos=0,bloqueado=false,tentativas=0;
+  const inicio=Date.now();
+
+  body.innerHTML=`
+    <div class="jogo-instrucoes">🃏 Encontre os pares! Clique em duas cartas — se uma tem o emoji e a outra tem a palavra correspondente, é um par! Combine todas para avançar.</div>
+    <div class="jogo-placar">
+      <div class="jogo-placar-item">✅ Pares: <span id="mem-acertos">0</span>/${pares.length}</div>
+      <div class="jogo-placar-item">🔄 Tentativas: <span id="mem-tent">0</span></div>
+      <div class="jogo-placar-item">⏱️ <span id="mem-tempo">0s</span></div>
+    </div>
+    <div id="memoria-board" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:520px;margin:0 auto 1rem"></div>`;
+
+  const timer=setInterval(()=>{
+    const el=document.getElementById("mem-tempo");
+    if(!el){clearInterval(timer);return;}
+    el.textContent=Math.floor((Date.now()-inicio)/1000)+"s";
+  },1000);
+
+  const board=document.getElementById("memoria-board");
+  cartas.forEach(carta=>{
+    const cor=CORES_PAR[carta.par%CORES_PAR.length];
+    const card=document.createElement("div");
+    card.className="mem-card";
+    card.style.minHeight="90px";
+    card.innerHTML=`<div class="mem-inner">
+      <div class="mem-frente" style="background:linear-gradient(135deg,#7C3AED,#2563EB);font-size:1.6rem">?</div>
+      <div class="mem-verso" style="background:white;border:2.5px solid ${cor}40;flex-direction:column;gap:2px">
+        <div style="font-size:${carta.tipo==='emoji'?'1.8rem':'0.88rem'};font-weight:800;color:${cor};font-family:'Nunito',sans-serif;text-align:center;padding:4px;line-height:1.2">${carta.conteudo}</div>
+        <div style="font-size:0.6rem;color:#94a3b8;font-weight:600;text-transform:uppercase">${carta.tipo==='emoji'?'🎭 emoji':'📝 palavra'}</div>
+      </div>
+    </div>`;
+    card.addEventListener("click",()=>{
+      if(bloqueado||card.classList.contains("virada")||card.classList.contains("acertou")) return;
+      card.classList.add("virada");
+      viradas.push({card,carta});
+      if(viradas.length===2){
+        bloqueado=true;tentativas++;
+        document.getElementById("mem-tent").textContent=tentativas;
+        const[a,b]=viradas;
+        if(a.carta.par===b.carta.par&&a.carta.id!==b.carta.id){
+          setTimeout(()=>{
+            [a.card,b.card].forEach(c=>{
+              c.classList.add("acertou");
+              c.querySelector(".mem-frente").style.background=`linear-gradient(135deg,${cor},${cor}cc)`;
+              c.querySelector(".mem-verso").style.borderColor=cor;
+              c.querySelector(".mem-verso").style.background=`${cor}12`;
+            });
+            acertos++;document.getElementById("mem-acertos").textContent=acertos;
+            viradas=[];bloqueado=false;
+            if(acertos===pares.length){
+              clearInterval(timer);
+              const seg=Math.floor((Date.now()-inicio)/1000);
+              setTimeout(()=>{
+                board.insertAdjacentHTML("afterend",`
+                  <div style="text-align:center;padding:1.25rem;background:var(--verde-claro);border-radius:var(--radius-sm);margin-top:1rem">
+                    <div style="font-size:2.5rem">🎉</div>
+                    <div style="font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--verde)">Memória Completa!</div>
+                    <div style="color:var(--cinza);font-size:0.88rem">${tentativas} tentativas • ${seg}s</div>
+                  </div>`);
+                liberarQuiz();
+              },400);
+            }
+          },350);
+        } else {
+          setTimeout(()=>{a.card.classList.remove("virada");b.card.classList.remove("virada");viradas=[];bloqueado=false;},950);
+        }
+      }
+    });
+    board.appendChild(card);
+  });
+}
+
+// ==================== CAÇA-PALAVRA ====================
+function iniciarCacaPalavra(body, jogo) {
+  const palavras=jogo.palavras.slice(0,8);
+  const COLS=12,ROWS=10;
+  let grade=Array.from({length:ROWS},()=>Array(COLS).fill(""));
+  let encontradas=new Set();
+  let primeiracel=null;
+  const dirs=[[0,1],[1,0],[1,1],[0,-1],[-1,0],[-1,-1],[1,-1],[-1,1]];
+  const letras="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const posicoesPalavras={};
+
+  palavras.forEach(palavra=>{
+    let colocada=false,tentativas=0;
+    while(!colocada&&tentativas<300){
+      tentativas++;
+      const dir=dirs[Math.floor(Math.random()*dirs.length)];
+      const row=Math.floor(Math.random()*ROWS),col=Math.floor(Math.random()*COLS);
+      const endRow=row+dir[0]*(palavra.length-1),endCol=col+dir[1]*(palavra.length-1);
+      if(endRow<0||endRow>=ROWS||endCol<0||endCol>=COLS) continue;
+      let ok=true;const cells=[];
+      for(let k=0;k<palavra.length;k++){
+        const r=row+dir[0]*k,c=col+dir[1]*k;
+        if(grade[r][c]!==""&&grade[r][c]!==palavra[k]){ok=false;break;}
+        cells.push([r,c]);
+      }
+      if(ok){cells.forEach(([r,c],k)=>grade[r][c]=palavra[k]);posicoesPalavras[palavra]=cells;colocada=true;}
+    }
+  });
+  for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++) if(!grade[r][c]) grade[r][c]=letras[Math.floor(Math.random()*letras.length)];
+
+  body.innerHTML=`
+    <div class="jogo-instrucoes">🔤 Encontre as palavras escondidas! Clique na <strong>1ª letra</strong> e depois na <strong>última letra</strong>. As palavras podem estar em qualquer direção (horizontal, vertical ou diagonal).</div>
+    <div class="caca-palavras" id="caca-lista">
+      ${palavras.map(p=>`<span class="caca-palavra-item" id="cw-${p}">${p}</span>`).join("")}
+    </div>
+    <div style="overflow-x:auto;text-align:center">
+      <div id="caca-board" style="display:inline-grid;grid-template-columns:repeat(${COLS},34px);gap:2px;margin-bottom:0.5rem"></div>
+    </div>
+    <div style="text-align:center">
+      <div id="caca-msg" style="font-size:0.9rem;font-weight:700;color:var(--roxo);min-height:1.5rem;padding:0.25rem"></div>
+      <div style="font-size:0.8rem;color:var(--cinza)">Encontradas: <span id="caca-count" style="font-weight:800;color:var(--roxo)">0</span>/${palavras.length}</div>
+    </div>`;
+
+  const board=document.getElementById("caca-board");
+  const getCel=(r,c)=>board.children[r*COLS+c];
+  const setMsg=(txt,cor="var(--roxo)")=>{const el=document.getElementById("caca-msg");if(el){el.textContent=txt;el.style.color=cor;}};
+
+  for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++){
+    const cel=document.createElement("div");
+    cel.className="caca-cell";cel.dataset.r=r;cel.dataset.c=c;cel.textContent=grade[r][c];
+    board.appendChild(cel);
+  }
+
+  const limpar=()=>{
+    if(primeiracel){getCel(primeiracel[0],primeiracel[1]).classList.remove("selecionada");primeiracel=null;}
+  };
+  const getLinha=(r1,c1,r2,c2)=>{
+    const dr=Math.sign(r2-r1),dc=Math.sign(c2-c1);
+    if(dr===0&&dc===0) return[[r1,c1]];
+    const cells=[];let r=r1,c=c1;
+    while(true){cells.push([r,c]);if(r===r2&&c===c2)break;r+=dr;c+=dc;if(cells.length>25)break;}
+    return cells;
+  };
+
+  board.addEventListener("click",e=>{
+    const cel=e.target.closest(".caca-cell");
+    if(!cel||cel.classList.contains("encontrada")) return;
+    const r=parseInt(cel.dataset.r),c=parseInt(cel.dataset.c);
+    if(!primeiracel){
+      primeiracel=[r,c];cel.classList.add("selecionada");
+      setMsg(`"${grade[r][c]}" selecionada. Clique na última letra da palavra!`,"var(--azul)");
+    } else {
+      const[r1,c1]=primeiracel;
+      if(r1===r&&c1===c){limpar();setMsg("","var(--cinza)");return;}
+      const linha=getLinha(r1,c1,r,c);
+      const palavra=linha.map(([rr,cc])=>grade[rr][cc]).join("");
+      const rev=[...palavra].reverse().join("");
+      const match=palavras.find(p=>p===palavra||p===rev);
+      limpar();
+      if(match&&!encontradas.has(match)){
+        encontradas.add(match);
+        const itemEl=document.getElementById("cw-"+match);
+        if(itemEl){itemEl.classList.add("encontrada");itemEl.innerHTML=`✅ <s>${match}</s>`;}
+        posicoesPalavras[match].forEach(([rr,cc])=>getCel(rr,cc).classList.add("encontrada"));
+        document.getElementById("caca-count").textContent=encontradas.size;
+        setMsg(`✅ "${match}" encontrada!`,"var(--verde)");
+        if(encontradas.size===palavras.length){
+          setTimeout(()=>{
+            board.insertAdjacentHTML("afterend",`
+              <div style="text-align:center;padding:1.25rem;background:var(--verde-claro);border-radius:var(--radius-sm);margin-top:1rem">
+                <div style="font-size:2.5rem">🎉</div>
+                <div style="font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--verde)">Caça-Palavra Completo!</div>
+                <div style="color:var(--cinza);font-size:0.88rem">Todas as ${palavras.length} palavras encontradas!</div>
+              </div>`);
+            liberarQuiz();
+          },500);
+        }
+      } else if(match){
+        setMsg(`"${match}" já foi encontrada!`,"var(--amarelo)");
+      } else {
+        setMsg("Não formou uma palavra. Tente outra combinação!","var(--cinza)");
+      }
+    }
+  });
 }
 
 function voltarParaAulas() {
+  // Remove teclado da forca se estiver ativo
+  if (window._forcaKeyHandler) {
+    document.removeEventListener("keydown", window._forcaKeyHandler);
+    window._forcaKeyHandler = null;
+  }
   document.getElementById("tela-aula").style.display = "none";
   document.getElementById("tela-aulas").style.display = "block";
   renderizarAulas();
@@ -3507,13 +4326,18 @@ function voltarParaAulas() {
 function iniciarQuiz() {
   const aula = estado.aulaAtual;
   const jaFezQuiz = estado.aulasCompletas.has(aula.id);
-  // Conta tentativa se já concluiu (está refazendo) ou se está reiniciando
   if (estado.quizAtual.perguntaIndex > 0 || jaFezQuiz) {
     registrarTentativaQuiz(aula.id);
   }
   estado.quizAtual = { perguntaIndex: 0, pontos: 0, respondida: false, tentativas: (estado.quizAtual.tentativas || 0) + 1 };
-  document.getElementById("quizContainer").style.display = "block";
-  document.getElementById("quizContainer").scrollIntoView({ behavior: 'smooth' });
+  // Esconde jogo e botão após clicar
+  const jogoSec = document.getElementById("jogoSection");
+  const btnQuiz = document.getElementById("btnIniciarQuiz");
+  if (jogoSec) jogoSec.style.display = "none";
+  if (btnQuiz) btnQuiz.style.display = "none";
+  const qc = document.getElementById("quizContainer");
+  qc.style.display = "block";
+  qc.scrollIntoView({ behavior: "smooth" });
   renderizarPergunta();
 }
 
@@ -3627,13 +4451,19 @@ function mostrarResultado() {
 function concluirAula(xpGanho, perfeito) {
   const aula = estado.aulaAtual;
   const acertos = xpGanho > 0 ? Math.round((xpGanho / aula.xp) * 5) : 4;
-  if (!estado.aulasCompletas.has(aula.id)) {
+  const primeiraVez = !estado.aulasCompletas.has(aula.id);
+  if (primeiraVez) {
     estado.aulasCompletas.add(aula.id);
     estado.xpTotal += xpGanho;
     calcularNivel();
     verificarConquistas(perfeito);
     atualizarHeader();
     registrarConclusaoAula(aula.id, xpGanho, acertos, 5, estado.quizAtual.tentativas || 1);
+    // Bloqueia a próxima aula por 24h
+    const proxIdx = AULAS.findIndex(a => a.id === aula.id) + 1;
+    if (proxIdx < AULAS.length) {
+      salvarBloqueio(AULAS[proxIdx].id);
+    }
   }
   voltarParaAulas();
 }
