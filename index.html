@@ -437,6 +437,9 @@
 
   /* ===== TELA DA AULA ===== */
   #tela-aula { display: none; max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+  @media (min-width: 901px) {
+    #tela-aula { padding-right: 240px; }
+  }
 
   .aula-header {
     display: flex;
@@ -862,6 +865,30 @@
 
   .btn-fechar-modal:hover { background: #6D28D9; }
 
+  /* ===== RESPONSIVO PASTA CARD ===== */
+  @media (max-width: 900px) {
+    .pasta-estudante-card {
+      position: relative;
+      top: auto;
+      right: auto;
+      width: 100%;
+      margin-bottom: 1rem;
+      animation: none;
+      border-radius: var(--radius);
+    }
+    .pasta-card-body {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-align: left;
+      padding: 0.75rem 1rem;
+    }
+    .pasta-card-avatar { margin: 0; flex-shrink: 0; }
+    .pasta-card-nome { margin-bottom: 0; flex: 1; }
+    .btn-minhas-atividades { width: auto; white-space: nowrap; }
+    .pasta-card-dica { display: none; }
+  }
+
   /* ===== CRONÔMETRO ===== */
   .cronometro {
     background: var(--fundo);
@@ -873,6 +900,94 @@
     display: flex;
     align-items: center;
     gap: 0.4rem;
+  }
+
+
+  /* ===== CARD PASTA DO ESTUDANTE ===== */
+  .pasta-estudante-card {
+    position: fixed;
+    top: 80px;
+    right: 1.25rem;
+    width: 210px;
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: 0 6px 28px rgba(0,0,0,0.14);
+    border: 2px solid #E0E7FF;
+    z-index: 90;
+    overflow: hidden;
+    animation: slideInRight 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes slideInRight {
+    from { transform: translateX(240px); opacity:0; }
+    to   { transform: translateX(0);     opacity:1; }
+  }
+  .pasta-card-header {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 0.75rem 1rem;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    letter-spacing: 0.3px;
+  }
+  .pasta-card-body {
+    padding: 0.9rem 1rem 1rem;
+    text-align: center;
+  }
+  .pasta-card-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    color: #fff;
+    margin: 0 auto 0.5rem;
+    box-shadow: 0 3px 10px rgba(102,126,234,0.35);
+  }
+  .pasta-card-nome {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--texto);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+    word-break: break-word;
+  }
+  .btn-minhas-atividades {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 100%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff !important;
+    border: none;
+    border-radius: 50px;
+    padding: 0.6rem 0.5rem;
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.92rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 3px 12px rgba(102,126,234,0.4);
+    letter-spacing: 0.2px;
+  }
+  .btn-minhas-atividades:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 18px rgba(102,126,234,0.55);
+  }
+  .btn-minhas-atividades:active {
+    transform: scale(0.97);
+  }
+  .pasta-card-dica {
+    font-size: 0.68rem;
+    color: var(--cinza);
+    margin-top: 0.5rem;
+    line-height: 1.4;
   }
 
   /* ===== VÍDEO DA AULA ===== */
@@ -3821,6 +3936,26 @@ function abrirAula(idAula) {
         <div class="barra-progresso-fill" style="width:${(aula.id/AULAS.length*100).toFixed(0)}%; background:${aula.cor}"></div>
       </div>
       <span style="font-size:0.85rem;font-weight:700;color:var(--cinza)">Aula ${aula.id} de 10</span>
+    </div>
+    <!-- Card Pasta do Estudante -->
+    <div class="pasta-estudante-card" id="pastaEstudanteCard">
+      <div class="pasta-card-header">
+        <span>📁</span> Acesse sua pasta
+      </div>
+      <div class="pasta-card-body">
+        <div class="pasta-card-avatar" id="pastaAvatar">${estado.nome.charAt(0).toUpperCase()}</div>
+        <div class="pasta-card-nome" id="pastaNome">${estado.nome.split(' ')[0]}</div>
+        <a
+          href="https://drive.google.com/drive/folders/1fDL0Jx8iDkNUrSqSzGwbA94yMrHcZKd8"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-minhas-atividades"
+          title="Abrir minha pasta no Google Drive"
+        >
+          <span>📂</span> Minhas Atividades
+        </a>
+        <p class="pasta-card-dica">Abre no Google Drive em nova aba</p>
+      </div>
     </div>
     ${aula.video ? `
     <div class="video-section">
