@@ -3582,14 +3582,15 @@ function mostrarBloqueada24h(idAula) {
         <p style="font-size:0.78rem;opacity:0.7;margin-bottom:0.75rem;letter-spacing:0.3px">
           🔑 Professor: libere a aula digitando sua senha
         </p>
-        <div style="display:flex;gap:0.5rem;align-items:center;justify-content:center">
-          <div style="position:relative;flex:1;max-width:200px">
+        <div style="display:flex;flex-direction:column;gap:0.5rem;align-items:center">
+          <!-- Campo: nome do professor -->
+          <div style="position:relative;width:100%;max-width:300px">
             <input
-              id="senhaLiberar"
-              type="password"
-              placeholder="Senha do professor"
-              maxlength="20"
-              onkeydown="if(event.key==='Enter') liberarAulaProfessor(${idAula})"
+              id="inputNomeProfLiberar"
+              type="text"
+              placeholder="Seu nome (ex: Emerson)"
+              maxlength="60"
+              onkeydown="if(event.key==='Enter') document.getElementById('senhaLiberar').focus()"
               style="
                 width:100%;box-sizing:border-box;
                 background:rgba(255,255,255,0.12);
@@ -3598,7 +3599,7 @@ function mostrarBloqueada24h(idAula) {
                 color:#fff;
                 padding:0.6rem 1rem 0.6rem 2.4rem;
                 font-family:'Nunito',sans-serif;
-                font-size:0.9rem;
+                font-size:0.88rem;
                 font-weight:700;
                 outline:none;
                 transition:border-color 0.2s,background 0.2s;
@@ -3606,26 +3607,55 @@ function mostrarBloqueada24h(idAula) {
               onfocus="this.style.borderColor='rgba(255,255,255,0.7)';this.style.background='rgba(255,255,255,0.2)'"
               onblur="this.style.borderColor='rgba(255,255,255,0.3)';this.style.background='rgba(255,255,255,0.12)'"
             />
-            <span style="position:absolute;left:0.85rem;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none">🔐</span>
+            <span style="position:absolute;left:0.85rem;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none">👨‍🏫</span>
           </div>
-          <button
-            onclick="liberarAulaProfessor(${idAula})"
-            style="
-              background:rgba(255,255,255,0.95);
-              color:#1e3a5f;
-              border:none;
-              padding:0.6rem 1.1rem;
-              border-radius:50px;
-              font-family:'Fredoka One',cursive;
-              font-size:0.95rem;
-              cursor:pointer;
-              white-space:nowrap;
-              box-shadow:0 3px 10px rgba(0,0,0,0.2);
-              transition:transform 0.15s,box-shadow 0.15s;
-            "
-            onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 5px 15px rgba(0,0,0,0.3)'"
-            onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 3px 10px rgba(0,0,0,0.2)'"
-          >✅ Liberar</button>
+          <!-- Campo: senha + botão -->
+          <div style="display:flex;gap:0.5rem;align-items:center;width:100%;max-width:300px">
+            <div style="position:relative;flex:1">
+              <input
+                id="senhaLiberar"
+                type="password"
+                placeholder="Senha"
+                maxlength="40"
+                onkeydown="if(event.key==='Enter') liberarAulaProfessor(${idAula})"
+                style="
+                  width:100%;box-sizing:border-box;
+                  background:rgba(255,255,255,0.12);
+                  border:2px solid rgba(255,255,255,0.3);
+                  border-radius:50px;
+                  color:#fff;
+                  padding:0.6rem 1rem 0.6rem 2.4rem;
+                  font-family:'Nunito',sans-serif;
+                  font-size:0.9rem;
+                  font-weight:700;
+                  outline:none;
+                  transition:border-color 0.2s,background 0.2s;
+                "
+                onfocus="this.style.borderColor='rgba(255,255,255,0.7)';this.style.background='rgba(255,255,255,0.2)'"
+                onblur="this.style.borderColor='rgba(255,255,255,0.3)';this.style.background='rgba(255,255,255,0.12)'"
+              />
+              <span style="position:absolute;left:0.85rem;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none">🔐</span>
+            </div>
+            <button
+              id="modal-senha-prof-btn"
+              onclick="liberarAulaProfessor(${idAula})"
+              style="
+                background:rgba(255,255,255,0.95);
+                color:#1e3a5f;
+                border:none;
+                padding:0.6rem 1.1rem;
+                border-radius:50px;
+                font-family:'Fredoka One',cursive;
+                font-size:0.95rem;
+                cursor:pointer;
+                white-space:nowrap;
+                box-shadow:0 3px 10px rgba(0,0,0,0.2);
+                transition:transform 0.15s,box-shadow 0.15s;
+              "
+              onmouseover="this.style.transform='scale(1.05)'"
+              onmouseout="this.style.transform='scale(1)'"
+            >✅ Liberar</button>
+          </div>
         </div>
         <div id="erroSenhaProf" style="margin-top:0.6rem;font-size:0.82rem;color:#FCA5A5;font-weight:700;min-height:1.2rem;display:none">
           ❌ Senha incorreta! Tente novamente.
@@ -3637,9 +3667,9 @@ function mostrarBloqueada24h(idAula) {
     </div>`;
   modal.classList.add("ativo");
 
-  // Foca no campo de senha após abrir o modal
+  // Foca no campo nome do professor após abrir o modal
   setTimeout(() => {
-    const inp = document.getElementById("senhaLiberar");
+    const inp = document.getElementById("inputNomeProfLiberar");
     if (inp) inp.focus();
   }, 350);
 
@@ -3651,36 +3681,75 @@ function mostrarBloqueada24h(idAula) {
   }, 1000);
 }
 
-function liberarAulaProfessor(idAula) {
-  const inp   = document.getElementById("senhaLiberar");
-  const erro  = document.getElementById("erroSenhaProf");
-  const ok    = document.getElementById("sucessoSenhaProf");
+async function liberarAulaProfessor(idAula) {
+  const inp  = document.getElementById("senhaLiberar");
+  const erro = document.getElementById("erroSenhaProf");
+  const ok   = document.getElementById("sucessoSenhaProf");
+  const btn  = document.querySelector("#modal-senha-prof-btn");
   if (!inp) return;
 
-  const senha = inp.value;
-  erro.style.display  = "none";
-  ok.style.display    = "none";
+  const nomeProf = document.getElementById("inputNomeProfLiberar")?.value.trim() || "";
+  const senha    = inp.value;
 
-  if (senha !== ADMIN_SENHA) {
-    // Senha errada — anima o campo
+  erro.style.display = "none";
+  ok.style.display   = "none";
+
+  if (!nomeProf) {
+    erro.textContent   = "❌ Informe o nome do professor!";
     erro.style.display = "block";
-    inp.style.borderColor = "#FCA5A5";
-    inp.value = "";
+    document.getElementById("inputNomeProfLiberar")?.focus();
+    return;
+  }
+  if (!senha) {
+    erro.textContent   = "❌ Informe a senha!";
+    erro.style.display = "block";
     inp.focus();
-    setTimeout(() => { inp.style.borderColor = "rgba(255,255,255,0.3)"; }, 1500);
     return;
   }
 
-  // Senha correta — remove o bloqueio
-  localStorage.removeItem(getBloqueioKey(idAula));
-  ok.style.display = "block";
+  // Desabilita botão durante verificação
+  if (btn) { btn.textContent = "⏳ Verificando..."; btn.disabled = true; }
 
-  setTimeout(() => {
-    fecharModal();
-    renderizarAulas();
-    // Abre a aula diretamente após 0.3s
-    setTimeout(() => abrirAula(idAula), 300);
-  }, 900);
+  try {
+    const profId   = "prof_" + nomeProf.toLowerCase().replace(/\s+/g, "_").replace(/[^a-z0-9_]/g, "");
+    const profData = await window._fb.carregarAluno("__prof__" + profId);
+
+    if (!profData) {
+      erro.textContent   = "❌ Professor não encontrado. Verifique o nome!";
+      erro.style.display = "block";
+      if (btn) { btn.textContent = "✅ Liberar"; btn.disabled = false; }
+      document.getElementById("inputNomeProfLiberar")?.focus();
+      return;
+    }
+
+    if (profData.senhaHash !== hashSenha(senha)) {
+      erro.textContent   = "❌ Senha incorreta! Tente novamente.";
+      erro.style.display = "block";
+      inp.style.borderColor = "#FCA5A5";
+      inp.value = "";
+      if (btn) { btn.textContent = "✅ Liberar"; btn.disabled = false; }
+      setTimeout(() => { inp.style.borderColor = "rgba(255,255,255,0.3)"; }, 1500);
+      inp.focus();
+      return;
+    }
+
+    // ✅ Senha correta — remove o bloqueio de 24h
+    localStorage.removeItem(getBloqueioKey(idAula));
+    ok.textContent   = "✅ Aula liberada pelo professor " + profData.nome + "!";
+    ok.style.display = "block";
+    if (btn) { btn.textContent = "✅ Liberado!"; btn.disabled = true; }
+
+    setTimeout(() => {
+      fecharModal();
+      renderizarAulas();
+      setTimeout(() => abrirAula(idAula), 300);
+    }, 900);
+
+  } catch(e) {
+    erro.textContent   = "❌ Erro de conexão. Verifique a internet e tente novamente.";
+    erro.style.display = "block";
+    if (btn) { btn.textContent = "✅ Liberar"; btn.disabled = false; }
+  }
 }
 
 // =================== DASHBOARD DO PROFESSOR ===================
