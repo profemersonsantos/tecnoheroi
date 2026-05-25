@@ -3178,6 +3178,9 @@ async function registrarLogin(nome) {
   estado.conquistasDesbloqueadas = new Set(dados.conquistas || []);
 
   await salvarAluno(nome, dados);
+
+  // Sincroniza bloqueios do Firebase para o localStorage (garante persistência)
+  await sincronizarBloqueiosFirebase(nome);
 }
 
 async function registrarConclusaoAula(idAula, xpGanho, acertos, total, tentativas) {
@@ -3486,20 +3489,116 @@ async function atualizarHeader() {
 }
 
 // ===== SISTEMA DE BLOQUEIO 24H =====
+// ══════════════════════════════════════════════════════════
+// SISTEMA DE BLOQUEIO 24H — salvo no Firebase + cache local
+// ══════════════════════════════════════════════════════════
+
 function getBloqueioKey(idAula) {
   return `tecnohero_bloqueio_${estado.nome}_aula${idAula}`;
 }
-function salvarBloqueio(idAula) {
+
+// Salva bloqueio NO FIREBASE (campo bloqueios dentro do aluno)
+// e também no localStorage como cache offline
+async function salvarBloqueio(idAula) {
   const liberacaoEm = new Date();
-  liberacaoEm.setDate(liberacaoEm.getDate() + 1); // +24h
-  localStorage.setItem(getBloqueioKey(idAula), liberacaoEm.toISOString());
+  liberacaoEm.setDate(liberacaoEm.getDate() + 1); // +24h exatas
+  const isoStr = liberacaoEm.toISOString();
+
+  // 1. Cache local imediato (para a interface não travar)
+  localStorage.setItem(getBloqueioKey(idAula), isoStr);
+
+  // 2. Firebase — salva dentro do documento do aluno
+  try {
+    const db   = await carregarDB();
+    const nome = estado.nome;
+    if (db[nome]) {
+      if (!db[nome].bloqueios) db[nome].bloqueios = {};
+      db[nome].bloqueios[idAula] = isoStr;
+      await salvarAluno(nome, db[nome]);
+    }
+  } catch(e) {
+    console.warn("Bloqueio salvo apenas localmente:", e);
+  }
 }
+
+// Lê bloqueio: Firebase tem prioridade, localStorage é fallback
+// Retorna os ms restantes (0 = desbloqueado)
 function getBloqueioRestante(idAula) {
+  // Tenta Firebase (via cache em memória _cacheDB)
+  try {
+    if (_cacheDB && estado.nome && _cacheDB[estado.nome]) {
+      const bloqueios = _cacheDB[estado.nome].bloqueios || {};
+      const val = bloqueios[idAula];
+      if (val) {
+        const libera = new Date(val).getTime();
+        const ms = Math.max(0, libera - Date.now());
+        // Sincroniza localStorage com o Firebase
+        if (ms > 0) {
+          localStorage.setItem(getBloqueioKey(idAula), val);
+        } else {
+          localStorage.removeItem(getBloqueioKey(idAula));
+        }
+        return ms;
+      }
+    }
+  } catch(e) {}
+
+  // Fallback: localStorage (offline ou cache ainda não carregado)
   const val = localStorage.getItem(getBloqueioKey(idAula));
   if (!val) return 0;
-  const libera = new Date(val).getTime();
-  const agora  = Date.now();
-  return Math.max(0, libera - agora);
+  return Math.max(0, new Date(val).getTime() - Date.now());
+}
+
+// Remove o bloqueio do Firebase E do localStorage
+async function removerBloqueio(idAula) {
+  // Remove cache local
+  localStorage.removeItem(getBloqueioKey(idAula));
+
+  // Remove no Firebase
+  try {
+    const dbData = await carregarDB();
+    const nome   = estado.nome;
+    if (dbData[nome] && dbData[nome].bloqueios) {
+      delete dbData[nome].bloqueios[idAula];
+      // Atualiza cache em memória
+      if (_cacheDB && _cacheDB[nome] && _cacheDB[nome].bloqueios) {
+        delete _cacheDB[nome].bloqueios[idAula];
+      }
+      await salvarAluno(nome, dbData[nome]);
+    }
+  } catch(e) {
+    console.warn("Erro ao remover bloqueio do Firebase:", e);
+  }
+}
+
+// Ao fazer login, carrega os bloqueios do Firebase para o localStorage
+async function sincronizarBloqueiosFirebase(nome) {
+  try {
+    const dados = await window._fb.carregarAluno(nome);
+    if (!dados) return;
+    const bloqueios = dados.bloqueios || {};
+    // Limpa bloqueios vencidos do Firebase automaticamente
+    let alterou = false;
+    for (const [idAula, isoStr] of Object.entries(bloqueios)) {
+      const ms = Math.max(0, new Date(isoStr).getTime() - Date.now());
+      if (ms > 0) {
+        localStorage.setItem(getBloqueioKey(idAula), isoStr);
+      } else {
+        // Bloqueio vencido — remove
+        delete bloqueios[idAula];
+        localStorage.removeItem(getBloqueioKey(idAula));
+        alterou = true;
+      }
+    }
+    if (alterou) {
+      dados.bloqueios = bloqueios;
+      await salvarAluno(nome, dados);
+    }
+    // Atualiza cache em memória
+    if (_cacheDB && _cacheDB[nome]) _cacheDB[nome].bloqueios = bloqueios;
+  } catch(e) {
+    console.warn("Erro ao sincronizar bloqueios:", e);
+  }
 }
 function formatarCountdown(ms) {
   if (ms <= 0) return "00:00:00";
@@ -3733,8 +3832,8 @@ async function liberarAulaProfessor(idAula) {
       return;
     }
 
-    // ✅ Senha correta — remove o bloqueio de 24h
-    localStorage.removeItem(getBloqueioKey(idAula));
+    // ✅ Senha correta — remove o bloqueio de 24h (Firebase + localStorage)
+    await removerBloqueio(idAula);
     ok.textContent   = "✅ Aula liberada pelo professor " + profData.nome + "!";
     ok.style.display = "block";
     if (btn) { btn.textContent = "✅ Liberado!"; btn.disabled = true; }
@@ -4749,7 +4848,7 @@ function mostrarResultado() {
     </div>`;
 }
 
-function concluirAula(xpGanho, perfeito) {
+async function concluirAula(xpGanho, perfeito) {
   const aula = estado.aulaAtual;
   const acertos = xpGanho > 0 ? Math.round((xpGanho / aula.xp) * 5) : 4;
   const primeiraVez = !estado.aulasCompletas.has(aula.id);
@@ -4760,10 +4859,10 @@ function concluirAula(xpGanho, perfeito) {
     verificarConquistas(perfeito);
     atualizarHeader();
     registrarConclusaoAula(aula.id, xpGanho, acertos, 5, estado.quizAtual.tentativas || 1);
-    // Bloqueia a próxima aula por 24h
+    // Bloqueia a próxima aula por 24h (salvo no Firebase)
     const proxIdx = AULAS.findIndex(a => a.id === aula.id) + 1;
     if (proxIdx < AULAS.length) {
-      salvarBloqueio(AULAS[proxIdx].id);
+      await salvarBloqueio(AULAS[proxIdx].id);
     }
   }
   voltarParaAulas();
