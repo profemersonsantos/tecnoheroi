@@ -889,6 +889,159 @@
     .pasta-card-dica { display: none; }
   }
 
+
+  /* ===== QUIZ FINAL ===== */
+  .quiz-final-container {
+    background: linear-gradient(135deg, #1e1b4b, #312e81);
+    border-radius: var(--radius);
+    padding: 0;
+    overflow: hidden;
+    margin-top: 2rem;
+    box-shadow: 0 8px 32px rgba(99,102,241,0.3);
+  }
+  .quiz-final-header {
+    background: linear-gradient(135deg, #7C3AED, #2563EB);
+    padding: 2rem;
+    text-align: center;
+    color: #fff;
+  }
+  .quiz-final-header h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8rem;
+    margin: 0.5rem 0 0.25rem;
+  }
+  .quiz-final-body { padding: 2rem; }
+  .quiz-final-progresso {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .quiz-final-barra {
+    flex: 1; height: 10px; background: rgba(255,255,255,0.15);
+    border-radius: 50px; overflow: hidden;
+  }
+  .quiz-final-barra-fill {
+    height: 100%; background: linear-gradient(90deg,#a78bfa,#60a5fa);
+    border-radius: 50px; transition: width 0.4s ease;
+  }
+  .quiz-final-num {
+    font-family: 'Fredoka One', cursive; font-size: 1rem;
+    color: #a78bfa; white-space: nowrap;
+  }
+  .quiz-final-pergunta {
+    background: rgba(255,255,255,0.07);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.25rem;
+    color: #e0e7ff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.5;
+    border-left: 4px solid #7C3AED;
+  }
+  .quiz-final-aula-tag {
+    display: inline-block;
+    background: rgba(124,58,237,0.4);
+    color: #c4b5fd;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.2rem 0.7rem;
+    border-radius: 50px;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .quiz-final-opcoes { display: flex; flex-direction: column; gap: 0.6rem; }
+  .quiz-final-opcao {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1.1rem;
+    color: #e0e7ff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+    text-align: left;
+    display: flex; gap: 0.75rem; align-items: center;
+  }
+  .quiz-final-opcao:hover:not(:disabled) {
+    background: rgba(124,58,237,0.35);
+    border-color: #7C3AED;
+    transform: translateX(4px);
+  }
+  .quiz-final-opcao.certa  { background: rgba(16,185,129,0.25); border-color: #10B981; color: #6EE7B7; }
+  .quiz-final-opcao.errada { background: rgba(239,68,68,0.2);   border-color: #EF4444; color: #FCA5A5; }
+  .quiz-final-opcao:disabled { cursor: default; }
+  .quiz-final-explicacao {
+    background: rgba(255,255,255,0.06);
+    border-left: 3px solid #a78bfa;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 0.85rem 1rem;
+    color: #c4b5fd;
+    font-size: 0.88rem;
+    margin-top: 0.75rem;
+    line-height: 1.5;
+    display: none;
+  }
+  .quiz-final-btn-prox {
+    margin-top: 1.25rem;
+    width: 100%;
+    background: linear-gradient(135deg,#7C3AED,#2563EB);
+    color: #fff;
+    border: none;
+    padding: 0.9rem;
+    border-radius: 50px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .quiz-final-btn-prox:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(124,58,237,0.5); }
+
+  /* ===== RESULTADO QUIZ FINAL ===== */
+  .quiz-final-resultado {
+    text-align: center; padding: 2rem;
+    color: #fff;
+  }
+  .quiz-final-resultado .resultado-emoji { font-size: 4rem; display: block; margin-bottom: 0.5rem; }
+  .quiz-final-resultado h2 { font-family: 'Fredoka One', cursive; font-size: 2rem; margin: 0 0 0.5rem; }
+  .quiz-final-resultado .placar {
+    font-family: 'Fredoka One', cursive;
+    font-size: 3.5rem; color: #fbbf24;
+    line-height: 1;
+  }
+  .quiz-final-resultado .placar-sub { font-size: 0.9rem; color: #a78bfa; margin-bottom: 1.25rem; }
+  .btn-baixar-certificado {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #1e1b4b;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(251,191,36,0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+    margin: 0.75rem 0.5rem;
+  }
+  .btn-baixar-certificado:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 10px 30px rgba(251,191,36,0.6); }
+  .btn-refazer-final {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(255,255,255,0.1);
+    color: #c4b5fd;
+    border: 2px solid rgba(255,255,255,0.2);
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0.5rem;
+    transition: all 0.18s;
+  }
+  .btn-refazer-final:hover { background: rgba(255,255,255,0.18); border-color: #a78bfa; }
+
   /* ===== CRONÔMETRO ===== */
   .cronometro {
     background: var(--fundo);
@@ -4615,6 +4768,470 @@ function iniciarCacaPalavra(body, jogo) {
   });
 }
 
+
+// ══════════════════════════════════════════════════════════════
+// QUIZ FINAL — 20 perguntas (2 por aula)
+// ══════════════════════════════════════════════════════════════
+const QUIZ_FINAL = [
+  // AULA 1 — Conhecendo o Chromebook
+  {
+    aula: "Aula 1 — Conhecendo o Chromebook",
+    pergunta: "O que é um Chromebook?",
+    opcoes: ["Um celular grande", "Um computador leve que usa a internet e funciona com o Chrome OS", "Um videogame portátil", "Um tablet sem tela"],
+    correta: 1,
+    explicacao: "O Chromebook é um computador leve, rápido e conectado à internet, que usa o sistema operacional Chrome OS!"
+  },
+  {
+    aula: "Aula 1 — Conhecendo o Chromebook",
+    pergunta: "Como você desliga corretamente o Chromebook?",
+    opcoes: ["Fecha a tampa e pronto", "Clica no relógio no canto inferior direito e depois em Desligar", "Aperta o botão de volume", "Arranca o carregador da tomada"],
+    correta: 1,
+    explicacao: "Para desligar corretamente, clique no relógio (ou foto do perfil) e selecione o ícone de Desligar!"
+  },
+  // AULA 2 — Dominando o Mouse e Teclado
+  {
+    aula: "Aula 2 — Dominando o Mouse e Teclado",
+    pergunta: "O que faz o touchpad do Chromebook?",
+    opcoes: ["Liga o Wi-Fi", "Funciona como mouse, permitindo mover o cursor e clicar", "Aumenta o volume", "Tira foto"],
+    correta: 1,
+    explicacao: "O touchpad é o painel sensível ao toque que funciona como um mouse — você desliza o dedo para mover o cursor!"
+  },
+  {
+    aula: "Aula 2 — Dominando o Mouse e Teclado",
+    pergunta: "Qual atalho de teclado serve para copiar um texto?",
+    opcoes: ["Ctrl + V", "Ctrl + Z", "Ctrl + C", "Ctrl + X"],
+    correta: 2,
+    explicacao: "Ctrl + C copia o texto selecionado! Ctrl + V cola, Ctrl + Z desfaz e Ctrl + X recorta."
+  },
+  // AULA 3 — Navegando na Internet
+  {
+    aula: "Aula 3 — Navegando na Internet",
+    pergunta: "O que significa 'https' no endereço de um site?",
+    opcoes: ["O site tem muitas fotos", "A conexão é segura e criptografada", "O site é gratuito", "O site é brasileiro"],
+    correta: 1,
+    explicacao: "O 'https' significa que o site usa criptografia para proteger seus dados — sempre prefira sites com https!"
+  },
+  {
+    aula: "Aula 3 — Navegando na Internet",
+    pergunta: "Qual é a melhor forma de pesquisar no Google?",
+    opcoes: ["Escrever frases longas e complicadas", "Usar palavras-chave específicas e diretas", "Sempre digitar perguntas em CAIXA ALTA", "Pesquisar só imagens"],
+    correta: 1,
+    explicacao: "Usar palavras-chave específicas ajuda o Google a encontrar resultados mais relevantes e precisos!"
+  },
+  // AULA 4 — Escrevendo com Google Docs
+  {
+    aula: "Aula 4 — Escrevendo com Google Docs",
+    pergunta: "Qual é a grande vantagem do Google Docs em relação a outros editores de texto?",
+    opcoes: ["Ele tem mais fontes", "Salva automaticamente na nuvem e pode ser acessado de qualquer lugar", "É mais colorido", "Só funciona no Chromebook"],
+    correta: 1,
+    explicacao: "O Google Docs salva automaticamente na nuvem! Isso significa que você nunca perde seu trabalho e pode acessar de qualquer computador."
+  },
+  {
+    aula: "Aula 4 — Escrevendo com Google Docs",
+    pergunta: "O que é 'compartilhar' um documento no Google Docs?",
+    opcoes: ["Imprimir várias cópias", "Permitir que outras pessoas vejam ou editem o documento", "Deletar o arquivo", "Mudar a cor do texto"],
+    correta: 1,
+    explicacao: "Compartilhar permite que professores e colegas vejam ou editem seu documento — muito útil para trabalhos em grupo!"
+  },
+  // AULA 5 — Apresentações com Slides
+  {
+    aula: "Aula 5 — Apresentações com Slides",
+    pergunta: "Quantos slides deve ter uma boa apresentação escolar segundo as boas práticas?",
+    opcoes: ["O máximo possível, com todo o conteúdo", "Poucos slides com informações claras e objetivas", "Apenas 1 slide com tudo", "Não importa a quantidade"],
+    correta: 1,
+    explicacao: "Menos é mais! Slides com poucas informações claras e objetivas são muito mais fáceis de entender e apresentar."
+  },
+  {
+    aula: "Aula 5 — Apresentações com Slides",
+    pergunta: "O que é um 'tema' no Google Slides?",
+    opcoes: ["O assunto da apresentação", "Um conjunto de cores, fontes e estilos visuais para os slides", "Um tipo de animação", "O título do primeiro slide"],
+    correta: 1,
+    explicacao: "O tema define o visual da apresentação — cores, fontes e estilos. Deixa tudo mais bonito e organizado!"
+  },
+  // AULA 6 — Comunicação Digital
+  {
+    aula: "Aula 6 — Comunicação Digital",
+    pergunta: "O que é 'netiqueta'?",
+    opcoes: ["Um tipo de rede Wi-Fi", "As regras de boas maneiras e respeito na internet", "Um aplicativo de mensagens", "Um filtro de fotos"],
+    correta: 1,
+    explicacao: "Netiqueta são as regras de etiqueta da internet — ser educado, respeitar as pessoas e não compartilhar conteúdo falso!"
+  },
+  {
+    aula: "Aula 6 — Comunicação Digital",
+    pergunta: "O que você NUNCA deve fazer em um e-mail escolar?",
+    opcoes: ["Colocar assunto", "Usar gírias, xingamentos ou ser grosseiro", "Se identificar pelo nome", "Revisar antes de enviar"],
+    correta: 1,
+    explicacao: "E-mails escolares exigem respeito e educação! Sempre use linguagem adequada, coloque assunto e se identifique."
+  },
+  // AULA 7 — Organizando Arquivos
+  {
+    aula: "Aula 7 — Organizando Arquivos",
+    pergunta: "Qual é a melhor forma de nomear um arquivo escolar?",
+    opcoes: ["doc1, doc2, doc3...", "asdfgh.docx", "Aula07_MeuNome_Atividade.docx", "Não importa o nome"],
+    correta: 2,
+    explicacao: "Um nome descritivo como 'Aula07_NomeAluno_Atividade' facilita encontrar o arquivo depois e organiza tudo!"
+  },
+  {
+    aula: "Aula 7 — Organizando Arquivos",
+    pergunta: "O que é uma 'pasta' no Google Drive?",
+    opcoes: ["Um arquivo de texto", "Um espaço para organizar e guardar arquivos relacionados", "Uma foto salva", "Um link da internet"],
+    correta: 1,
+    explicacao: "Pastas são contêineres virtuais para organizar arquivos! Assim como pastas físicas guardam papéis, pastas digitais guardam arquivos."
+  },
+  // AULA 8 — Segurança Digital
+  {
+    aula: "Aula 8 — Segurança Digital",
+    pergunta: "O que é uma senha forte?",
+    opcoes: ["Seu nome e data de nascimento", "Uma combinação de letras maiúsculas, minúsculas, números e símbolos", "A palavra 'senha123'", "Qualquer palavra do dicionário"],
+    correta: 1,
+    explicacao: "Uma senha forte mistura letras maiúsculas, minúsculas, números e símbolos. Nunca use dados pessoais óbvios!"
+  },
+  {
+    aula: "Aula 8 — Segurança Digital",
+    pergunta: "O que você deve fazer ao receber uma mensagem suspeita pedindo dados pessoais?",
+    opcoes: ["Responder com seus dados para ajudar", "Ignorar, deletar e contar para um adulto de confiança", "Compartilhar com amigos", "Clicar em todos os links"],
+    correta: 1,
+    explicacao: "Mensagens pedindo dados pessoais são golpes! Nunca compartilhe informações pessoais e sempre avise um adulto."
+  },
+  // AULA 9 — Criando com Tecnologia
+  {
+    aula: "Aula 9 — Criando com Tecnologia",
+    pergunta: "O que é cidadania digital?",
+    opcoes: ["Ter muitos seguidores nas redes sociais", "Usar a tecnologia de forma responsável, ética e respeitosa", "Passar o dia todo no computador", "Saber programar jogos"],
+    correta: 1,
+    explicacao: "Cidadania digital é usar a tecnologia com responsabilidade, respeito e ética — tanto online quanto offline!"
+  },
+  {
+    aula: "Aula 9 — Criando com Tecnologia",
+    pergunta: "O que é direito autoral na internet?",
+    opcoes: ["Poder copiar qualquer coisa da internet", "A proteção legal das criações de uma pessoa — texto, música, imagem", "Um tipo de vírus", "Uma rede social"],
+    correta: 1,
+    explicacao: "Direito autoral protege as criações de quem as fez. Sempre peça permissão ou use conteúdo com licença livre!"
+  },
+  // AULA 10 — Portfólio Digital
+  {
+    aula: "Aula 10 — Portfólio Digital",
+    pergunta: "O que é um portfólio digital?",
+    opcoes: ["Uma senha secreta", "Uma coleção organizada dos seus melhores trabalhos digitais", "Um aplicativo de jogos", "Uma pasta vazia no Drive"],
+    correta: 1,
+    explicacao: "Portfólio digital é sua vitrine! Uma coleção dos seus melhores trabalhos que mostra tudo o que você aprendeu e criou."
+  },
+  {
+    aula: "Aula 10 — Portfólio Digital",
+    pergunta: "Qual foi a habilidade mais importante que você aprendeu neste curso?",
+    opcoes: ["Usar tecnologia com responsabilidade e criatividade", "Ficar o dia todo no computador", "Instalar jogos no Chromebook", "Ignorar as regras da internet"],
+    correta: 0,
+    explicacao: "Usar tecnologia com responsabilidade e criatividade é a habilidade mais valiosa — e você aprendeu isso durante todo o curso! 🎉"
+  }
+];
+
+// Estado do Quiz Final
+let estadoQuizFinal = {
+  ativo: false,
+  perguntaIndex: 0,
+  acertos: 0,
+  respondida: false
+};
+
+function iniciarQuizFinal() {
+  estadoQuizFinal = { ativo: true, perguntaIndex: 0, acertos: 0, respondida: false };
+  renderizarQuizFinal();
+}
+
+function renderizarQuizFinal() {
+  const container = document.getElementById("quizFinalContainer");
+  if (!container) return;
+  const idx = estadoQuizFinal.perguntaIndex;
+  const total = QUIZ_FINAL.length;
+
+  if (idx >= total) {
+    mostrarResultadoFinal();
+    return;
+  }
+
+  const q = QUIZ_FINAL[idx];
+  const pct = Math.round((idx / total) * 100);
+  const letras = ["A", "B", "C", "D"];
+
+  container.innerHTML = `
+    <div class="quiz-final-container">
+      <div class="quiz-final-header">
+        <div style="font-size:2rem">🏆</div>
+        <h2>Quiz Final do Curso</h2>
+        <p style="opacity:0.85;font-size:0.9rem">Mostre tudo o que você aprendeu!</p>
+      </div>
+      <div class="quiz-final-body">
+        <div class="quiz-final-progresso">
+          <div class="quiz-final-barra">
+            <div class="quiz-final-barra-fill" style="width:${pct}%"></div>
+          </div>
+          <span class="quiz-final-num">${idx + 1}/${total}</span>
+        </div>
+        <div class="quiz-final-aula-tag">📚 ${q.aula}</div>
+        <div class="quiz-final-pergunta">${q.pergunta}</div>
+        <div class="quiz-final-opcoes" id="qfOpcoes">
+          ${q.opcoes.map((op, i) => `
+            <button class="quiz-final-opcao" onclick="responderQuizFinal(${i})" id="qfOp${i}">
+              <span style="font-family:'Fredoka One',cursive;font-size:1.1rem;opacity:0.7">${letras[i]}</span>
+              ${op}
+            </button>`).join("")}
+        </div>
+        <div class="quiz-final-explicacao" id="qfExplicacao">💡 ${q.explicacao}</div>
+        <button class="quiz-final-btn-prox" id="qfBtnProx" onclick="proximaQuizFinal()">
+          ${idx + 1 < total ? "Próxima Pergunta →" : "Ver Resultado 🎯"}
+        </button>
+      </div>
+    </div>`;
+}
+
+function responderQuizFinal(idx) {
+  if (estadoQuizFinal.respondida) return;
+  estadoQuizFinal.respondida = true;
+  const q = QUIZ_FINAL[estadoQuizFinal.perguntaIndex];
+  const correta = q.correta;
+  const botoes = document.querySelectorAll(".quiz-final-opcao");
+  botoes.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === correta) btn.classList.add("certa");
+    else if (i === idx && idx !== correta) btn.classList.add("errada");
+  });
+  if (idx === correta) estadoQuizFinal.acertos++;
+  const exp = document.getElementById("qfExplicacao");
+  if (exp) exp.style.display = "block";
+  const btn = document.getElementById("qfBtnProx");
+  if (btn) btn.style.display = "block";
+}
+
+function proximaQuizFinal() {
+  estadoQuizFinal.perguntaIndex++;
+  estadoQuizFinal.respondida = false;
+  renderizarQuizFinal();
+}
+
+function mostrarResultadoFinal() {
+  const container = document.getElementById("quizFinalContainer");
+  const acertos = estadoQuizFinal.acertos;
+  const total = QUIZ_FINAL.length;
+  const pct = Math.round((acertos / total) * 100);
+  const passou = acertos >= 16;
+
+  let emoji, titulo, msg;
+  if (acertos === total) { emoji = "🏆"; titulo = "PERFEITO! Mestre TecnoHerói!"; msg = "Incrível! Você acertou todas as 20 questões! Você é um verdadeiro gênio digital!"; }
+  else if (passou) { emoji = "🌟"; titulo = "Parabéns, TecnoHerói!"; msg = `Você acertou ${acertos} de 20 questões (${pct}%) — missão cumprida! Você está pronto para receber seu certificado!`; }
+  else { emoji = "💪"; titulo = "Quase lá!"; msg = `Você acertou ${acertos} de 20 questões (${pct}%). Precisa de pelo menos 16 acertos (80%) para o certificado. Revise o conteúdo e tente de novo!`; }
+
+  container.innerHTML = `
+    <div class="quiz-final-container">
+      <div class="quiz-final-resultado">
+        <span class="resultado-emoji">${emoji}</span>
+        <h2>${titulo}</h2>
+        <div class="placar">${acertos}/20</div>
+        <div class="placar-sub">${pct}% de aproveitamento</div>
+        <p style="color:#c4b5fd;font-size:0.95rem;max-width:400px;margin:0 auto 1.5rem">${msg}</p>
+        ${passou ? `
+          <button class="btn-baixar-certificado" onclick="baixarCertificado()">
+            🎓 Baixar Certificado
+          </button><br>` : `
+          <div style="background:rgba(239,68,68,0.15);border:2px solid rgba(239,68,68,0.4);border-radius:var(--radius-sm);padding:0.75rem 1.5rem;color:#fca5a5;font-weight:800;display:inline-block;margin-bottom:1rem;">
+            ⚠️ Mínimo: 16 acertos (80%) para o certificado
+          </div><br>`}
+        <button class="btn-refazer-final" onclick="iniciarQuizFinal()">
+          🔄 Refazer Quiz Final
+        </button>
+      </div>
+    </div>`;
+}
+
+function baixarCertificado() {
+  const nome    = estado.nome  || "Estudante";
+  const turma   = estado.turma || "5º Ano B";
+  const dataHoje = new Date().toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" });
+  const acertos = estadoQuizFinal.acertos;
+  const pct = Math.round((acertos / QUIZ_FINAL.length) * 100);
+
+  // Detectar professor pela turma do aluno
+  const turmaUpper = turma.toUpperCase();
+  let nomeProfessor = "Emerson Da Silva Santos";  // padrão: 5º Ano B
+  if (turmaUpper.includes("A") && !turmaUpper.includes("B")) {
+    nomeProfessor = "Agatha Battonyai Valeriano"; // 5º Ano A
+  }
+
+  const w = window.open("", "_blank");
+  w.document.write(`<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Certificado TecnoHerói — ${nome}</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { width:210mm; height:148mm; background:#fff; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    display: flex; align-items: stretch;
+  }
+  .cert {
+    width: 210mm; height: 148mm;
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #1e3a8a 100%);
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 10mm 14mm;
+    text-align: center;
+  }
+  /* Decorações de fundo */
+  .cert::before {
+    content: '';
+    position: absolute; inset: 6mm;
+    border: 3px solid rgba(251,191,36,0.5);
+    border-radius: 8px;
+    pointer-events: none;
+  }
+  .cert::after {
+    content: '';
+    position: absolute; inset: 8mm;
+    border: 1px solid rgba(251,191,36,0.25);
+    border-radius: 6px;
+    pointer-events: none;
+  }
+  .stars {
+    position: absolute; top:0; left:0; width:100%; height:100%;
+    pointer-events:none; overflow:hidden;
+  }
+  .star {
+    position:absolute; width:4px; height:4px;
+    background:#fbbf24; border-radius:50%; opacity:0.3;
+  }
+  .escola-logo {
+    font-family: 'Fredoka One', cursive;
+    font-size: 9pt; color: #fbbf24;
+    letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 3mm; opacity: 0.9;
+  }
+  .titulo-curso {
+    font-family: 'Fredoka One', cursive;
+    font-size: 10pt; color: #a78bfa;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 1.5mm;
+  }
+  .cert-titulo {
+    font-family: 'Fredoka One', cursive;
+    font-size: 22pt; color: #fbbf24;
+    line-height: 1.1; margin-bottom: 2mm;
+    text-shadow: 0 2px 8px rgba(251,191,36,0.4);
+  }
+  .cert-subtitulo {
+    font-size: 9pt; color: #c4b5fd;
+    margin-bottom: 3mm;
+  }
+  .linha {
+    width: 80%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(251,191,36,0.5), transparent);
+    margin: 2mm auto;
+  }
+  .certifica-que { font-size: 8pt; color: #a78bfa; margin-bottom: 1mm; }
+  .nome-aluno {
+    font-family: 'Fredoka One', cursive;
+    font-size: 20pt; color: #fff;
+    text-shadow: 0 2px 12px rgba(124,58,237,0.8);
+    margin: 1mm 0;
+  }
+  .turma { font-size: 8.5pt; color: #c4b5fd; margin-bottom: 2mm; }
+  .descricao {
+    font-size: 7.5pt; color: #e0e7ff;
+    line-height: 1.5; max-width: 160mm;
+    margin-bottom: 2.5mm;
+  }
+  .aproveitamento {
+    display: inline-block;
+    background: rgba(251,191,36,0.15);
+    border: 1px solid rgba(251,191,36,0.4);
+    border-radius: 20px;
+    padding: 1mm 5mm;
+    font-size: 7.5pt; color: #fbbf24; font-weight: 800;
+    margin-bottom: 3mm;
+  }
+  .assinaturas {
+    display: flex; justify-content: space-around;
+    width: 100%; margin-top: 2mm; gap: 4mm;
+  }
+  .assinatura {
+    flex: 1; text-align: center;
+  }
+  .assinatura .linha-ass {
+    width: 100%; height: 1px;
+    background: rgba(255,255,255,0.3);
+    margin-bottom: 1.5mm;
+  }
+  .assinatura .cargo {
+    font-size: 6pt; color: #a78bfa;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .assinatura .ass-nome {
+    font-size: 7pt; color: #e0e7ff; font-weight: 700;
+    margin-bottom: 0.5mm;
+  }
+  .data { font-size: 6.5pt; color: #a78bfa; margin-top: 2mm; }
+  .emoji-deco {
+    font-size: 28pt; margin-bottom: 1mm;
+    filter: drop-shadow(0 2px 8px rgba(251,191,36,0.6));
+  }
+  @media print {
+    html, body { width:210mm; height:148mm; }
+    .no-print { display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="cert">
+  <div class="stars">
+    ${Array.from({length:30}, (_,i) => `<div class="star" style="top:${Math.random()*100}%;left:${Math.random()*100}%;opacity:${0.1+Math.random()*0.3}"></div>`).join("")}
+  </div>
+  <div class="escola-logo">E.M. João Oriani — Piracicaba/SP</div>
+  <div class="titulo-curso">🚀 Curso de Informática para Heróis</div>
+  <div class="emoji-deco">🏆</div>
+  <div class="cert-titulo">Certificado de Conclusão</div>
+  <div class="linha"></div>
+  <div class="certifica-que">Certificamos que</div>
+  <div class="nome-aluno">${nome}</div>
+  <div class="turma">${turma} • Ano Letivo 2025</div>
+  <div class="linha"></div>
+  <div class="descricao">
+    concluiu com êxito o <strong style="color:#fbbf24">Curso de Informática TecnoHerói</strong>, composto por 10 aulas sobre
+    Chromebook, Mouse e Teclado, Internet, Google Docs, Google Slides,
+    Comunicação Digital, Organização de Arquivos, Segurança Digital,
+    Criação com Tecnologia e Portfólio Digital.
+  </div>
+  <div class="aproveitamento">✨ Aproveitamento: ${acertos}/20 questões (${pct}%)</div>
+  <div class="assinaturas">
+    <div class="assinatura">
+      <div class="linha-ass"></div>
+      <div class="ass-nome">${nomeProfessor}</div>
+      <div class="cargo">Professor${nomeProfessor === "Agatha Battonyai Valeriano" ? "a" : ""}</div>
+    </div>
+    <div class="assinatura">
+      <div class="linha-ass"></div>
+      <div class="ass-nome">Francine Trevisan Augusti Bena</div>
+      <div class="cargo">Coordenadora Pedagógica</div>
+    </div>
+    <div class="assinatura">
+      <div class="linha-ass"></div>
+      <div class="ass-nome">Cristiane Martin Campos de Godoy</div>
+      <div class="cargo">Diretora</div>
+    </div>
+  </div>
+  <div class="data">Piracicaba, ${dataHoje}</div>
+</div>
+<scr"+"ipt>
+  window.onload = () => {
+    setTimeout(() => window.print(), 600);
+  };
+</"+"script>
+</body>
+</html>`);
+  w.document.close();
+}
+
 function voltarParaAulas() {
   // Remove teclado da forca se estiver ativo
   if (window._forcaKeyHandler) {
@@ -4748,7 +5365,21 @@ function mostrarResultado() {
       <button class="btn-repetir-quiz" onclick="iniciarQuiz()">
         🔄 ${passou ? 'Repetir Quiz' : 'Tentar Novamente'}
       </button>
-    </div>`;
+    </div>
+    ${passou && aula.id === 10 ? `
+      <div style="margin-top:2rem">
+        <div style="text-align:center;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:var(--radius);padding:1.5rem;box-shadow:0 6px 24px rgba(251,191,36,0.35)">
+          <div style="font-size:2.5rem">🏆</div>
+          <div style="font-family:'Fredoka One',cursive;font-size:1.4rem;color:#1e1b4b;margin:0.5rem 0">Quiz Final do Curso</div>
+          <p style="color:#1e3a8a;font-size:0.9rem;margin-bottom:1rem">Você completou todas as aulas! Agora é hora do <strong>desafio final</strong> com 20 perguntas de todo o curso. Acertando 80% (16/20) você ganha seu <strong>Certificado de Conclusão</strong>! 🎓</p>
+          <button onclick="document.getElementById('secaoQuizFinal').scrollIntoView({behavior:'smooth'});setTimeout(iniciarQuizFinal,400)" style="background:#1e1b4b;color:#fbbf24;border:none;padding:0.85rem 2rem;border-radius:50px;font-family:'Fredoka One',cursive;font-size:1.1rem;cursor:pointer;transition:transform 0.15s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            🚀 Iniciar Quiz Final
+          </button>
+        </div>
+        <div id="secaoQuizFinal" style="margin-top:1.5rem">
+          <div id="quizFinalContainer"></div>
+        </div>
+      </div>` : ""}`;
 }
 
 function concluirAula(xpGanho, perfeito) {
