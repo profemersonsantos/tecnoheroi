@@ -5047,232 +5047,123 @@ function baixarCertificado() {
   const turma   = estado.turma || "5º Ano B";
   const dataHoje = new Date().toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" });
   const acertos = estadoQuizFinal.acertos;
-  const pct = Math.round((acertos / QUIZ_FINAL.length) * 100);
+  const pct     = Math.round((acertos / QUIZ_FINAL.length) * 100);
 
-  // Detectar professor pela turma
   const turmaUpper = turma.toUpperCase();
-  let nomeProfessor = "Emerson Da Silva Santos";
+  let nomeProfessor  = "Emerson Da Silva Santos";
   let cargoProfessor = "Professor";
   if (turmaUpper.includes("A") && !turmaUpper.includes("B")) {
     nomeProfessor  = "Agatha Battonyai Valeriano";
     cargoProfessor = "Professora";
   }
 
-  // Estrelinhas aleatórias
-  const estrelas = Array.from({length:32}, () =>
-    `<div style="position:absolute;width:3px;height:3px;background:#fbbf24;border-radius:50%;
-      top:${(Math.random()*100).toFixed(1)}%;left:${(Math.random()*100).toFixed(1)}%;
-      opacity:${(0.08+Math.random()*0.25).toFixed(2)}"></div>`
+  const estrelas = Array.from({length:30}, () =>
+    `<div style="position:absolute;width:3px;height:3px;background:#fbbf24;border-radius:50%;` +
+    `top:${(Math.random()*100).toFixed(1)}%;left:${(Math.random()*100).toFixed(1)}%;` +
+    `opacity:${(0.08+Math.random()*0.22).toFixed(2)}"></div>`
   ).join("");
 
-  const certHTML = `<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<title>Certificado — ${nome}</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
-
-  * { margin:0; padding:0; box-sizing:border-box; }
-
-  /* Forçar impressão de cores de fundo no Chrome/Chromebook */
-  html {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    color-adjust: exact !important;
-  }
-
-  @page {
-    size: 297mm 210mm landscape;
-    margin: 8mm;
-  }
-
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: #fff;
-    width: 281mm;
-    height: 194mm;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cert {
-    width: 281mm;
-    height: 194mm;
-    background: #1e1b4b !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 10mm 16mm 8mm;
-    text-align: center;
-    border-radius: 6px;
-  }
-
-  /* Gradiente via camada extra (mais compatível com impressão) */
-  .cert-bg {
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e3a8a 100%) !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    z-index: 0;
-  }
-  .cert > * { position: relative; z-index: 1; }
-
-  /* Bordas douradas */
-  .borda-ext {
-    position: absolute; inset: 5mm;
-    border: 2.5px solid rgba(251,191,36,0.6);
-    border-radius: 5px; z-index: 1;
-    pointer-events: none;
-  }
-  .borda-int {
-    position: absolute; inset: 7.5mm;
-    border: 1px solid rgba(251,191,36,0.25);
-    border-radius: 3px; z-index: 1;
-    pointer-events: none;
-  }
-
-  .escola { font-family:'Fredoka One',cursive; font-size:9pt; color:#fbbf24; letter-spacing:1.2px; text-transform:uppercase; margin-bottom:1.5mm; opacity:0.92; }
-  .curso  { font-family:'Fredoka One',cursive; font-size:7.5pt; color:#a78bfa; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:1mm; }
-  .trofeu { font-size:26pt; margin-bottom:1.5mm; }
-  .titulo { font-family:'Fredoka One',cursive; font-size:26pt; color:#fbbf24; line-height:1.1; margin-bottom:2mm; }
-
-  .linha {
-    width:70%; height:1px;
-    background: linear-gradient(90deg, transparent, rgba(251,191,36,0.55), transparent) !important;
-    -webkit-print-color-adjust: exact !important;
-    margin:2mm auto;
-  }
-
-  .certifica { font-size:8pt; color:#a78bfa; margin-bottom:1mm; }
-  .aluno     { font-family:'Fredoka One',cursive; font-size:22pt; color:#fff; margin:1mm 0; line-height:1.2; }
-  .turma-ano { font-size:8pt; color:#c4b5fd; margin-bottom:2mm; }
-
-  .descricao {
-    font-size:7pt; color:#e0e7ff;
-    line-height:1.6; max-width:230mm;
-    margin-bottom:2mm;
-  }
-
-  .aproveit {
-    display:inline-block;
-    background:rgba(251,191,36,0.18) !important;
-    -webkit-print-color-adjust: exact !important;
-    border:1px solid rgba(251,191,36,0.45);
-    border-radius:20px;
-    padding:1mm 5mm;
-    font-size:7pt; color:#fbbf24; font-weight:800;
-    margin-bottom:3mm;
-  }
-
-  .rodape {
-    display:flex; justify-content:space-around;
-    width:100%; gap:4mm;
-    margin-top:1mm;
-  }
-  .rod { flex:1; text-align:center; }
-  .rod-nome  { font-size:7pt; color:#e0e7ff; font-weight:800; line-height:1.4; }
-  .rod-cargo { font-size:5.5pt; color:#a78bfa; text-transform:uppercase; letter-spacing:0.4px; margin-top:0.5mm; }
-
-  .data      { font-size:6pt; color:#a78bfa; margin-top:2.5mm; }
-  .simbolico { font-size:5pt; color:rgba(167,139,250,0.5); margin-top:1.5mm; font-style:italic; }
-
-  /* Barra de ação (não imprime) */
-  .toolbar {
-    position: fixed; bottom:0; left:0; right:0;
-    background:#f1f5f9; border-top:1px solid #e2e8f0;
-    padding:10px 16px; text-align:center;
-    font-family:sans-serif; font-size:13px; color:#555;
-    display:flex; align-items:center; justify-content:center; gap:12px;
-  }
-  .btn-imp {
-    background:#7C3AED; color:#fff; border:none;
-    padding:8px 24px; border-radius:20px;
-    cursor:pointer; font-weight:700; font-size:13px;
-  }
-  .btn-imp:hover { background:#6d28d9; }
-
-  @media print {
-    html, body {
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-    }
-    .toolbar { display:none !important; }
-    body { width:281mm; height:194mm; }
-  }
-</style>
-</head>
-<body>
-
-<div class="cert">
-  <div class="cert-bg"></div>
-  <!-- Estrelinhas -->
-  <div style="position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden">${estrelas}</div>
-  <div class="borda-ext"></div>
-  <div class="borda-int"></div>
-
-  <div class="escola">E.M. João Oriani — Piracicaba/SP</div>
-  <div class="curso">🚀 Curso de Informática para Heróis</div>
-  <div class="trofeu">🏆</div>
-  <div class="titulo">Certificado de Conclusão</div>
-  <div class="linha"></div>
-  <div class="certifica">Certificamos que</div>
-  <div class="aluno">${nome}</div>
-  <div class="turma-ano">${turma} • Ano Letivo 2026</div>
-  <div class="linha"></div>
-  <div class="descricao">
-    concluiu com êxito o <strong style="color:#fbbf24">Curso de Informática TecnoHerói</strong>,
-    composto por 10 aulas: Chromebook, Mouse e Teclado, Internet, Google Docs, Google Slides,
-    Comunicação Digital, Organização de Arquivos, Segurança Digital,
-    Criação com Tecnologia e Portfólio Digital.
-  </div>
-  <div class="aproveit">✨ Aproveitamento: ${acertos}/20 questões (${pct}%)</div>
-  <div class="rodape">
-    <div class="rod">
-      <div class="rod-nome">${nomeProfessor}</div>
-      <div class="rod-cargo">${cargoProfessor}</div>
-    </div>
-    <div class="rod">
-      <div class="rod-nome">Francine Trevisan Augusti Bena</div>
-      <div class="rod-cargo">Coordenadora Pedagógica</div>
-    </div>
-    <div class="rod">
-      <div class="rod-nome">Cristiane Martin Campos de Godoy</div>
-      <div class="rod-cargo">Diretora</div>
-    </div>
-  </div>
-  <div class="data">Piracicaba, ${dataHoje}</div>
-  <div class="simbolico">* Este certificado é simbólico e não possui validade oficial, legal ou registro em órgãos competentes.</div>
-</div>
-
-<!-- Barra de ação -->
-<div class="toolbar">
-  💡 Antes de imprimir: marque <strong>"Gráficos de segundo plano"</strong> nas opções de impressão para preservar as cores.
-  <button class="btn-imp" onclick="imprimir()">🖨️ Imprimir / Salvar PDF</button>
-</div>
-
-<scr"+"ipt>
-function imprimir() {
-  // Pequeno delay para garantir que as fontes carregaram
-  setTimeout(() => window.print(), 300);
-}
-window.onload = () => {
-  // Aguarda fontes e imagens antes de abrir o diálogo
-  document.fonts.ready.then(() => {
-    setTimeout(() => window.print(), 1000);
-  });
-};
-</"+"script>
-</body>
-</html>`;
+  const certHTML = "<!DOCTYPE html>\n" +
+"<html lang='pt-BR'>\n" +
+"<head>\n" +
+"<meta charset='UTF-8'>\n" +
+"<title>Certificado \u2014 " + nome + "</title>\n" +
+"<style>\n" +
+"@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');\n" +
+"* { margin:0; padding:0; box-sizing:border-box; }\n" +
+"html {\n" +
+"  -webkit-print-color-adjust: exact !important;\n" +
+"  print-color-adjust: exact !important;\n" +
+"}\n" +
+"@page {\n" +
+"  size: A4 landscape;\n" +
+"  margin: 10mm;\n" +
+"}\n" +
+"body {\n" +
+"  font-family: 'Nunito', sans-serif;\n" +
+"  background: #0f0c29;\n" +
+"  width: 277mm; height: 190mm;\n" +
+"  display: flex; align-items: center; justify-content: center;\n" +
+"  -webkit-print-color-adjust: exact !important;\n" +
+"  print-color-adjust: exact !important;\n" +
+"}\n" +
+".cert {\n" +
+"  width: 277mm; height: 190mm;\n" +
+"  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e3a8a 100%);\n" +
+"  -webkit-print-color-adjust: exact !important;\n" +
+"  print-color-adjust: exact !important;\n" +
+"  position: relative; overflow: hidden;\n" +
+"  display: flex; flex-direction: column;\n" +
+"  align-items: center; justify-content: center;\n" +
+"  padding: 10mm 18mm 8mm;\n" +
+"  text-align: center;\n" +
+"  border-radius: 5px;\n" +
+"}\n" +
+".borda-ext { position:absolute; inset:5mm; border:2.5px solid rgba(251,191,36,0.6); border-radius:4px; z-index:1; pointer-events:none; }\n" +
+".borda-int { position:absolute; inset:7.5mm; border:1px solid rgba(251,191,36,0.22); border-radius:3px; z-index:1; pointer-events:none; }\n" +
+".inner { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; width:100%; }\n" +
+".escola { font-family:'Fredoka One',cursive; font-size:9.5pt; color:#fbbf24; letter-spacing:1.2px; text-transform:uppercase; margin-bottom:1.5mm; opacity:0.92; }\n" +
+".curso  { font-family:'Fredoka One',cursive; font-size:8pt; color:#a78bfa; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:1.5mm; }\n" +
+".trofeu { font-size:24pt; margin-bottom:1.5mm; line-height:1; }\n" +
+".titulo { font-family:'Fredoka One',cursive; font-size:27pt; color:#fbbf24; line-height:1.1; margin-bottom:2.5mm; }\n" +
+".linha  { width:65%; height:1px; background:linear-gradient(90deg,transparent,rgba(251,191,36,0.55),transparent); margin:2mm auto; }\n" +
+".certifica { font-size:8pt; color:#a78bfa; margin-bottom:1mm; }\n" +
+".aluno  { font-family:'Fredoka One',cursive; font-size:22pt; color:#fff; margin:1mm 0; line-height:1.2; }\n" +
+".turma-ano { font-size:8pt; color:#c4b5fd; margin-bottom:2mm; }\n" +
+".descricao { font-size:7.5pt; color:#e0e7ff; line-height:1.6; max-width:230mm; margin-bottom:2mm; }\n" +
+".aproveit  { display:inline-block; background:rgba(251,191,36,0.18); border:1px solid rgba(251,191,36,0.45); border-radius:20px; padding:1mm 5mm; font-size:7.5pt; color:#fbbf24; font-weight:800; margin-bottom:3mm; -webkit-print-color-adjust:exact; print-color-adjust:exact; }\n" +
+".rodape    { display:flex; justify-content:space-around; width:100%; gap:6mm; margin-top:1.5mm; }\n" +
+".rod       { flex:1; text-align:center; }\n" +
+".rod-nome  { font-size:7pt; color:#e0e7ff; font-weight:800; line-height:1.4; }\n" +
+".rod-cargo { font-size:5.5pt; color:#a78bfa; text-transform:uppercase; letter-spacing:0.4px; margin-top:0.5mm; }\n" +
+".data      { font-size:6.5pt; color:#a78bfa; margin-top:2.5mm; }\n" +
+".simbolico { font-size:5pt; color:rgba(167,139,250,0.5); margin-top:1.5mm; font-style:italic; }\n" +
+".toolbar   { position:fixed; bottom:0; left:0; right:0; background:#f1f5f9; border-top:1px solid #e2e8f0; padding:10px 20px; display:flex; align-items:center; justify-content:center; gap:14px; font-family:sans-serif; font-size:13px; color:#444; }\n" +
+".btn-imp   { background:#7C3AED; color:#fff; border:none; padding:8px 22px; border-radius:20px; cursor:pointer; font-weight:700; font-size:13px; }\n" +
+"@media print {\n" +
+"  .toolbar { display:none !important; }\n" +
+"  html, body, .cert {\n" +
+"    -webkit-print-color-adjust: exact !important;\n" +
+"    print-color-adjust: exact !important;\n" +
+"  }\n" +
+"}\n" +
+"</style>\n" +
+"</head>\n" +
+"<body>\n" +
+"<div class='cert'>\n" +
+"  <div style='position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0'>" + estrelas + "</div>\n" +
+"  <div class='borda-ext'></div>\n" +
+"  <div class='borda-int'></div>\n" +
+"  <div class='inner'>\n" +
+"    <div class='escola'>E.M. Jo\u00e3o Oriani \u2014 Piracicaba/SP</div>\n" +
+"    <div class='curso'>\uD83D\uDE80 Curso de Inform\u00e1tica para Her\u00f3is</div>\n" +
+"    <div class='trofeu'>\uD83C\uDFC6</div>\n" +
+"    <div class='titulo'>Certificado de Conclus\u00e3o</div>\n" +
+"    <div class='linha'></div>\n" +
+"    <div class='certifica'>Certificamos que</div>\n" +
+"    <div class='aluno'>" + nome + "</div>\n" +
+"    <div class='turma-ano'>" + turma + " \u2022 Ano Letivo 2026</div>\n" +
+"    <div class='linha'></div>\n" +
+"    <div class='descricao'>concluiu com \u00eaxito o <strong style='color:#fbbf24'>Curso de Inform\u00e1tica TecnoHer\u00f3i</strong>, composto por 10 aulas: Chromebook, Mouse e Teclado, Internet, Google Docs, Google Slides, Comunica\u00e7\u00e3o Digital, Organiza\u00e7\u00e3o de Arquivos, Seguran\u00e7a Digital, Cria\u00e7\u00e3o com Tecnologia e Portf\u00f3lio Digital.</div>\n" +
+"    <div class='aproveit'>\u2728 Aproveitamento: " + acertos + "/20 quest\u00f5es (" + pct + "%)</div>\n" +
+"    <div class='rodape'>\n" +
+"      <div class='rod'><div class='rod-nome'>" + nomeProfessor + "</div><div class='rod-cargo'>" + cargoProfessor + "</div></div>\n" +
+"      <div class='rod'><div class='rod-nome'>Francine Trevisan Augusti Bena</div><div class='rod-cargo'>Coordenadora Pedag\u00f3gica</div></div>\n" +
+"      <div class='rod'><div class='rod-nome'>Cristiane Martin Campos de Godoy</div><div class='rod-cargo'>Diretora</div></div>\n" +
+"    </div>\n" +
+"    <div class='data'>Piracicaba, " + dataHoje + "</div>\n" +
+"    <div class='simbolico'>* Este certificado \u00e9 simb\u00f3lico e n\u00e3o possui validade oficial, legal ou registro em \u00f3rg\u00e3os competentes.</div>\n" +
+"  </div>\n" +
+"</div>\n" +
+"<div class='toolbar'>\n" +
+"  \uD83D\uDCA1 Antes de imprimir: marque <strong>&quot;Gr\u00e1ficos de segundo plano&quot;</strong> nas op\u00e7\u00f5es para preservar as cores.\n" +
+"  <button class='btn-imp' onclick='window.print()'>&#x1F5A8;&#xFE0F; Imprimir / Salvar PDF</button>\n" +
+"</div>\n" +
+"</body>\n" +
+"</html>";
 
   const w = window.open("", "_blank");
+  w.document.open();
   w.document.write(certHTML);
   w.document.close();
 }
