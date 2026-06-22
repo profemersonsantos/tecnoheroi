@@ -4183,7 +4183,7 @@ async function mostrarConcluirAulas(nomeAluno) {
   if (!a) return;
 
   const modal = document.getElementById("modalConquista");
-  const AULAS_LOCAL = window.AULAS || [];
+  const AULAS_LOCAL = AULAS || [];
 
   const linhas = AULAS_LOCAL.map(aula => {
     const concluida = !!a.aulas[aula.id];
@@ -4243,7 +4243,7 @@ async function concluirAulaProf(nomeAluno, idAula) {
     const aluno = db[nomeAluno];
     if (!aluno) throw new Error("Aluno não encontrado");
 
-    const aula = (window.AULAS||[]).find(a => a.id === idAula);
+    const aula = AULAS.find(a => a.id === idAula);
     if (!aula) throw new Error("Aula não encontrada");
 
     // Registra conclusão com dados padrão
@@ -4260,7 +4260,7 @@ async function concluirAulaProf(nomeAluno, idAula) {
     // Atualiza XP e nível
     const totalXP = Object.values(aluno.aulas).reduce((s,x) => s + (x.xpGanho||0), 0);
     aluno.xpTotal = totalXP;
-    aluno.nivel   = calcularNivel(totalXP);
+    aluno.nivel   = calcularNivelPorXP(totalXP);
 
     await salvarAluno(nomeAluno, aluno);
     if (btn) { btn.textContent = "✅ Concluído!"; btn.style.background="#DCFCE7"; }
@@ -4291,7 +4291,7 @@ async function desfazerConclusaoProf(nomeAluno, idAula) {
     // Recalcula XP e nível
     const totalXP = Object.values(aluno.aulas).reduce((s,x) => s + (x.xpGanho||0), 0);
     aluno.xpTotal = totalXP;
-    aluno.nivel   = calcularNivel(totalXP);
+    aluno.nivel   = calcularNivelPorXP(totalXP);
 
     await salvarAluno(nomeAluno, aluno);
 
@@ -4305,12 +4305,12 @@ async function desfazerConclusaoProf(nomeAluno, idAula) {
   }
 }
 
-// Função auxiliar: calcula nível pelo XP total
-function calcularNivel(xp) {
-  const niveis = [0, 100, 300, 600, 1000, 1500, 2100, 2800, 3600];
+// Função auxiliar: calcula nível pelo XP total (usada pelo painel do professor)
+function calcularNivelPorXP(xp) {
+  const niveis = [0, 100, 250, 450, 700, 1000, 1350, 1750];
   let n = 1;
-  for (let i = 0; i < niveis.length; i++) {
-    if (xp >= niveis[i]) n = i + 1;
+  for (let i = niveis.length - 1; i >= 0; i--) {
+    if (xp >= niveis[i]) { n = i + 1; break; }
   }
   return n;
 }
