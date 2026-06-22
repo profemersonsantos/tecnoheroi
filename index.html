@@ -1573,7 +1573,7 @@
     <input type="text" id="inputNomeProf" placeholder="Ex: Carlos Silva" maxlength="60" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box">
 
     <label style="display:block;font-weight:800;font-size:0.85rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">🔑 Senha</label>
-    <input type="password" id="inputSenhaAdmin" placeholder="Sua senha" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box" onkeydown="if(event.key==='Enter')loginAdmin()">
+    <input type="password" id="inputSenhaAdmin" placeholder="Sua senha" autocomplete="new-password" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box" onkeydown="if(event.key==='Enter')loginAdmin()">
 
     <div id="erroAdmin" style="color:#DC2626;font-size:0.85rem;font-weight:700;margin-bottom:0.75rem;display:none;background:#FEE2E2;padding:0.6rem 0.9rem;border-radius:8px"></div>
 
@@ -1600,10 +1600,10 @@
     <input type="text" id="inputTurmaProfCad" placeholder="Ex: 5B" maxlength="30" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box">
 
     <label style="display:block;font-weight:800;font-size:0.85rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">🔑 Criar Senha</label>
-    <input type="password" id="inputSenhaProfCad" placeholder="Mínimo 4 caracteres" maxlength="40" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box">
+    <input type="password" id="inputSenhaProfCad" placeholder="Mínimo 4 caracteres" autocomplete="new-password" maxlength="40" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box">
 
     <label style="display:block;font-weight:800;font-size:0.85rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">🔑 Confirmar Senha</label>
-    <input type="password" id="inputSenhaConfCad" placeholder="Repita a senha" maxlength="40" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box" onkeydown="if(event.key==='Enter')cadastrarProf()">
+    <input type="password" id="inputSenhaConfCad" placeholder="Repita a senha" autocomplete="new-password" maxlength="40" style="width:100%;padding:0.9rem 1.2rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:1rem;margin-bottom:1rem;outline:none;box-sizing:border-box" onkeydown="if(event.key==='Enter')cadastrarProf()">
 
     <div id="erroCadProf" style="color:#DC2626;font-size:0.85rem;font-weight:700;margin-bottom:0.75rem;display:none;background:#FEE2E2;padding:0.6rem 0.9rem;border-radius:8px"></div>
 
@@ -1667,6 +1667,7 @@
     <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap">
       <button onclick="mostrarCadastroAluno()" style="background:#2563EB;color:#fff;border:none;padding:0.5rem 1rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer">➕ Cadastrar Aluno</button>
       <button onclick="exportarRelatorio()" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);padding:0.5rem 1rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer">📥 Exportar CSV</button>
+      <button onclick="mostrarAlterarSenha()" style="background:rgba(251,191,36,0.2);color:#fbbf24;border:1px solid rgba(251,191,36,0.4);padding:0.5rem 1rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer">🔑 Alterar Senha</button>
       <button onclick="limparDados()" style="background:rgba(220,38,38,0.3);color:#fca5a5;border:1px solid rgba(220,38,38,0.4);padding:0.5rem 1rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer">🗑️ Limpar Dados</button>
       <button onclick="sairAdmin()" style="background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);padding:0.5rem 1rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer">🚪 Sair</button>
     </div>
@@ -1694,6 +1695,44 @@
       </div>
       <div id="erroCadastroAluno" style="margin-top:0.75rem;display:none;color:#DC2626;font-weight:700;font-size:0.85rem;background:#FEE2E2;padding:0.6rem 0.9rem;border-radius:8px"></div>
       <div id="sucessoCadastroAluno" style="margin-top:0.75rem;display:none;color:#16A34A;font-weight:700;font-size:0.85rem;background:#DCFCE7;padding:0.6rem 0.9rem;border-radius:8px"></div>
+    </div>
+
+    <!-- ALTERAR SENHA DO PROFESSOR -->
+    <div id="painel-alterar-senha" style="display:none;background:#fff;border-radius:14px;padding:1.75rem;margin-bottom:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,0.1);border:2px solid #fbbf24">
+      <h3 style="font-family:'Fredoka One',cursive;font-size:1.3rem;color:#1e3a5f;margin-bottom:0.4rem">🔑 Alterar Senha</h3>
+      <p style="font-size:0.83rem;color:#64748B;margin-bottom:1.25rem">Crie uma senha forte com letras, números e símbolos.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:1rem;align-items:end">
+        <div>
+          <label style="display:block;font-weight:800;font-size:0.82rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">Senha Atual</label>
+          <div style="position:relative">
+            <input type="text" id="senhaAtualProf" placeholder="Digite sua senha atual"
+              autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false"
+              data-senha="" maxlength="40"
+              onkeydown="interceptarTeclaAlterarSenha(event,'senhaAtualProf')"
+              oninput="return false" onpaste="return false"
+              style="width:100%;padding:0.8rem 1rem 0.8rem 2.8rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:0.95rem;outline:none;box-sizing:border-box;letter-spacing:0.15em">
+            <span style="position:absolute;left:0.9rem;top:50%;transform:translateY(-50%);font-size:1rem">🔒</span>
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-weight:800;font-size:0.82rem;color:#1e3a5f;margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px">Nova Senha</label>
+          <div style="position:relative">
+            <input type="text" id="senhaNovaProfA" placeholder="Mínimo 4 caracteres"
+              autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false"
+              data-senha="" maxlength="40"
+              onkeydown="interceptarTeclaAlterarSenha(event,'senhaNovaProfA')"
+              oninput="return false" onpaste="return false"
+              style="width:100%;padding:0.8rem 1rem 0.8rem 2.8rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Nunito',sans-serif;font-size:0.95rem;outline:none;box-sizing:border-box;letter-spacing:0.15em">
+            <span style="position:absolute;left:0.9rem;top:50%;transform:translateY(-50%);font-size:1rem">✨</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:0.5rem">
+          <button onclick="confirmarAlterarSenha()" style="padding:0.8rem 1.4rem;background:#fbbf24;color:#1e1b4b;border:none;border-radius:10px;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;white-space:nowrap;font-weight:700">✅ Salvar</button>
+          <button onclick="fecharAlterarSenha()" style="padding:0.8rem 1rem;background:#f1f5f9;color:#64748B;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer">✕</button>
+        </div>
+      </div>
+      <div id="erroAlterarSenha"   style="margin-top:0.75rem;display:none;color:#DC2626;font-weight:700;font-size:0.85rem;background:#FEE2E2;padding:0.6rem 0.9rem;border-radius:8px"></div>
+      <div id="sucessoAlterarSenha" style="margin-top:0.75rem;display:none;color:#16A34A;font-weight:700;font-size:0.85rem;background:#DCFCE7;padding:0.6rem 0.9rem;border-radius:8px"></div>
     </div>
 
     <!-- Filtros -->
@@ -3501,6 +3540,160 @@ function _abrirDashboard() {
   renderizarDashboard();
 }
 
+
+// ══════════════════════════════════════════════════════════════
+// ALTERAR SENHA DO PROFESSOR
+// ══════════════════════════════════════════════════════════════
+
+// Interceptador de teclas reutilizável para campos mascarados
+function interceptarTeclaAlterarSenha(event, campoId) {
+  const inp = document.getElementById(campoId);
+  if (!inp) return;
+  if (event.key === "Enter") {
+    event.preventDefault();
+    // Se for a senha atual, foca na nova; se for a nova, confirma
+    if (campoId === "senhaAtualProf") {
+      document.getElementById("senhaNovaProfA")?.focus();
+    } else {
+      confirmarAlterarSenha();
+    }
+    return;
+  }
+  if (event.key === "Backspace") {
+    event.preventDefault();
+    const s = inp.dataset.senha || "";
+    inp.dataset.senha = s.slice(0, -1);
+    inp.value = "●".repeat(inp.dataset.senha.length);
+    return;
+  }
+  if (event.key === "Delete" || event.key === "Escape") {
+    event.preventDefault();
+    inp.dataset.senha = "";
+    inp.value = "";
+    return;
+  }
+  if (event.key.length > 1) return;
+  if (event.ctrlKey || event.metaKey || event.altKey) { event.preventDefault(); return; }
+  event.preventDefault();
+  const atual = inp.dataset.senha || "";
+  if (atual.length >= 40) return;
+  inp.dataset.senha = atual + event.key;
+  inp.value = "●".repeat(inp.dataset.senha.length);
+}
+
+function mostrarAlterarSenha() {
+  // Fecha o painel de cadastro se estiver aberto
+  document.getElementById("painel-cadastro-aluno").style.display = "none";
+  const painel = document.getElementById("painel-alterar-senha");
+  if (painel.style.display === "block") {
+    fecharAlterarSenha();
+    return;
+  }
+  // Limpa campos e mensagens
+  ["senhaAtualProf","senhaNovaProfA"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.dataset.senha = ""; el.value = ""; }
+  });
+  document.getElementById("erroAlterarSenha").style.display   = "none";
+  document.getElementById("sucessoAlterarSenha").style.display = "none";
+  painel.style.display = "block";
+  // Foca no campo de senha atual
+  setTimeout(() => document.getElementById("senhaAtualProf")?.focus(), 100);
+}
+
+function fecharAlterarSenha() {
+  const painel = document.getElementById("painel-alterar-senha");
+  painel.style.display = "none";
+  // Zera os campos por segurança
+  ["senhaAtualProf","senhaNovaProfA"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.dataset.senha = ""; el.value = ""; }
+  });
+}
+
+async function confirmarAlterarSenha() {
+  const erroEl   = document.getElementById("erroAlterarSenha");
+  const sucessoEl = document.getElementById("sucessoAlterarSenha");
+  const btnSalvar = document.querySelector("#painel-alterar-senha button[onclick='confirmarAlterarSenha()']");
+
+  erroEl.style.display   = "none";
+  sucessoEl.style.display = "none";
+
+  const senhaAtual = document.getElementById("senhaAtualProf")?.dataset.senha || "";
+  const senhaNova  = document.getElementById("senhaNovaProfA")?.dataset.senha || "";
+
+  // Validações
+  if (!senhaAtual) {
+    erroEl.textContent = "❌ Digite sua senha atual.";
+    erroEl.style.display = "block";
+    document.getElementById("senhaAtualProf")?.focus();
+    return;
+  }
+  if (!senhaNova) {
+    erroEl.textContent = "❌ Digite a nova senha.";
+    erroEl.style.display = "block";
+    document.getElementById("senhaNovaProfA")?.focus();
+    return;
+  }
+  if (senhaNova.length < 4) {
+    erroEl.textContent = "❌ A nova senha precisa ter pelo menos 4 caracteres.";
+    erroEl.style.display = "block";
+    document.getElementById("senhaNovaProfA")?.focus();
+    return;
+  }
+  if (senhaAtual === senhaNova) {
+    erroEl.textContent = "❌ A nova senha deve ser diferente da senha atual.";
+    erroEl.style.display = "block";
+    return;
+  }
+
+  if (btnSalvar) { btnSalvar.textContent = "⏳ Salvando..."; btnSalvar.disabled = true; }
+
+  try {
+    // Busca o professor logado no Firebase
+    const nomeProf = estado.admin?.nome || "";
+    if (!nomeProf) throw new Error("Professor não identificado.");
+
+    const profId   = "prof_" + nomeProf.toLowerCase().replace(/\s+/g, "_").replace(/[^a-z0-9_]/g, "");
+    const profData = await window._fb.carregarAluno("__prof__" + profId);
+
+    if (!profData) throw new Error("Professor não encontrado no banco.");
+
+    // Verifica senha atual
+    if (profData.senhaHash !== hashSenha(senhaAtual)) {
+      erroEl.textContent = "❌ Senha atual incorreta. Tente novamente.";
+      erroEl.style.display = "block";
+      // Limpa campo da senha atual
+      const el = document.getElementById("senhaAtualProf");
+      if (el) { el.dataset.senha = ""; el.value = ""; el.focus(); }
+      if (btnSalvar) { btnSalvar.textContent = "✅ Salvar"; btnSalvar.disabled = false; }
+      return;
+    }
+
+    // Atualiza com a nova senha
+    profData.senhaHash = hashSenha(senhaNova);
+    await window._fb.salvarAluno("__prof__" + profId, profData);
+
+    // Limpa campos imediatamente por segurança
+    ["senhaAtualProf","senhaNovaProfA"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.dataset.senha = ""; el.value = ""; }
+    });
+
+    sucessoEl.textContent = "✅ Senha alterada com sucesso! Use a nova senha no próximo login.";
+    sucessoEl.style.display = "block";
+    if (btnSalvar) { btnSalvar.textContent = "✅ Salvo!"; }
+
+    // Fecha o painel após 3 segundos
+    setTimeout(() => fecharAlterarSenha(), 3000);
+
+  } catch(e) {
+    erroEl.textContent = "❌ Erro: " + e.message;
+    erroEl.style.display = "block";
+    if (btnSalvar) { btnSalvar.textContent = "✅ Salvar"; btnSalvar.disabled = false; }
+  }
+}
+
 function sairAdmin() {
   document.getElementById("tela-dashboard").style.display = "none";
   document.getElementById("tela-boas-vindas").style.display = "flex";
@@ -3768,10 +3961,17 @@ function mostrarBloqueada24h(idAula) {
             <div style="position:relative;flex:1">
               <input
                 id="senhaLiberar"
-                type="password"
-                placeholder="Senha"
+                type="text"
+                placeholder="Código de acesso"
                 maxlength="40"
-                onkeydown="if(event.key==='Enter') liberarAulaProfessor(${idAula})"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                data-senha=""
+                onkeydown="interceptarTeclaSenha(event, ${idAula})"
+                oninput="return false"
+                onpaste="return false"
                 style="
                   width:100%;box-sizing:border-box;
                   background:rgba(255,255,255,0.12);
@@ -3784,6 +3984,7 @@ function mostrarBloqueada24h(idAula) {
                   font-weight:700;
                   outline:none;
                   transition:border-color 0.2s,background 0.2s;
+                  letter-spacing:0.2em;
                 "
                 onfocus="this.style.borderColor='rgba(255,255,255,0.7)';this.style.background='rgba(255,255,255,0.2)'"
                 onblur="this.style.borderColor='rgba(255,255,255,0.3)';this.style.background='rgba(255,255,255,0.12)'"
@@ -3822,7 +4023,9 @@ function mostrarBloqueada24h(idAula) {
   modal.classList.add("ativo");
 
   // Foca no campo nome do professor após abrir o modal
+  // e limpa qualquer valor residual do campo de senha
   setTimeout(() => {
+    limparCampoSenhaModal();
     const inp = document.getElementById("inputNomeProfLiberar");
     if (inp) inp.focus();
   }, 350);
@@ -3835,6 +4038,63 @@ function mostrarBloqueada24h(idAula) {
   }, 1000);
 }
 
+// ══════════════════════════════════════════════════════════
+// INTERCEPTADOR DE TECLAS — impede que o Chrome salve a senha
+// O campo exibe "●" mas armazena o valor real em data-senha
+// ══════════════════════════════════════════════════════════
+function interceptarTeclaSenha(event, idAula) {
+  const inp = document.getElementById("senhaLiberar");
+  if (!inp) return;
+
+  // Teclas especiais
+  if (event.key === "Enter") {
+    event.preventDefault();
+    liberarAulaProfessor(idAula);
+    return;
+  }
+  if (event.key === "Escape") {
+    event.preventDefault();
+    inp.dataset.senha = "";
+    inp.value = "";
+    return;
+  }
+  if (event.key === "Backspace") {
+    event.preventDefault();
+    const s = inp.dataset.senha || "";
+    inp.dataset.senha = s.slice(0, -1);
+    inp.value = "●".repeat(inp.dataset.senha.length);
+    return;
+  }
+  if (event.key === "Delete") {
+    event.preventDefault();
+    inp.dataset.senha = "";
+    inp.value = "";
+    return;
+  }
+  // Ignorar teclas de controle/navegação
+  if (event.key.length > 1) return;
+  // Ignorar Ctrl+A, Ctrl+C etc.
+  if (event.ctrlKey || event.metaKey || event.altKey) {
+    event.preventDefault();
+    return;
+  }
+  // Caractere normal → adiciona ao valor real e exibe ●
+  event.preventDefault();
+  const atual = inp.dataset.senha || "";
+  if (atual.length >= 40) return; // limite de tamanho
+  inp.dataset.senha = atual + event.key;
+  inp.value = "●".repeat(inp.dataset.senha.length);
+}
+
+// Limpa o campo mascarado ao abrir o modal
+function limparCampoSenhaModal() {
+  const inp = document.getElementById("senhaLiberar");
+  if (inp) {
+    inp.dataset.senha = "";
+    inp.value = "";
+  }
+}
+
 async function liberarAulaProfessor(idAula) {
   const inp  = document.getElementById("senhaLiberar");
   const erro = document.getElementById("erroSenhaProf");
@@ -3843,7 +4103,7 @@ async function liberarAulaProfessor(idAula) {
   if (!inp) return;
 
   const nomeProf = document.getElementById("inputNomeProfLiberar")?.value.trim() || "";
-  const senha    = inp.value;
+  const senha    = inp.dataset.senha || ""; // lê do atributo DOM, não do campo visível
 
   erro.style.display = "none";
   ok.style.display   = "none";
@@ -3880,6 +4140,7 @@ async function liberarAulaProfessor(idAula) {
       erro.textContent   = "❌ Senha incorreta! Tente novamente.";
       erro.style.display = "block";
       inp.style.borderColor = "#FCA5A5";
+      inp.dataset.senha = "";
       inp.value = "";
       if (btn) { btn.textContent = "✅ Liberar"; btn.disabled = false; }
       setTimeout(() => { inp.style.borderColor = "rgba(255,255,255,0.3)"; }, 1500);
@@ -3889,6 +4150,9 @@ async function liberarAulaProfessor(idAula) {
 
     // ✅ Senha correta — remove o bloqueio de 24h
     localStorage.removeItem(getBloqueioKey(idAula));
+    // Limpa a senha da memória imediatamente após uso
+    inp.dataset.senha = "";
+    inp.value = "";
     ok.textContent   = "✅ Aula liberada pelo professor " + profData.nome + "!";
     ok.style.display = "block";
     if (btn) { btn.textContent = "✅ Liberado!"; btn.disabled = true; }
