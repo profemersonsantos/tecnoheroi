@@ -4172,6 +4172,149 @@ async function liberarAulaProfessor(idAula) {
 
 // =================== DASHBOARD DO PROFESSOR ===================
 
+
+// ══════════════════════════════════════════════════════════════
+// CONCLUIR / DESFAZER AULAS — PAINEL DO PROFESSOR
+// ══════════════════════════════════════════════════════════════
+
+async function mostrarConcluirAulas(nomeAluno) {
+  const db = await carregarDB();
+  const a  = db[nomeAluno];
+  if (!a) return;
+
+  const modal = document.getElementById("modalConquista");
+  const AULAS_LOCAL = window.AULAS || [];
+
+  const linhas = AULAS_LOCAL.map(aula => {
+    const concluida = !!a.aulas[aula.id];
+    const nomeEsc   = nomeAluno.replace(/'/g, "\'");
+    if (concluida) {
+      const dt = new Date(a.aulas[aula.id].dataConclusao).toLocaleDateString("pt-BR");
+      return `<tr style="border-bottom:1px solid #f1f5f9;background:#f0fdf4">
+        <td style="padding:0.65rem 1rem;font-size:0.85rem;font-weight:700;color:#16A34A">${aula.emoji} Aula ${aula.id} — ${aula.titulo}</td>
+        <td style="padding:0.65rem 1rem;text-align:center">
+          <span style="background:#DCFCE7;color:#16A34A;padding:0.2rem 0.6rem;border-radius:50px;font-size:0.75rem;font-weight:800">✅ ${dt}</span>
+        </td>
+        <td style="padding:0.65rem 1rem;text-align:center">
+          <button onclick="desfazerConclusaoProf('${nomeEsc}',${aula.id})" style="background:#FEE2E2;color:#DC2626;border:none;padding:0.3rem 0.8rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.78rem;cursor:pointer">↩️ Desfazer</button>
+        </td>
+      </tr>`;
+    } else {
+      return `<tr style="border-bottom:1px solid #f1f5f9">
+        <td style="padding:0.65rem 1rem;font-size:0.85rem;color:#64748B">${aula.emoji} Aula ${aula.id} — ${aula.titulo}</td>
+        <td style="padding:0.65rem 1rem;text-align:center;color:#94a3b8;font-size:0.8rem">Não concluída</td>
+        <td style="padding:0.65rem 1rem;text-align:center">
+          <button onclick="concluirAulaProf('${nomeEsc}',${aula.id})" style="background:#DCFCE7;color:#16A34A;border:none;padding:0.3rem 0.8rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.78rem;cursor:pointer">✅ Concluir</button>
+        </td>
+      </tr>`;
+    }
+  }).join("");
+
+  modal.innerHTML = `
+    <div style="background:#fff;border-radius:20px;padding:2rem;max-width:640px;width:100%;max-height:80vh;overflow-y:auto;animation:popIn 0.3s ease">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
+        <div>
+          <h2 style="font-family:'Fredoka One',cursive;font-size:1.4rem;color:#1e3a5f;margin:0">🎓 Concluir Aulas</h2>
+          <p style="margin:0.25rem 0 0;font-size:0.85rem;color:#64748B;font-weight:700">${a.nome} — ${a.turma||"—"}</p>
+        </div>
+        <button onclick="fecharModal()" style="background:#f1f5f9;border:none;width:36px;height:36px;border-radius:50%;font-size:1.1rem;cursor:pointer;color:#64748B">✕</button>
+      </div>
+      <div style="background:#FEF9C3;border:1px solid #FDE68A;border-radius:10px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.83rem;color:#92400E;font-weight:700">
+        ⚠️ Use com responsabilidade. Concluir uma aula manualmente registra o progresso do aluno no Firebase.
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:0.85rem;font-family:'Nunito',sans-serif">
+        <thead><tr style="background:#f8fafc;border-bottom:2px solid #e2e8f0">
+          <th style="padding:0.6rem 1rem;text-align:left;font-size:0.72rem;text-transform:uppercase;color:#64748B">Aula</th>
+          <th style="padding:0.6rem 1rem;text-align:center;font-size:0.72rem;text-transform:uppercase;color:#64748B">Status</th>
+          <th style="padding:0.6rem 1rem;text-align:center;font-size:0.72rem;text-transform:uppercase;color:#64748B">Ação</th>
+        </tr></thead>
+        <tbody>${linhas}</tbody>
+      </table>
+    </div>`;
+  modal.classList.add("ativo");
+}
+
+async function concluirAulaProf(nomeAluno, idAula) {
+  const btn = event?.target;
+  if (btn) { btn.textContent = "⏳..."; btn.disabled = true; }
+
+  try {
+    const db   = await carregarDB();
+    const aluno = db[nomeAluno];
+    if (!aluno) throw new Error("Aluno não encontrado");
+
+    const aula = (window.AULAS||[]).find(a => a.id === idAula);
+    if (!aula) throw new Error("Aula não encontrada");
+
+    // Registra conclusão com dados padrão
+    if (!aluno.aulas) aluno.aulas = {};
+    aluno.aulas[idAula] = {
+      dataConclusao : new Date().toISOString(),
+      acertos       : 5,
+      xpGanho       : aula.xp || 100,
+      tentativas    : 1,
+      concluidoPorProf: true,
+      prof          : profLogado.nome
+    };
+
+    // Atualiza XP e nível
+    const totalXP = Object.values(aluno.aulas).reduce((s,x) => s + (x.xpGanho||0), 0);
+    aluno.xpTotal = totalXP;
+    aluno.nivel   = calcularNivel(totalXP);
+
+    await salvarAluno(nomeAluno, aluno);
+    if (btn) { btn.textContent = "✅ Concluído!"; btn.style.background="#DCFCE7"; }
+
+    // Recarrega o modal para atualizar o status
+    setTimeout(() => mostrarConcluirAulas(nomeAluno), 700);
+    renderizarDashboard();
+
+  } catch(e) {
+    if (btn) { btn.textContent = "❌ Erro"; btn.disabled = false; }
+    alert("Erro ao concluir aula: " + e.message);
+  }
+}
+
+async function desfazerConclusaoProf(nomeAluno, idAula) {
+  if (!confirm(`Desfazer conclusão da Aula ${idAula} de ${nomeAluno}?`)) return;
+
+  const btn = event?.target;
+  if (btn) { btn.textContent = "⏳..."; btn.disabled = true; }
+
+  try {
+    const db    = await carregarDB();
+    const aluno = db[nomeAluno];
+    if (!aluno) throw new Error("Aluno não encontrado");
+
+    delete aluno.aulas[idAula];
+
+    // Recalcula XP e nível
+    const totalXP = Object.values(aluno.aulas).reduce((s,x) => s + (x.xpGanho||0), 0);
+    aluno.xpTotal = totalXP;
+    aluno.nivel   = calcularNivel(totalXP);
+
+    await salvarAluno(nomeAluno, aluno);
+
+    // Recarrega o modal
+    setTimeout(() => mostrarConcluirAulas(nomeAluno), 500);
+    renderizarDashboard();
+
+  } catch(e) {
+    if (btn) { btn.textContent = "❌ Erro"; btn.disabled = false; }
+    alert("Erro ao desfazer: " + e.message);
+  }
+}
+
+// Função auxiliar: calcula nível pelo XP total
+function calcularNivel(xp) {
+  const niveis = [0, 100, 300, 600, 1000, 1500, 2100, 2800, 3600];
+  let n = 1;
+  for (let i = 0; i < niveis.length; i++) {
+    if (xp >= niveis[i]) n = i + 1;
+  }
+  return n;
+}
+
 async function renderizarDashboard() {
   invalidarCache();
   const db = await carregarDB();
@@ -4273,6 +4416,7 @@ async function renderizarDashboard() {
         </td>
         <td style="padding:0.9rem 1rem;text-align:center">
           <button onclick="mostrarDetalheAluno('${nomeEsc}')" style="background:#EDE9FE;color:#7C3AED;border:none;padding:0.35rem 0.7rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer;display:block;width:100%;margin-bottom:0.3rem">📋 Detalhes</button>
+          <button onclick="mostrarConcluirAulas('${nomeEsc}')" style="background:#DCFCE7;color:#16A34A;border:none;padding:0.35rem 0.7rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer;display:block;width:100%;margin-bottom:0.3rem">🎓 Concluir Aula</button>
           <button onclick="removerAluno('${nomeEsc}')" style="background:#FEE2E2;color:#DC2626;border:none;padding:0.35rem 0.7rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer;display:block;width:100%">🗑️ Remover</button>
         </td>
       </tr>`;
@@ -4327,14 +4471,18 @@ async function mostrarDetalheAluno(nome) {
   const ultLog   = a.ultimoLogin   ? new Date(a.ultimoLogin).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",year:"2-digit",hour:"2-digit",minute:"2-digit"})   : "—";
   const linhas = AULAS.map(aula => {
     const d = a.aulas[aula.id];
-    if (!d) return `<tr style="background:#fafafa"><td style="padding:0.6rem 1rem;font-size:0.83rem">${aula.emoji} Aula ${aula.id} — ${aula.titulo}</td><td colspan="4" style="padding:0.6rem 1rem;text-align:center;color:#94a3b8;font-size:0.78rem">Não concluída</td></tr>`;
+    const nomeEscDet = nome.replace(/'/g,"\'");
+    if (!d) return `<tr style="background:#fafafa"><td style="padding:0.6rem 1rem;font-size:0.83rem">${aula.emoji} Aula ${aula.id} — ${aula.titulo}</td><td colspan="3" style="padding:0.6rem 1rem;text-align:center;color:#94a3b8;font-size:0.78rem">Não concluída</td><td style="padding:0.6rem 1rem;text-align:center"><button onclick="concluirAulaProf('${nomeEscDet}',${aula.id})" style="background:#DCFCE7;color:#16A34A;border:none;padding:0.25rem 0.75rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.75rem;cursor:pointer">✅ Concluir</button></td></tr>`;
     const dt = new Date(d.dataConclusao).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",year:"2-digit",hour:"2-digit",minute:"2-digit"});
+    const nomeEscDet2 = nome.replace(/'/g,"\'");
     return `<tr style="border-bottom:1px solid #f1f5f9">
       <td style="padding:0.6rem 1rem;font-size:0.83rem;font-weight:700">${aula.emoji} Aula ${aula.id} — ${aula.titulo}</td>
       <td style="padding:0.6rem 1rem;text-align:center"><span style="background:#DCFCE7;color:#16A34A;padding:0.2rem 0.6rem;border-radius:50px;font-size:0.72rem;font-weight:800">✅ ${dt}</span></td>
       <td style="padding:0.6rem 1rem;text-align:center;font-weight:800;color:#D97706">${d.acertos}/5</td>
       <td style="padding:0.6rem 1rem;text-align:center;font-weight:800;color:#7C3AED">${d.xpGanho} XP</td>
-      <td style="padding:0.6rem 1rem;text-align:center;color:${(d.tentativas||1)>1?'#EA580C':'#64748B'};font-weight:700">${d.tentativas||1}x ${(d.tentativas||1)>1?'🔄':''}</td>
+      <td style="padding:0.6rem 1rem;text-align:center">
+        <button onclick="desfazerConclusaoProf('${nomeEscDet2}',${aula.id})" style="background:#FEE2E2;color:#DC2626;border:none;padding:0.25rem 0.65rem;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.72rem;cursor:pointer">↩️ Desfazer</button>
+      </td>
     </tr>`;
   }).join("");
   const nomeEsc = nome.replace(/'/g,"\\'");
@@ -4360,7 +4508,7 @@ async function mostrarDetalheAluno(nome) {
         <th style="padding:0.5rem 1rem;text-align:center;color:#64748B;font-size:0.72rem;text-transform:uppercase">Conclusão</th>
         <th style="padding:0.5rem 1rem;text-align:center;color:#64748B;font-size:0.72rem;text-transform:uppercase">Acertos</th>
         <th style="padding:0.5rem 1rem;text-align:center;color:#64748B;font-size:0.72rem;text-transform:uppercase">XP</th>
-        <th style="padding:0.5rem 1rem;text-align:center;color:#64748B;font-size:0.72rem;text-transform:uppercase">Tentativas</th>
+        <th style="padding:0.5rem 1rem;text-align:center;color:#64748B;font-size:0.72rem;text-transform:uppercase">Ação Prof.</th>
       </tr></thead>
       <tbody>${linhas}</tbody>
     </table>
