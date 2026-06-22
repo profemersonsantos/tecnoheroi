@@ -3650,11 +3650,11 @@ async function confirmarAlterarSenha() {
   if (btnSalvar) { btnSalvar.textContent = "⏳ Salvando..."; btnSalvar.disabled = true; }
 
   try {
-    // Busca o professor logado no Firebase
-    const nomeProf = estado.admin?.nome || "";
-    if (!nomeProf) throw new Error("Professor não identificado.");
+    // Busca o professor logado no Firebase via profLogado
+    const nomeProf = profLogado?.nome || "";
+    if (!nomeProf) throw new Error("Professor não identificado. Faça login novamente.");
 
-    const profId   = "prof_" + nomeProf.toLowerCase().replace(/\s+/g, "_").replace(/[^a-z0-9_]/g, "");
+    const profId   = profLogado.id || ("prof_" + nomeProf.toLowerCase().replace(/\s+/g, "_").replace(/[^a-z0-9_]/g, ""));
     const profData = await window._fb.carregarAluno("__prof__" + profId);
 
     if (!profData) throw new Error("Professor não encontrado no banco.");
